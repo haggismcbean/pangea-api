@@ -1,0 +1,1 @@
+`php artisan serve` or `php artisan serve --port=8080`
