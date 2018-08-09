@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('posts', 'PostController@index');
+Route::get('posts/{id}', 'PostController@show');
+Route::post('posts', 'PostController@store');
+Route::put('posts/{id}', 'PostController@update');
+Route::delete('posts/{id}', 'PostController@delete');
