@@ -12,29 +12,29 @@ class PostController extends Controller
         return Post::all();
     }
  
-    public function show($id)
+    public function show(Post $post)
     {
-        return Post::find($id);
+        return $post;
     }
 
     public function store(Request $request)
     {
-        return Post::create($request->all());
+        $post = Post::create($request->all());
+
+        return response()->json($post, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $Post = Post::findOrFail($id);
-        $Post->update($request->all());
+        $post->update($request->all());
 
-        return $Post;
+        return response()->json($post, 200);
     }
 
-    public function delete(Request $request, $id)
+    public function delete(Post $post)
     {
-        $Post = Post::findOrFail($id);
-        $Post->delete();
+        $post->delete();
 
-        return 204;
+        return response()->json(null, 204);
     }
 }
