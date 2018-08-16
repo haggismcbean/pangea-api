@@ -6,6 +6,8 @@
 
                 <div class="card-body">
                     Hey. Well here we are.
+
+                    Token: {{$token}}
                 </div>
             </div>
         </div>

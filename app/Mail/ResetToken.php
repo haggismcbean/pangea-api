@@ -7,18 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RegisterAccount extends Mailable
+class ResetToken extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -28,6 +30,6 @@ class RegisterAccount extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.account.register');
+        return $this->view('emails.account.reset-token');
     }
 }

@@ -7,6 +7,9 @@ use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetToken;
+
 class ForgotPasswordController extends Controller
 {
     /*
@@ -49,6 +52,9 @@ class ForgotPasswordController extends Controller
         }
 
         $token = $this->broker()->createToken($user);
-        return response()->json(['data' => $token], 200);
+
+        Mail::to($user)->send(new ResetToken($token));
+
+        return response()->json(['data' => 'Email sent'], 200);
     }
 }
