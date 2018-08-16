@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterAccount;
+
 class RegisterController extends Controller
 {
     /*
@@ -47,12 +50,18 @@ class RegisterController extends Controller
         // Here the request is validated. The validator method is located
         // inside the RegisterController, and makes sure the name, email
         // password and password_confirmation fields are required.
-        $this->validator($request->all())->validate();
+        try {
+            $this->validator($request->all())->validate();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Duplicate username or email'], 400);
+        }
 
         // A Registered event is created and will trigger any relevant
         // observers, such as sending a confirmation email or any 
         // code that needs to be run as soon as the user is created.
         event(new Registered($user = $this->create($request->all())));
+
+        Mail::to($user)->send(new RegisterAccount($user));
 
         // After the user is created, he's logged in.
         $this->guard()->login($user);
