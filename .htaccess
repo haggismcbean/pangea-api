@@ -1,0 +1,3 @@
+SetEnvIf Origin "^http(s)?://(.+\.)?(local.pangea.com|pangea.com)(:[0-9]+)?$" origin_is=$0
+Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
+Header always set Access-Control-Allow-Headers: *
