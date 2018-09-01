@@ -1,0 +1,36 @@
+{
+	"authHost": "http://local.pangea-api.com:8888",
+	"authEndpoint": "/broadcasting/auth",
+	"clients": [
+		{
+			"appId": "e5c4ed1336470165",
+			"key": "3b6fe094a9d7155eec0edbcc32c0854c"
+		},
+		{
+			"appId": "7edb4bfeb2fa0948",
+			"key": "dc29a2333b05bf294c0b7ef44e36b485"
+		}
+	],
+	"database": "redis",
+	"databaseConfig": {
+		"redis": {},
+		"sqlite": {
+			"databasePath": "/database/laravel-echo-server.sqlite"
+		}
+	},
+	"devMode": true,
+	"host": null,
+	"port": "6001",
+	"protocol": "http",
+	"socketio": {},
+	"sslCertPath": "",
+	"sslKeyPath": "",
+	"sslCertChainPath": "",
+	"sslPassphrase": "",
+	"apiOriginAllow": {
+		"allowCors": true,
+		"allowOrigin": "http://local.pangea.com:8888/",
+		"allowMethods": "PUT, GET, POST, DELETE, OPTIONS",
+		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+	}
+}

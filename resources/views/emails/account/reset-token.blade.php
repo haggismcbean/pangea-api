@@ -2,12 +2,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dun dun dun</div>
+                <div class="card-header">Reset your password</div>
 
                 <div class="card-body">
-                    Hey. Well here we are.
+                    Follow the link below to complete your password reset
 
-                    Token: {{$token}}
+                    <a href="http://http://local.pangea.com:8888/reset-password/{{$token}}">http://http://local.pangea.com:8888/reset-password/{{$token}}</a>
                 </div>
             </div>
         </div>
