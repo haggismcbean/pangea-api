@@ -1,16 +1,6 @@
 {
 	"authHost": "http://local.pangea-api.com:8888",
 	"authEndpoint": "/broadcasting/auth",
-	"clients": [
-		{
-			"appId": "e5c4ed1336470165",
-			"key": "3b6fe094a9d7155eec0edbcc32c0854c"
-		},
-		{
-			"appId": "7edb4bfeb2fa0948",
-			"key": "dc29a2333b05bf294c0b7ef44e36b485"
-		}
-	],
 	"database": "redis",
 	"databaseConfig": {
 		"redis": {},

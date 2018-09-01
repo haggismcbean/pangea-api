@@ -30,3 +30,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 Route::post('password/email', 'Auth\ForgotPasswordController@getResetToken');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
+// chat messages
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('messages', 'ChatsController@fetchMessages');
+	Route::post('messages', 'ChatsController@sendMessage');
+});
