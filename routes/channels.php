@@ -16,6 +16,5 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('chat', function ($user) {
-	logger('here!', $user);
-  return true;
+	return true;
 });
