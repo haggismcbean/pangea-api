@@ -57,3 +57,15 @@
 	[] things characters can do to each other
 	[] things characters can do to their surroundings
 	[] there being more than one town! (travel)
+
+
+#If You Forgot How to Spin Things Up:
+Run three servers for the web hooks to be working properly:
+
+1. The queue
+	php artisan queue:work
+2. The redis server
+	redis-server
+3. The socket.io server
+	laravel-echo-server start
+
