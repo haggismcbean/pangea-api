@@ -1,35 +1,59 @@
 `php artisan serve` or `php artisan serve --port=8080`
 
-### Db structure (TODO)
+#How I'd Like the Backend to look
 
+##Conventional API
+###User
+[x] account creation
+[x] password reset/change
+[x] login
+[] 'settings'
+[] character creation
+[] registration
+[] deletion
 
-One user many Characters
+##Webhook
+###Actions
+[] combat (manual & auto modes)
+[] farming
+[] hunting
+[] foraging/mining
+[] manufacturing (this can easily be split into many more parts)
+[] travelling
+[] talking
+[] child birth (automatically)
+[] waking up
 
-One character one location node
+###States
+[] location
+[] weather
+[] day/night
+[] hunger/health
 
-One location node one town
+###Webhook Manager
+[] GameStateManager
+	[] wrapper around traditional db read/write methods that takes care of notifying user channels where necessary
+	[] write to db
+	[] notify necessary user channels
+	[] record to db all notifications (successful and failed), for retrieval later if necessary.
+[] User channel
+	[] decides what to form sentences about (and tersity)
+	[] sends sentences to user
+[] Sentence former
+	[] form readable sentences
+	[] avoid reading from db, all necessary data should be passed in
+	[] uses classes to construct sentences about eg. character appearance, weather, events, speech, etc
 
-One town many buildings
+#How I will get there
+[] Core functionality
+	[x] account creation
+	[] character creation
+	[] character 'speak' event (to start, this is the only event). start just pushing straight to relevent webhooks
+	[] GameStateManager as intermediary between speech and user alerts
+	[] User channel priorities (basic)
+	[] Sentence former (basic) -> communicates with some kind of character class which contains needed descriptive words and so on.
 
-One town many characters
-
-One town many groups
-
-One group many speeches
-
-One character many items
-
-One building many items
-
-SentenceFormer
- - When a player joins his private webhook, the sentence former gets events from the sentence queue and decides whether to form sentences from them. If it decides to, then it emits them. It gets all the sentences and checks for priority FIRST in case a super urgent event happens like a sec before the player logged in (so they can react to it instead of reading about birds chirupping first)
-
- - Whilst a player is online, the sentence former is called each time a sentence is pushed to the queue automatically and everything works as you'd expect.
-
- - A player logging in also counts as an event that would create sentences - as the user gets updated about the world they've woken up in.
-
- - Some sentences will start with verbose, then be downgraded to standard, then be downgraded to terse, based on their priority and other event priorities.
-
-
-Sentence Queue
- - When anything happens in the game, we add an event to the player's sentence queue so that users can be informed about that event. Events are pushed with a priority and then game logic can decide if they want to read about it or not. But basically we have a dumping ground for each player where we drop anything that they can see hear or feel and then the sentenceFormer decides whether to actually pass the information on or not. We write all to DB AND pass it to a class, so it's available if user logs off and whatnot.
+[] Increasing user's available actions
+	[] things characters can do to each other
+	[] things characters can do to their surroundings
+	[] there being more than one town! (travel)
