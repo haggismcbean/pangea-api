@@ -8,30 +8,66 @@ use Carbon\Carbon;
 class CharacterTraits extends Model
 {
     // These descriptors must fit in the sentence 'He has $value $keys'
-    private static $pronoun = ["he", "she"];
     // Eg: 'He has `full blushing` `cheeks`'
-    private static $cheeksTypes = ["full rosy", "sunken", "pointy", "heart shaped"];
-    private static $jawTypes = ["a full", "a round", "an oval", "a sunken", "a pointy"];
-    private static $skinColours = ["white", "pale pink", "tanned", "pale brown", "brown", "dark brown", "black"];
-    private static $skinTypes = ["clean", "greasy", "spotty", "pockmarked", "peeling"];
-    private static $skinHairiness = ["hairy", "hairless", "patchy"];
-    private static $hairColours = ["brown", "dark brown", "pale brown", "blonde", "black", "ginger"];
-    private static $hairTypes = ["curly", "stright", "wavy", "frizzy"];
-    private static $noseShapes = ["a big", "a small", "a roman", "a proud", "a crooked"];
-    private static $mouthShapes = ["an almond shaped", "a full", "a thin lipped", "a chapped"];
-    private static $eyesColours = ["blue", "brown", "dark brown", "green", "yellow", "pale blue", "hazel"];
-    private static $eyesTypes = ["wide staring", "narrow", "almond shaped"];
-    private static $eyebrowsTypes = ["arched", "flat", "hairy", "thin"];
+    private static $skinColoursArray = ["white", "pale pink", "tanned", "pale brown", "brown", "dark brown", "black"];
+    private static $skinColours;
 
-    public static function getRandomTrait($traitName)
+    private static $cheeksTypesArray = ["full rosy", "sunken", "pointy", "heart shaped"];
+    private static $cheeksTypes;
+
+    private static $jawTypesArray = ["a full", "a round", "an oval", "a sunken", "a pointy"];
+    private static $jawTypes;
+
+    private static $skinTypesArray = ["clean", "greasy", "spotty", "pockmarked", "peeling"];
+    private static $skinTypes;
+
+    private static $skinHairinessArray = ["hairy", "hairless", "patchy"];
+    private static $skinHairiness;
+
+    private static $hairColoursArray = ["brown", "dark brown", "pale brown", "blonde", "black", "ginger"];
+    private static $hairColours;
+
+    private static $hairTypesArray = ["curly", "stright", "wavy", "frizzy"];
+    private static $hairTypes;
+
+    private static $noseShapesArray = ["a big", "a small", "a roman", "a proud", "a crooked"];
+    private static $noseShapes;
+
+    private static $mouthShapesArray = ["an almond shaped", "a full", "a thin lipped", "a chapped"];
+    private static $mouthShapes;
+
+    private static $eyesColoursArray = ["blue", "brown", "dark brown", "green", "yellow", "pale blue", "hazel"];
+    private static $eyesColours;
+
+    private static $eyesTypesArray = ["wide staring", "narrow", "almond shaped"];
+    private static $eyesTypes;
+
+    private static $eyebrowsTypesArray = ["arched", "flat", "hairy", "thin"];
+    private static $eyebrowsTypes;
+
+    public static function init()
+    {
+        $traits = [
+            'skinColours', 'cheeksTypes', 'jawTypes', 'skinTypes', 'skinHairiness', 'hairColours',
+            'hairTypes', 'noseShapes', 'mouthShapes', 'eyesColours', 'eyesTypes', 'eyebrowsTypes'
+        ];
+
+        foreach( $traits as $trait) {
+            CharacterTraits::${$trait} = new Traits($trait);
+            $traitArray = $trait . 'Array';
+
+            CharacterTraits::${$trait}->addTraitProperties(
+                CharacterTraits::${$traitArray},
+                function($character) {
+                    return 1;
+                }
+            );
+        }
+    }
+
+    public static function getRandomTrait($traitName, $character)
     {
         $trait = CharacterTraits::$$traitName;
-
-        if ($trait) {
-            $max = count($trait) - 1;
-            return rand(0, $max);
-        }
-
-        return "error!";
+        return $trait->getRandomTrait($character);
     }
 }
