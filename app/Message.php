@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
 
 class Message extends Model
 {
@@ -21,6 +20,6 @@ class Message extends Model
 	 */
 	public function user()
 	{
-	  return $this->belongsTo(User::class);
+	  return $this->belongsTo(Character::class);
 	}
 }

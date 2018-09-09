@@ -1,9 +1,9 @@
 `php artisan serve` or `php artisan serve --port=8080`
 
-#How I'd Like the Backend to look
+# How I'd Like the Backend to look
 
-##Conventional API
-###User
+## Conventional API
+### User
 [x] account creation
 [x] password reset/change
 [x] login
@@ -12,8 +12,8 @@
 [] registration
 [] deletion
 
-##Webhook
-###Actions
+## Webhook
+### Actions
 [] combat (manual & auto modes)
 [] farming
 [] hunting
@@ -24,13 +24,13 @@
 [] child birth (automatically)
 [] waking up
 
-###States
+### States
 [] location
 [] weather
 [] day/night
 [] hunger/health
 
-###Webhook Manager
+### Webhook Manager
 [] GameStateManager
 	[] wrapper around traditional db read/write methods that takes care of notifying user channels where necessary
 	[] write to db
@@ -44,7 +44,10 @@
 	[] avoid reading from db, all necessary data should be passed in
 	[] uses classes to construct sentences about eg. character appearance, weather, events, speech, etc
 
-#How I will get there
+### Cron Jobs
+[] CronJobManager adds events to the game state manager when necessary (?? - requires more thought)
+
+# How I will get there
 [] Core functionality
 	[x] account creation
 	[] character creation
@@ -59,7 +62,7 @@
 	[] there being more than one town! (travel)
 
 
-#If You Forgot How to Spin Things Up:
+# If You Forgot How to Spin Things Up:
 Run three servers for the web hooks to be working properly:
 
 1. The queue

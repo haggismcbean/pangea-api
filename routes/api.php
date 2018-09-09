@@ -37,3 +37,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('messages', 'ChatsController@fetchMessages');
 	Route::post('messages', 'ChatsController@sendMessage');
 });
+
+// character creation
+Route::post('create_new_character', 'CharacterController@createNewCharacter');

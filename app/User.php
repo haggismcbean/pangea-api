@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Message;
+// use App\Character;
 
 class User extends Authenticatable
 {
@@ -36,13 +36,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * A user can have many messages
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function messages()
+    public function character()
     {
-      return $this->hasMany(Message::class);
+        return $this->hasMany(Character::class);
     }
 }
