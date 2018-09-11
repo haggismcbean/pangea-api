@@ -5,20 +5,20 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class CharacterTraits extends Model
+class CharacterAppearanceTraits extends Model
 {
     // These descriptors must fit in the sentence 'He has $value $keys'
     // Eg: 'He has `full blushing` `cheeks`'
     private static $skinColoursArray = ["white", "pale pink", "tanned", "pale brown", "brown", "dark brown", "black"];
     private static $skinColours;
 
-    private static $cheeksTypesArray = ["full rosy", "sunken", "pointy", "heart shaped"];
+    private static $cheeksTypesArray = ["full rosy", "sunken", "pointy", "heart shaped", "blushing", "puffy"];
     private static $cheeksTypes;
 
-    private static $jawTypesArray = ["a full", "a round", "an oval", "a sunken", "a pointy"];
+    private static $jawTypesArray = ["a full", "a round", "an oval", "a sunken", "a pointy", "a protruding"];
     private static $jawTypes;
 
-    private static $skinTypesArray = ["clean", "greasy", "spotty", "pockmarked", "peeling"];
+    private static $skinTypesArray = ["clean", "greasy", "spotty", "pockmarked", "peeling", "rash covered"];
     private static $skinTypes;
 
     private static $skinHairinessArray = ["hairy", "hairless", "patchy"];
@@ -39,7 +39,7 @@ class CharacterTraits extends Model
     private static $eyesColoursArray = ["blue", "brown", "dark brown", "green", "yellow", "pale blue", "hazel"];
     private static $eyesColours;
 
-    private static $eyesTypesArray = ["wide staring", "narrow", "almond shaped"];
+    private static $eyesTypesArray = ["wide staring", "narrow", "almond shaped", "suspicious looking", "flirtatious", "permanently shocked", "worried", "care worn", "bottomless"];
     private static $eyesTypes;
 
     private static $eyebrowsTypesArray = ["arched", "flat", "hairy", "thin"];
@@ -53,11 +53,11 @@ class CharacterTraits extends Model
         ];
 
         foreach( $traits as $trait) {
-            CharacterTraits::${$trait} = new Traits($trait);
+            CharacterAppearanceTraits::${$trait} = new Traits($trait);
             $traitArray = $trait . 'Array';
 
-            CharacterTraits::${$trait}->addTraitProperties(
-                CharacterTraits::${$traitArray},
+            CharacterAppearanceTraits::${$trait}->addTraitProperties(
+                CharacterAppearanceTraits::${$traitArray},
                 function($character) {
                     return 1;
                 }
@@ -67,7 +67,7 @@ class CharacterTraits extends Model
 
     public static function getRandomTrait($traitName, $character)
     {
-        $trait = CharacterTraits::$$traitName;
+        $trait = CharacterAppearanceTraits::$$traitName;
         return $trait->getRandomTrait($character);
     }
 }

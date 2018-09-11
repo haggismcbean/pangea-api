@@ -23,6 +23,7 @@
 [] talking
 [] child birth (automatically)
 [] waking up
+[] aging
 
 ### States
 [] location
@@ -50,11 +51,11 @@
 # How I will get there
 [] Core functionality
 	[x] account creation
+	[] Sentence former (basic) -> communicates with some kind of character class which contains needed descriptive words and so on. We need this to create descriptions of different characters.
 	[] character creation
 	[] character 'speak' event (to start, this is the only event). start just pushing straight to relevent webhooks
 	[] GameStateManager as intermediary between speech and user alerts
 	[] User channel priorities (basic)
-	[] Sentence former (basic) -> communicates with some kind of character class which contains needed descriptive words and so on.
 
 [] Increasing user's available actions
 	[] things characters can do to each other

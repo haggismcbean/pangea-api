@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\CharacterTraits;
+use App\Traits\CharacterAppearanceTraits;
+use App\Names\NameFactory;
 // use App\Message;
 
 
@@ -22,7 +23,8 @@ class Character extends Model
     {
         $this->user_id = 0;
         $this->birthday = Carbon::now();
-        // $this->name = CharacterTraits::getRandomName();
+        $this->gender = rand(0, 1) === 0 ? "male" : "female";
+        $this->name = NameFactory::getRandomForename($this->gender) . " " . NameFactory::getRandomSurname();
         $this->createRandomAppearance($age);
         // $this->personality = $this->createRandomPersonality();
         // $this->backstory = $this->createRandomBackstory();
@@ -45,23 +47,22 @@ class Character extends Model
 
     private function createRandomAppearance($age)
     {
-        CharacterTraits::init();
+        CharacterAppearanceTraits::init();
 
-        $this->gender = rand(0, 1);
         $this->height = rand(70, 140);
         $this->weight = rand(40, 100);
         $this->strength = rand(1, 10);
-        $this->skin_colour = CharacterTraits::getRandomTrait("skinColours", $this);
-        $this->cheek_type = CharacterTraits::getRandomTrait("cheeksTypes", $this);
-        $this->jaw_type = CharacterTraits::getRandomTrait("jawTypes", $this);
-        $this->skin_type = CharacterTraits::getRandomTrait("skinTypes", $this);
-        $this->skin_hairiness = CharacterTraits::getRandomTrait("skinHairiness", $this);
-        $this->hair_colour = CharacterTraits::getRandomTrait("hairColours", $this);
-        $this->hair_type = CharacterTraits::getRandomTrait("hairTypes", $this);
-        $this->nose = CharacterTraits::getRandomTrait("noseShapes", $this);
-        $this->mouth = CharacterTraits::getRandomTrait("mouthShapes", $this);
-        $this->eye_type = CharacterTraits::getRandomTrait("eyesColours", $this);
-        $this->eye_colour = CharacterTraits::getRandomTrait("eyesTypes", $this);
-        $this->eyebrow_type = CharacterTraits::getRandomTrait("eyebrowsTypes", $this);
+        $this->skin_colour = CharacterAppearanceTraits::getRandomTrait("skinColours", $this);
+        $this->cheek_type = CharacterAppearanceTraits::getRandomTrait("cheeksTypes", $this);
+        $this->jaw_type = CharacterAppearanceTraits::getRandomTrait("jawTypes", $this);
+        $this->skin_type = CharacterAppearanceTraits::getRandomTrait("skinTypes", $this);
+        $this->skin_hairiness = CharacterAppearanceTraits::getRandomTrait("skinHairiness", $this);
+        $this->hair_colour = CharacterAppearanceTraits::getRandomTrait("hairColours", $this);
+        $this->hair_type = CharacterAppearanceTraits::getRandomTrait("hairTypes", $this);
+        $this->nose = CharacterAppearanceTraits::getRandomTrait("noseShapes", $this);
+        $this->mouth = CharacterAppearanceTraits::getRandomTrait("mouthShapes", $this);
+        $this->eye_type = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
+        $this->eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
+        $this->eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
     }
 }
