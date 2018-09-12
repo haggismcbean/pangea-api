@@ -9,7 +9,7 @@ class CharacterAppearanceTraits extends Model
 {
     // These descriptors must fit in the sentence 'He has $value $keys'
     // Eg: 'He has `full blushing` `cheeks`'
-    private static $skinColoursArray = ["white", "pale pink", "tanned", "pale brown", "brown", "dark brown", "black"];
+    private static $skinColoursArray = ["snow white", "pale pink", "healthy tanned", "tree brown", "tea brown", "mahogany brown", "black"];
     private static $skinColours;
 
     private static $cheeksTypesArray = ["full rosy", "sunken", "pointy", "heart shaped", "blushing", "puffy"];
@@ -36,7 +36,7 @@ class CharacterAppearanceTraits extends Model
     private static $mouthShapesArray = ["an almond shaped", "a full", "a thin lipped", "a chapped"];
     private static $mouthShapes;
 
-    private static $eyesColoursArray = ["blue", "brown", "dark brown", "green", "yellow", "pale blue", "hazel"];
+    private static $eyesColoursArray = ["weepy blue", "cold blue", "sludge brown", "dark brown", "slime green", "firey yellow", "pale blue", "solid hazel", "dull grey"];
     private static $eyesColours;
 
     private static $eyesTypesArray = ["wide staring", "narrow", "almond shaped", "suspicious looking", "flirtatious", "permanently shocked", "worried", "care worn", "bottomless"];

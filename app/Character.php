@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Traits\CharacterAppearanceTraits;
+use App\Traits\CharacterPersonalityTraits;
 use App\Names\NameFactory;
 // use App\Message;
 
@@ -26,7 +27,7 @@ class Character extends Model
         $this->gender = rand(0, 1) === 0 ? "male" : "female";
         $this->name = NameFactory::getRandomForename($this->gender) . " " . NameFactory::getRandomSurname();
         $this->createRandomAppearance($age);
-        // $this->personality = $this->createRandomPersonality();
+        $this->createRandomPersonality();
         // $this->backstory = $this->createRandomBackstory();
     }
 
@@ -64,5 +65,15 @@ class Character extends Model
         $this->eye_type = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
         $this->eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
         $this->eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
+    }
+
+    private function createRandomPersonality()
+    {
+        CharacterPersonalityTraits::init();
+
+        $this->enjoys = CharacterPersonalityTraits::getRandomTrait("enjoys", $this);
+        $this->believes = CharacterPersonalityTraits::getRandomTrait("believes", $this);
+        $this->aLargeGroup = CharacterPersonalityTraits::getRandomTrait("aLargeGroup", $this);
+        $this->aSeriousConversation = CharacterPersonalityTraits::getRandomTrait("aSeriousConversation", $this);
     }
 }

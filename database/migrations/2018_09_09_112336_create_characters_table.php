@@ -16,8 +16,9 @@ class CreateCharactersTable extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->text('name');
             $table->date('birthday');
-            $table->integer('gender');
+            $table->text('gender');
             $table->integer('height');
             $table->integer('weight');
             $table->integer('strength');
@@ -33,6 +34,11 @@ class CreateCharactersTable extends Migration
             $table->text('eye_type');
             $table->text('eye_colour');
             $table->text('eyebrow_type');
+
+            $table->text('enjoys');
+            $table->text('believes');
+            $table->text('aLargeGroup');
+            $table->text('aSeriousConversation');
             $table->timestamps();
         });
     }
