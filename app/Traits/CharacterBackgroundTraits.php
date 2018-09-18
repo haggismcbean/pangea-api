@@ -7,21 +7,16 @@ use Carbon\Carbon;
 
 class CharacterBackgroundTraits extends Model
 {
-    // These descriptors must fit in the sentence 'He $keys $value'
-    // Eg: 'He enjoys `trout fishing`'
     private static $bornArray = ["The Glorious Republic of", "The Wondrous Free Community of", "The Revered Town of", "The Crommulist Dictatorship of", "The Divine Crommulist Freetwon of", "The Crommulist Republic of", "The Republic of", "The State of Crommulist", "The Crommulist State of"];
     private static $born;
 
-    private static $fatherWasAHumbleArray = ["computer scientist", "dancer", "street hustler", "theif", "rapper", "gardener", "tobacco farmer", "cancer patient", "doctor", "politician", "benevolent dictator", "dish washer", "taxi driver", "accountant", "animator", "primary care giver", "juggler", "clown", "project manager", "used car salesman", "mercenary soldier", "General of the Crommulist Republic", "chef", "street hygeine coordinator", "school dinner taste tester"];
+    private static $fatherWasArray = ["computer scientist", "dancer", "street hustler", "theif", "rapper", "gardener", "tobacco farmer", "cancer patient", "doctor", "politician", "benevolent dictator", "dish washer", "taxi driver", "accountant", "animator", "primary care giver", "juggler", "clown", "project manager", "used car salesman", "mercenary soldier", "General of the Crommulist Republic", "chef", "street hygeine coordinator", "school dinner taste tester"];
     private static $fatherWas;
-
-    private static $motherWasAHumbleArray = $fatherWasAHumbleArray;
-    private static $motherWas;
 
     private static $notableParentArray = ["fought in the Great Worker's Struggle as a footsoldier", "fought in the Great Worker's Struggle as a flamethrower operator", "fought in the Great Worker's Struggle as a drone operator", "fought in the Great Worker's Struggle as a chef", "fought in the Great Worker's Struggle as a field medic", "was briefly famous for their role in the Crommulist perges of 2232", "made the headlines in 2212 for falling into a canal", "discovered the cure to Fascism", "became the leader of a cult", "believed in aliens"];
     private static $notableParent;
 
-    private static $graduatedArray = ["top of their class", "bottom of their class"];
+    private static $graduatedArray = ["top of their class", "without distinction", "as far as we can tell", "bottom of their class"];
     private static $graduated;
 
     private static $teachersReportsSayArray = ["they could rarely be found without their finger up their nose", "they were a hard working and conscienscious individual", "they could do with spending less time chasing members of the opposite sex", "they should really try harder", "they unfortunately will never amount to anything"];
@@ -36,29 +31,22 @@ class CharacterBackgroundTraits extends Model
     private static $commendationArray = ["photocopying at twice the usual speed during a work placement at the Department of Photocopiers and Paper Pushers", "waving with great enthusiasm as the Regional"];
     private static $commendation;
 
-    private static $mundanityArray = [];
-    private static $mundanity = [];
-
-    private static $prisonStayArray = [];
-    private static $prisonStay;
-
-    private static $mundanityEscalationArray = [];
-    private static $mundanityEscalation = [];
+    private static $wasSoBoredTheyArray = ["started collecting stamps", "started carving potatoes", "took their electronic handsignalers apart", "took up draughts", "took up go", "learned to sing the national anthem backwards", "started sowing their own clothes", "wrote a 500 page book about a rock named Charles", "forgot their own name", "forgot to eat", "forgot where they lived"];
+    private static $wasSoBoredThey;
 
     public static function init()
     {
         $traits = [
-            'born', 'fatherWas', 'motherWas', 'notableParent', 'graduated',
-            'teachersReportsSay', 'furtherEductation', 'citation', 'commendation',
-            'mundanity', 'prisonStay', 'mundanityEscalation'
+            "born", "fatherWas", "notableParent", "graduated", "teachersReportsSay", "furtherEductation", "citation",
+            "commendation", "wasSoBoredThey"
         ];
 
         foreach( $traits as $trait) {
-            CharacterPersonalityTraits::${$trait} = new Traits($trait);
+            CharacterBackgroundTraits::${$trait} = new Traits($trait);
             $traitArray = $trait . 'Array';
 
-            CharacterPersonalityTraits::${$trait}->addTraitProperties(
-                CharacterPersonalityTraits::${$traitArray},
+            CharacterBackgroundTraits::${$trait}->addTraitProperties(
+                CharacterBackgroundTraits::${$traitArray},
                 function($character) {
                     return 1;
                 }
@@ -68,7 +56,7 @@ class CharacterBackgroundTraits extends Model
 
     public static function getRandomTrait($traitName, $character)
     {
-        $trait = CharacterPersonalityTraits::$$traitName;
+        $trait = CharacterBackgroundTraits::$$traitName;
 
         if ($trait !== null) {
             return $trait->getRandomTrait($character);

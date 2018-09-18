@@ -14,7 +14,7 @@ class CharacterController extends Controller
 
         // firstly! Lets write our own laravel tutorial, detailing how to create tables, relations, so on and so forth :thumbsup:
         $character = new Character();
-        $character->save();
+        // $character->save();
         return response()->json($character, 201);
     }
 }

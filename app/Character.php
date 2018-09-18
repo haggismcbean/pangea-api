@@ -6,15 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Traits\CharacterAppearanceTraits;
 use App\Traits\CharacterPersonalityTraits;
+use App\Traits\CharacterBackgroundTraits;
 use App\Names\NameFactory;
 // use App\Message;
 
 
 class Character extends Model
 {
-    public $personality;
-    public $backstory;
-
     /**
      * Create a new event instance.
      *
@@ -28,7 +26,7 @@ class Character extends Model
         $this->name = NameFactory::getRandomForename($this->gender) . " " . NameFactory::getRandomSurname();
         $this->createRandomAppearance($age);
         $this->createRandomPersonality();
-        // $this->backstory = $this->createRandomBackstory();
+        $this->createRandomBackstory();
     }
 
     public function user()
@@ -75,5 +73,21 @@ class Character extends Model
         $this->believes = CharacterPersonalityTraits::getRandomTrait("believes", $this);
         $this->aLargeGroup = CharacterPersonalityTraits::getRandomTrait("aLargeGroup", $this);
         $this->aSeriousConversation = CharacterPersonalityTraits::getRandomTrait("aSeriousConversation", $this);
+    }
+
+    private function createRandomBackstory()
+    {
+        CharacterBackgroundTraits::init();
+
+        $this->born = CharacterBackgroundTraits::getRandomTrait("born", $this);
+        $this->fatherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
+        $this->motherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
+        $this->notableParent = CharacterBackgroundTraits::getRandomTrait("notableParent", $this);
+        $this->graduated = CharacterBackgroundTraits::getRandomTrait("graduated", $this);
+        $this->teachersReportsSay = CharacterBackgroundTraits::getRandomTrait("teachersReportsSay", $this);
+        $this->furtherEductation = CharacterBackgroundTraits::getRandomTrait("furtherEductation", $this);
+        $this->citation = CharacterBackgroundTraits::getRandomTrait("citation", $this);
+        $this->commendation = CharacterBackgroundTraits::getRandomTrait("commendation", $this);
+        $this->wasSoBoredThey = CharacterBackgroundTraits::getRandomTrait("wasSoBoredThey", $this);
     }
 }
