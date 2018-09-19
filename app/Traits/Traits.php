@@ -9,11 +9,17 @@ use Carbon\Carbon;
 class Traits extends Model
 {
     public $name;
+    public $trait;
+    public $pronoun;
+    public $defaultLayout;
+
     private $traits = [];
 
-    public function __construct($name)
+    public function __construct($name, $pronoun=null, $defaultLayout=false)
     {
         $this->name = $name;
+        $this->pronoun = $pronoun;
+        $this->defaultLayout = $defaultLayout;
     }
 
     public function addTraitProperty($trait, $probabilityFunction)
@@ -52,7 +58,8 @@ class Traits extends Model
             $currentProbability += $trait->probability;
 
             if ($currentProbability >= $traitIndex) {
-                return $trait->trait;
+                $this->trait = $trait->trait;
+                return $this;
             }
         }
 

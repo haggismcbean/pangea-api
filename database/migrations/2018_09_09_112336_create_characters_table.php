@@ -39,6 +39,19 @@ class CreateCharactersTable extends Migration
             $table->text('believes');
             $table->text('aLargeGroup');
             $table->text('aSeriousConversation');
+
+            $table->text('born');
+            $table->text('fatherWas');
+            $table->text('motherWas');
+            $table->text('notableParentWas');
+            $table->text('notableParent');
+            $table->text('graduated');
+            $table->text('teachersReportsSay');
+            $table->text('furtherEductation');
+            $table->text('citation');
+            $table->text('commendation');
+            $table->text('wasSoBoredThey');
+
             $table->timestamps();
         });
     }

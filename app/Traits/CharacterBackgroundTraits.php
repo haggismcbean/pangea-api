@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class CharacterBackgroundTraits extends Model
 {
+    private static $defaultLayout = "{{pronoun}} was {{key}} in {{value}}";
+
     private static $bornArray = ["The Glorious Republic of", "The Wondrous Free Community of", "The Revered Town of", "The Crommulist Dictatorship of", "The Divine Crommulist Freetwon of", "The Crommulist Republic of", "The Republic of", "The State of Crommulist", "The Crommulist State of"];
     private static $born;
 
@@ -44,6 +46,13 @@ class CharacterBackgroundTraits extends Model
         foreach( $traits as $trait) {
             CharacterBackgroundTraits::${$trait} = new Traits($trait);
             $traitArray = $trait . 'Array';
+            $defaultLayout = $trait . 'DefaultLayout';
+
+            if (property_exists('CharacterBackgroundTraits', $defaultLayout)) {
+                CharacterBackgroundTraits::${$trait}->defaultLayout = CharacterBackgroundTraits::${$defaultLayout};
+            } else if (property_exists('CharacterBackgroundTraits', 'defaultLayout')) {
+                CharacterBackgroundTraits::${$trait}->defaultLayout = CharacterBackgroundTraits::$defaultLayout;
+            }
 
             CharacterBackgroundTraits::${$trait}->addTraitProperties(
                 CharacterBackgroundTraits::${$traitArray},

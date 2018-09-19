@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Traits\CharacterAppearanceTraits;
 use App\Traits\CharacterPersonalityTraits;
 use App\Traits\CharacterBackgroundTraits;
+use App\SentenceFormer\SentenceFormer;
 use App\Names\NameFactory;
 // use App\Message;
 
@@ -60,8 +61,8 @@ class Character extends Model
         $this->hair_type = CharacterAppearanceTraits::getRandomTrait("hairTypes", $this);
         $this->nose = CharacterAppearanceTraits::getRandomTrait("noseShapes", $this);
         $this->mouth = CharacterAppearanceTraits::getRandomTrait("mouthShapes", $this);
-        $this->eye_type = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
-        $this->eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
+        $this->eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
+        $this->eye_type = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
         $this->eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
     }
 
@@ -82,6 +83,7 @@ class Character extends Model
         $this->born = CharacterBackgroundTraits::getRandomTrait("born", $this);
         $this->fatherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
         $this->motherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
+        $this->notableParentWas = rand(0, 1) === 0 ? "father" : "mother";
         $this->notableParent = CharacterBackgroundTraits::getRandomTrait("notableParent", $this);
         $this->graduated = CharacterBackgroundTraits::getRandomTrait("graduated", $this);
         $this->teachersReportsSay = CharacterBackgroundTraits::getRandomTrait("teachersReportsSay", $this);
@@ -89,5 +91,13 @@ class Character extends Model
         $this->citation = CharacterBackgroundTraits::getRandomTrait("citation", $this);
         $this->commendation = CharacterBackgroundTraits::getRandomTrait("commendation", $this);
         $this->wasSoBoredThey = CharacterBackgroundTraits::getRandomTrait("wasSoBoredThey", $this);
+
+        $sentence = SentenceFormer::formSentence($this->born);
+
+        var_dump($sentence);
+
+        // the thing with background traits is, itd be cool if different characters get different amounts of naughty, well behaved, and mundane ones. Three in total.
+
+        // also we'll need to redo this for second generation characters at a later date.  
     }
 }
