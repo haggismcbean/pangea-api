@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 class Traits extends Model
 {
-    public $name;
     public $trait;
     public $defaultLayout;
 

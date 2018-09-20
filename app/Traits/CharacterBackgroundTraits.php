@@ -11,18 +11,19 @@ class CharacterBackgroundTraits extends Model
 
     private static $bornArray = ["The Glorious Republic of Bloop", "The Wondrous Free Community of Blang", "The Revered Town of Hoop-Hoop", "The Crommulist Dictatorship of Schwang", "The Divine Crommulist Freetwon of Dingdong", "The Crommulist Republic of Ding", "The Republic of Pwapwa", "The State of Crommulist Shwaga", "The Crommulist State of Neenor"];
     private static $born;
+    private static $bornDefaultLayout = "{{name}} was {{key}} in {{value}}";
 
     private static $fatherWasArray = ["computer scientist", "dancer", "street hustler", "theif", "rapper", "gardener", "tobacco farmer", "cancer patient", "doctor", "politician", "benevolent dictator", "dish washer", "taxi driver", "accountant", "animator", "primary care giver", "juggler", "clown", "project manager", "used car salesman", "mercenary soldier", "General of the Crommulist Republic", "chef", "street hygeine coordinator", "school dinner taste tester"];
     private static $fatherWas;
-    private static $fatherWasDefaultLayout = "Father was a {{value}}";
+    private static $fatherWasDefaultLayout = "{{posessivePronoun}} father was a {{value}}";
 
     private static $motherWasArray = ["computer scientist", "dancer", "street hustler", "theif", "rapper", "gardener", "tobacco farmer", "cancer patient", "doctor", "politician", "benevolent dictator", "dish washer", "taxi driver", "accountant", "animator", "primary care giver", "juggler", "clown", "project manager", "used car salesman", "mercenary soldier", "General of the Crommulist Republic", "chef", "street hygeine coordinator", "school dinner taste tester"];
     private static $motherWas;
-    private static $motherWasDefaultLayout = "Mother was a {{value}}";
+    private static $motherWasDefaultLayout = "{{posessivePronoun}} mother was a {{value}}";
 
     private static $notableParentWasArray = ["fought in the Great Worker's Struggle as a foot solider", "fought in the Great Worker's Struggle as a flamethrower operator", "fought in the Great Worker's Struggle as a drone operator", "fought in the Great Worker's Struggle as a chef", "fought in the Great Worker's Struggle as a field medic", "was briefly famous for playing a minor role in the Crommulist perges of 2232", "made the headlines in 2212 for falling into a canal", "discovered the cure to Fascism", "became the leader of a cult", "believed in aliens"];
     private static $notableParentWas;
-    private static $notableParentWasDefaultLayout = "{{notableParent}} {{value}}";
+    private static $notableParentWasDefaultLayout = "{{posessivePronoun}} {{notableParent}} {{value}}";
 
     private static $graduatedArray = ["top of {{posessivePronoun}} class", "without distinction", "bottom of {{posessivePronoun}} class"];
     private static $graduated;
@@ -40,7 +41,7 @@ class CharacterBackgroundTraits extends Model
     private static $citation;
     private static $citationDefaultLayout = "{{pronoun}} received a citation for {{value}}";
 
-    private static $commendationArray = ["photocopying at twice the usual speed during a work placement at the Department of Photocopiers and Paper Pushers", "waving with great enthusiasm as the Regional"];
+    private static $commendationArray = ["photocopying at twice the usual speed during a work placement at the Department of Photocopiers and Paper Pushers", "waving with great enthusiasm"];
     private static $commendation;
     private static $commendationDefaultLayout = "{{pronoun}} received a commendation for {{value}}";
 
