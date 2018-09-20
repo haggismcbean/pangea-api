@@ -27,7 +27,7 @@ class CharacterBackgroundTraits extends Model
 
     private static $graduatedArray = ["top of {{posessivePronoun}} class", "without distinction", "bottom of {{posessivePronoun}} class"];
     private static $graduated;
-    private static $graduatedDefaultLayout = "{{pronoun}} {{key}} {{value}}";
+    private static $graduatedDefaultLayout = "{{forename}} {{key}} from secondary school {{value}}";
 
     private static $teachersReportsSayArray = ["{{pronoun}} could rarely be found without {{posessivePronoun}} finger up {{posessivePronoun}} nose", "{{pronoun}} was a hard working and conscienscious individual", "{{pronoun}} could do with spending less time chasing members of the opposite sex", "{{pronoun}} should really try harder", "{{pronoun}} unfortunately will never amount to anything"];
     private static $teachersReportsSay;

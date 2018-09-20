@@ -26,7 +26,9 @@ class Character extends Model
         $this->gender = rand(0, 1) === 0 ? "male" : "female";
         $this->pronoun = $this->gender === "male" ? "he" : "she";
         $this->posessivePronoun = $this->gender === "male" ? "his" : "her";
-        $this->name = NameFactory::getRandomForename($this->gender) . " " . NameFactory::getRandomSurname();
+        $this->forename = NameFactory::getRandomForename($this->gender);
+        $this->surname = NameFactory::getRandomSurname();
+        $this->name = $this->forename . " " . $this->surname;
         $this->createRandomAppearance($age);
         $this->createRandomPersonality();
         $this->createRandomBackstory();
