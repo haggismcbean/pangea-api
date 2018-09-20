@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Traits\CharacterAppearanceTraits;
 use App\Traits\CharacterPersonalityTraits;
 use App\Traits\CharacterBackgroundTraits;
-use App\SentenceFormer\SentenceFormer;
+use App\MessageFormer\MessageFormer;
 use App\Names\NameFactory;
 // use App\Message;
 
@@ -24,6 +24,8 @@ class Character extends Model
         $this->user_id = 0;
         $this->birthday = Carbon::now();
         $this->gender = rand(0, 1) === 0 ? "male" : "female";
+        $this->pronoun = $this->gender === "male" ? "he" : "she";
+        $this->posessivePronoun = $this->gender === "male" ? "his" : "her";
         $this->name = NameFactory::getRandomForename($this->gender) . " " . NameFactory::getRandomSurname();
         $this->createRandomAppearance($age);
         $this->createRandomPersonality();
@@ -82,9 +84,9 @@ class Character extends Model
 
         $this->born = CharacterBackgroundTraits::getRandomTrait("born", $this);
         $this->fatherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
-        $this->motherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
-        $this->notableParentWas = rand(0, 1) === 0 ? "father" : "mother";
-        $this->notableParent = CharacterBackgroundTraits::getRandomTrait("notableParent", $this);
+        $this->motherWas = CharacterBackgroundTraits::getRandomTrait("motherWas", $this);
+        $this->notableParent = rand(0, 1) === 0 ? "father" : "mother";
+        $this->notableParentWas = CharacterBackgroundTraits::getRandomTrait("notableParentWas", $this);
         $this->graduated = CharacterBackgroundTraits::getRandomTrait("graduated", $this);
         $this->teachersReportsSay = CharacterBackgroundTraits::getRandomTrait("teachersReportsSay", $this);
         $this->furtherEductation = CharacterBackgroundTraits::getRandomTrait("furtherEductation", $this);
@@ -92,9 +94,19 @@ class Character extends Model
         $this->commendation = CharacterBackgroundTraits::getRandomTrait("commendation", $this);
         $this->wasSoBoredThey = CharacterBackgroundTraits::getRandomTrait("wasSoBoredThey", $this);
 
-        $sentence = SentenceFormer::formSentence($this->born);
+        $sentence = new MessageFormer();
+        $sentence->formSentence($this->born, $this);
+        $sentence->formSentence($this->fatherWas, $this);
+        $sentence->formSentence($this->motherWas, $this);
+        $sentence->formSentence($this->notableParentWas, $this);
+        $sentence->formSentence($this->graduated, $this);
+        $sentence->formSentence($this->teachersReportsSay, $this);
+        $sentence->formSentence($this->furtherEductation, $this);
+        $sentence->formSentence($this->citation, $this);
+        $sentence->formSentence($this->commendation, $this);
+        $sentence->formSentence($this->wasSoBoredThey, $this);
 
-        var_dump($sentence);
+        echo $sentence->message;
 
         // the thing with background traits is, itd be cool if different characters get different amounts of naughty, well behaved, and mundane ones. Three in total.
 

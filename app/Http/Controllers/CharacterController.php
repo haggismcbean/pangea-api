@@ -7,6 +7,7 @@ use App\Character;
 
 class CharacterController extends Controller
 {
+
     public function createNewCharacter() {
         // okay so users create a new character. It's randomly assigned appearance, backstory, personality.
         // so what does this mean? we create a new entry in the database, associated with current userId.
@@ -15,6 +16,6 @@ class CharacterController extends Controller
         // firstly! Lets write our own laravel tutorial, detailing how to create tables, relations, so on and so forth :thumbsup:
         $character = new Character();
         // $character->save();
-        return response()->json($character, 201);
+        // return response()->json($character, 201);
     }
 }

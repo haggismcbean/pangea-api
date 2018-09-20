@@ -10,15 +10,13 @@ class Traits extends Model
 {
     public $name;
     public $trait;
-    public $pronoun;
     public $defaultLayout;
 
     private $traits = [];
 
-    public function __construct($name, $pronoun=null, $defaultLayout=false)
+    public function __construct($name, $defaultLayout=false)
     {
         $this->name = $name;
-        $this->pronoun = $pronoun;
         $this->defaultLayout = $defaultLayout;
     }
 
