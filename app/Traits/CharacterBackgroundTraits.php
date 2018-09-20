@@ -20,11 +20,11 @@ class CharacterBackgroundTraits extends Model
     private static $motherWas;
     private static $motherWasDefaultLayout = "Mother was a {{value}}";
 
-    private static $notableParentWasArray = ["fought in the Great Worker's Struggle as a foot solider", "fought in the Great Worker's Struggle as a flamethrower operator", "fought in the Great Worker's Struggle as a drone operator", "fought in the Great Worker's Struggle as a chef", "fought in the Great Worker's Struggle as a field medic", "was briefly famous for {{posessivePronoun}} role in the Crommulist perges of 2232", "made the headlines in 2212 for falling into a canal", "discovered the cure to Fascism", "became the leader of a cult", "believed in aliens"];
+    private static $notableParentWasArray = ["fought in the Great Worker's Struggle as a foot solider", "fought in the Great Worker's Struggle as a flamethrower operator", "fought in the Great Worker's Struggle as a drone operator", "fought in the Great Worker's Struggle as a chef", "fought in the Great Worker's Struggle as a field medic", "was briefly famous for playing a minor role in the Crommulist perges of 2232", "made the headlines in 2212 for falling into a canal", "discovered the cure to Fascism", "became the leader of a cult", "believed in aliens"];
     private static $notableParentWas;
     private static $notableParentWasDefaultLayout = "{{notableParent}} {{value}}";
 
-    private static $graduatedArray = ["top of {{posessivePronoun}} class", "without distinction", "as far as we can tell", "bottom of {{posessivePronoun}} class"];
+    private static $graduatedArray = ["top of {{posessivePronoun}} class", "without distinction", "bottom of {{posessivePronoun}} class"];
     private static $graduated;
     private static $graduatedDefaultLayout = "{{pronoun}} {{key}} {{value}}";
 
