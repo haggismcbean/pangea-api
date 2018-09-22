@@ -14,6 +14,8 @@ use App\Names\NameFactory;
 
 class Character extends Model
 {
+    private $age;
+
     /**
      * Create a new event instance.
      *
@@ -24,12 +26,13 @@ class Character extends Model
         $this->user_id = 0;
         $this->birthday = Carbon::now();
         $this->gender = rand(0, 1) === 0 ? "male" : "female";
+        $this->age = $age ? $age : rand(21, 35);
         $this->pronoun = $this->gender === "male" ? "he" : "she";
         $this->posessivePronoun = $this->gender === "male" ? "his" : "her";
         $this->forename = NameFactory::getRandomForename($this->gender);
         $this->surname = NameFactory::getRandomSurname();
         $this->name = $this->forename . " " . $this->surname;
-        $this->createRandomAppearance($age);
+        $this->createRandomAppearance();
         $this->createRandomPersonality();
         $this->createRandomBackstory();
     }
@@ -49,69 +52,93 @@ class Character extends Model
       return $this->hasMany(Message::class);
     }
 
-    private function createRandomAppearance($age)
+    private function createRandomAppearance()
     {
         CharacterAppearanceTraits::init();
 
         $this->height = rand(70, 140);
         $this->weight = rand(40, 100);
         $this->strength = rand(1, 10);
-        $this->skin_colour = CharacterAppearanceTraits::getRandomTrait("skinColours", $this);
-        $this->cheek_type = CharacterAppearanceTraits::getRandomTrait("cheeksTypes", $this);
-        $this->jaw_type = CharacterAppearanceTraits::getRandomTrait("jawTypes", $this);
-        $this->skin_type = CharacterAppearanceTraits::getRandomTrait("skinTypes", $this);
-        $this->skin_hairiness = CharacterAppearanceTraits::getRandomTrait("skinHairiness", $this);
-        $this->hair_colour = CharacterAppearanceTraits::getRandomTrait("hairColours", $this);
-        $this->hair_type = CharacterAppearanceTraits::getRandomTrait("hairTypes", $this);
-        $this->nose = CharacterAppearanceTraits::getRandomTrait("noseShapes", $this);
-        $this->mouth = CharacterAppearanceTraits::getRandomTrait("mouthShapes", $this);
-        $this->eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
-        $this->eye_type = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
-        $this->eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
+        $skin_colour = CharacterAppearanceTraits::getRandomTrait("skinColours", $this);
+        $skin_type = CharacterAppearanceTraits::getRandomTrait("skinTypes", $this);
+        $skin_hairiness = CharacterAppearanceTraits::getRandomTrait("skinHairiness", $this);
+        $cheek_type = CharacterAppearanceTraits::getRandomTrait("cheeksTypes", $this);
+        $jaw_type = CharacterAppearanceTraits::getRandomTrait("jawTypes", $this);
+        $hair_colour = CharacterAppearanceTraits::getRandomTrait("hairColours", $this);
+        $hair_type = CharacterAppearanceTraits::getRandomTrait("hairTypes", $this);
+        $nose = CharacterAppearanceTraits::getRandomTrait("noseShapes", $this);
+        $mouth = CharacterAppearanceTraits::getRandomTrait("mouthShapes", $this);
+        $eye_colour = CharacterAppearanceTraits::getRandomTrait("eyesColours", $this);
+        $eye_type = CharacterAppearanceTraits::getRandomTrait("eyesTypes", $this);
+        $eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
+
+        $message = new MessageFormer();
+        $message->addSentence("{{name}} is a {{gender}}", $this);
+        $message->addSentence("{{pronoun}} is " . $this->age . " years old", $this);
+        $message->addSentence("{{pronoun}} is " . $this->height . "cm tall", $this);
+        $message->addSentence("{{pronoun}} weighs " . $this->weight . "kg", $this);
+        $message->formSentence($skin_colour, $this);
+        $message->formSentence($skin_type, $this);
+        $message->formSentence($skin_hairiness, $this);
+        $message->formSentence($cheek_type, $this);
+        $message->formSentence($jaw_type, $this);
+        $message->formSentence($hair_colour, $this);
+        $message->formSentence($hair_type, $this);
+        $message->formSentence($nose, $this);
+        $message->formSentence($mouth, $this);
+        $message->formSentence($eye_colour, $this);
+        $message->formSentence($eye_type, $this);
+        $message->formSentence($eyebrow_type, $this);
+
+        $this->appearance = $message->message;
     }
 
     private function createRandomPersonality()
     {
         CharacterPersonalityTraits::init();
 
-        $this->enjoys = CharacterPersonalityTraits::getRandomTrait("enjoys", $this);
-        $this->believes = CharacterPersonalityTraits::getRandomTrait("believes", $this);
-        $this->aLargeGroup = CharacterPersonalityTraits::getRandomTrait("aLargeGroup", $this);
-        $this->aSeriousConversation = CharacterPersonalityTraits::getRandomTrait("aSeriousConversation", $this);
+        $enjoys = CharacterPersonalityTraits::getRandomTrait("enjoys", $this);
+        $believes = CharacterPersonalityTraits::getRandomTrait("believes", $this);
+        $aLargeGroup = CharacterPersonalityTraits::getRandomTrait("aLargeGroup", $this);
+        $aSeriousConversation = CharacterPersonalityTraits::getRandomTrait("aSeriousConversation", $this);
+
+        $message = new MessageFormer();
+        $message->formSentence($enjoys, $this);
+        $message->formSentence($believes, $this);
+        $message->formSentence($aLargeGroup, $this);
+        $message->formSentence($aSeriousConversation, $this);
+
+        $this->personality = $message->message;
     }
 
     private function createRandomBackstory()
     {
         CharacterBackgroundTraits::init();
 
-        $this->born = CharacterBackgroundTraits::getRandomTrait("born", $this);
-        $this->fatherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
-        $this->motherWas = CharacterBackgroundTraits::getRandomTrait("motherWas", $this);
-        $this->notableParent = rand(0, 1) === 0 ? "father" : "mother";
-        $this->notableParentWas = CharacterBackgroundTraits::getRandomTrait("notableParentWas", $this);
-        $this->graduated = CharacterBackgroundTraits::getRandomTrait("graduated", $this);
-        $this->teachersReportsSay = CharacterBackgroundTraits::getRandomTrait("teachersReportsSay", $this);
-        $this->furtherEductation = CharacterBackgroundTraits::getRandomTrait("furtherEductation", $this);
-        $this->citation = CharacterBackgroundTraits::getRandomTrait("citation", $this);
-        $this->commendation = CharacterBackgroundTraits::getRandomTrait("commendation", $this);
-        $this->wasSoBoredThey = CharacterBackgroundTraits::getRandomTrait("wasSoBoredThey", $this);
+        $born = CharacterBackgroundTraits::getRandomTrait("born", $this);
+        $fatherWas = CharacterBackgroundTraits::getRandomTrait("fatherWas", $this);
+        $motherWas = CharacterBackgroundTraits::getRandomTrait("motherWas", $this);
+        $notableParent = rand(0, 1) === 0 ? "father" : "mother";
+        $notableParentWas = CharacterBackgroundTraits::getRandomTrait("notableParentWas", $this);
+        $graduated = CharacterBackgroundTraits::getRandomTrait("graduated", $this);
+        $teachersReportsSay = CharacterBackgroundTraits::getRandomTrait("teachersReportsSay", $this);
+        $furtherEductation = CharacterBackgroundTraits::getRandomTrait("furtherEductation", $this);
+        $citation = CharacterBackgroundTraits::getRandomTrait("citation", $this);
+        $commendation = CharacterBackgroundTraits::getRandomTrait("commendation", $this);
+        $wasSoBoredThey = CharacterBackgroundTraits::getRandomTrait("wasSoBoredThey", $this);
 
-        $sentence = new MessageFormer();
-        $sentence->formSentence($this->born, $this);
-        $sentence->formSentence($this->fatherWas, $this);
-        $sentence->formSentence($this->motherWas, $this);
-        $sentence->formSentence($this->notableParentWas, $this);
-        $sentence->formSentence($this->graduated, $this);
-        $sentence->formSentence($this->teachersReportsSay, $this);
-        $sentence->formSentence($this->furtherEductation, $this);
-        $sentence->formSentence($this->citation, $this);
-        $sentence->formSentence($this->commendation, $this);
-        $sentence->formSentence($this->wasSoBoredThey, $this);
+        $message = new MessageFormer();
+        $message->formSentence($born, $this);
+        $message->formSentence($fatherWas, $this);
+        $message->formSentence($motherWas, $this);
+        $message->formSentence($notableParentWas, $this);
+        $message->formSentence($graduated, $this);
+        $message->formSentence($teachersReportsSay, $this);
+        $message->formSentence($furtherEductation, $this);
+        $message->formSentence($citation, $this);
+        $message->formSentence($commendation, $this);
+        $message->formSentence($wasSoBoredThey, $this);
 
-        echo $sentence->message;
-
-        // the thing with background traits is, itd be cool if different characters get different amounts of naughty, well behaved, and mundane ones. Three in total.
-
-        // also we'll need to redo this for second generation characters at a later date.  
+        $this->backstory = $message->message;
     }
 }

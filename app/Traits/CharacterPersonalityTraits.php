@@ -7,19 +7,22 @@ use Carbon\Carbon;
 
 class CharacterPersonalityTraits extends Model
 {
-    // These descriptors must fit in the sentence 'He $keys $value'
-    // Eg: 'He enjoys `trout fishing`'
+    private static $defaultLayout = "{{pronoun}} {{key}} {{value}}";
+
     private static $enjoysArray = [];
     private static $enjoys;
 
     private static $believesArray = [];
     private static $believes;
+    private static $believesDefaultLayout = "{{pronoun}} lives {{posessivePronoun}} life by the saying '{{value}}'";
 
     private static $aLargeGroupArray = ["plays the fool", "dominates", "interrupts all the time", "sinks into the background", "withdraws, then interjects loudly with irrelevent details", "waits until its their turn to talk", "agrees with everyone", "agrees with the loudest person", "disagrees with everyone", "disagrees with the loudest person", "sighs loudly", "tries to avoid being in", "mediates well", "mediates poorly", "is a good person to have"];
     private static $aLargeGroup;
+    private static $aLargeGroupDefaultLayout = "In a large group {{pronoun}} often {{value}}";
 
     private static $aSeriousConversationArray = ["tends to deflect in", "tends to accuse in", "tends to raise their voice in", "tends to ask meaningless questions in", "tends to make jokes in", "would rather avoid", "seeks out people who can engage in", "believes in the value of"];
     private static $aSeriousConversation;
+    private static $aSeriousConversationDefaultLayout = "{{pronoun}} {{value}} a serious conversation";
 
     public static function init()
     {
@@ -34,6 +37,13 @@ class CharacterPersonalityTraits extends Model
         foreach( $traits as $trait) {
             CharacterPersonalityTraits::${$trait} = new Traits($trait);
             $traitArray = $trait . 'Array';
+            $defaultLayout = $trait . 'DefaultLayout';
+
+            if (property_exists(new CharacterPersonalityTraits, $defaultLayout)) {
+                CharacterPersonalityTraits::${$trait}->defaultLayout = CharacterPersonalityTraits::${$defaultLayout};
+            } else if (property_exists(new CharacterPersonalityTraits, 'defaultLayout')) {
+                CharacterPersonalityTraits::${$trait}->defaultLayout = CharacterPersonalityTraits::$defaultLayout;
+            }
 
             CharacterPersonalityTraits::${$trait}->addTraitProperties(
                 CharacterPersonalityTraits::${$traitArray},
