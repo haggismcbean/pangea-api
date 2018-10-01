@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use App\Character;
+use App\Character;
 
 class User extends Authenticatable
 {
@@ -36,7 +36,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function character()
+    public function characters()
     {
         return $this->hasMany(Character::class);
     }

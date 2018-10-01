@@ -73,3 +73,8 @@ Run three servers for the web hooks to be working properly:
 3. The socket.io server
 	laravel-echo-server start
 
+# If you Forget How to Query from Command Line:
+```
+$ php artisan tinker
+>App\User::first()->tasks;
+```

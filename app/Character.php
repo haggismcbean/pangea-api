@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Factories\CharacterFactory;
-// use App\Message;
+use App\Message;
 
 
 class Character extends Model

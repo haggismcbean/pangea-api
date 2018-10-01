@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Character;
 
 class Message extends Model
 {
@@ -18,7 +19,7 @@ class Message extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	public function user()
+	public function character()
 	{
 	  return $this->belongsTo(Character::class);
 	}
