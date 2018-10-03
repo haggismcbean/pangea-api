@@ -7,20 +7,20 @@ use App\Character;
 
 class Message extends Model
 {
-	/**
-	 * Fields that are mass assignable
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['message'];
+    /**
+     * Fields that are mass assignable
+     *
+     * @var array
+     */
+    protected $fillable = ['message'];
 
-	/**
-	 * A message belong to a user
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function character()
-	{
-	  return $this->belongsTo(Character::class);
-	}
+    /**
+     * A message belong to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function character()
+    {
+      return $this->belongsTo(Character::class);
+    }
 }

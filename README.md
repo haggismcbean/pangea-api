@@ -78,3 +78,7 @@ Run three servers for the web hooks to be working properly:
 $ php artisan tinker
 >App\User::first()->tasks;
 ```
+
+# If you Forget How to Do Database Migrations:
+`php artisan migrate:rollback`
+`php artisan migrate:rollback --step=5`
