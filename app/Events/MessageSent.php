@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\User;
+use App\Character;
 use App\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -17,11 +18,11 @@ class MessageSent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * User that sent the message
+     * Character that sent the message
      *
-     * @var User
+     * @var Character
      */
-    public $user;
+    public $character;
 
     /**
      * Message details
@@ -35,9 +36,9 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(User $user, Message $message)
+    public function __construct(Character $character, Message $message)
     {
-        $this->user = $user;
+        $this->character = $character;
         $this->message = $message;
     }
 
@@ -48,6 +49,7 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat');
+        $chatRoom = 'chat';
+        return new PrivateChannel($chatRoom);
     }
 }
