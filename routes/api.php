@@ -31,7 +31,6 @@ Route::post('logout', 'Auth\LoginController@logout');
 Route::post('password/email', 'Auth\ForgotPasswordController@getResetToken');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
 // chat messages
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('messages', 'ChatsController@fetchMessages');
@@ -39,4 +38,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 
 // character creation
-Route::post('create_new_character', 'CharacterController@createNewCharacter');
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('character', 'CharacterController@create');
+	Route::get('characters', 'CharacterController@show');
+});

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Factories\CharacterFactory;
 use App\Message;
+use App\User;
+use Auth;
 
 
 class Character extends Model
@@ -23,7 +25,7 @@ class Character extends Model
     {
         $character = new CharacterFactory();
 
-        $this->user_id = 0;
+        $this->user_id = Auth::id();
         $this->birthday = $character->birthday;
         $this->gender = $character->gender;
         $this->age = $character->age;
@@ -42,7 +44,7 @@ class Character extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User');
     }
 
     /**
