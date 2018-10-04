@@ -6,6 +6,7 @@ use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MessageSent;
+use App\GameEvents\SpeakEvent;
 
 class ChatsController extends Controller
 {
@@ -47,12 +48,13 @@ class ChatsController extends Controller
 
 		$character = $user->characters()->find($characterId);
 
-		$message = $character->messages()->create([
-			'message' => $request->input('message')
-		]);
-
-		broadcast(new MessageSent($character, $message));
-
-		return ['status' => 'Message Sent!'];
+		if ($character) {
+			$speakEvent = new SpeakEvent();
+			$speakEvent->handle($character, $request);
+			
+			return ['status' => 'Message Sent!'];
+		} else {
+			return response()->json(['status' => 'Unauthorised'], 401);
+		}
 	}
 }

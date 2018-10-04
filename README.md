@@ -40,9 +40,9 @@
 [] User channel
 	[] decides what to form sentences about (and tersity)
 	[] sends sentences to user
-[] Sentence former
-	[] form readable sentences
-	[] avoid reading from db, all necessary data should be passed in
+[x] Sentence former
+	[x] form readable sentences
+	[x] avoid reading from db, all necessary data should be passed in
 	[] uses classes to construct sentences about eg. character appearance, weather, events, speech, etc
 
 ### Cron Jobs
@@ -52,9 +52,9 @@
 [] Core functionality
 	[x] account creation
 	[x] Sentence former (basic) -> communicates with some kind of character class which contains needed descriptive words and so on. We need this to create descriptions of different characters.
-	[x] character creation
-	[] character 'speak' event (to start, this is the only event). start just pushing straight to relevent webhooks
-	[] GameStateManager as intermediary between speech and user alerts
+	[x] character creation - FE missing
+	[x] character 'speak' event (to start, this is the only event). start just pushing straight to relevent webhooks
+	[x] GameStateManager as intermediary between speech and user alerts
 	[] User channel priorities (basic)
 
 [] Increasing user's available actions
@@ -80,5 +80,6 @@ $ php artisan tinker
 ```
 
 # If you Forget How to Do Database Migrations:
+https://www.parthpatel.net/laravel-tutorial-for-beginner-5-4/
 `php artisan migrate:rollback`
 `php artisan migrate:rollback --step=5`

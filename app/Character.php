@@ -26,6 +26,7 @@ class Character extends Model
         $character = new CharacterFactory();
 
         $this->user_id = Auth::id();
+        $this->location_id = 0;
         $this->birthday = $character->birthday;
         $this->gender = $character->gender;
         $this->age = $character->age;
@@ -47,8 +48,13 @@ class Character extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function location()
+    {
+        return $this->belongsTo('App\Location');
+    }
+
     /**
-     * A user can have many messages
+     * A character can have many messages
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
