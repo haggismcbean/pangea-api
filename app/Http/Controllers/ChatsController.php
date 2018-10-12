@@ -32,7 +32,7 @@ class ChatsController extends Controller
 	 */
 	public function fetchMessages()
 	{
-		return Message::with('character')->get();
+		return Message::with('character')->orderBy('created_at', 'DESC')->paginate(15);
 	}
 
 	/**
