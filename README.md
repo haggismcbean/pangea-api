@@ -66,7 +66,7 @@
 
 # Before Launch Remember to:
 - [] Look into what happens if I crash (I need to restart all the webhook stuff)
-- [] Remove the images of the world from /app/public/world_images (also make new images and use them to create the world so people can't check git commits)
+- [] Make new images and use them to create the world so people can't check git commits
 
 
 # If You Forgot How to Spin Things Up:
@@ -83,12 +83,15 @@ Run three servers for the web hooks to be working properly:
 ```
 $ php artisan tinker
 >App\User::first()->tasks;
+>App\Location::find(1);
 ```
 
 # If you Forget How to Do Database Migrations:
 https://www.parthpatel.net/laravel-tutorial-for-beginner-5-4/
 `php artisan migrate:rollback`
 `php artisan migrate:rollback --step=5`
+
+`php artisan migrate`
 
 ```
 php artisan make:migration create_users_table --create=users
@@ -97,6 +100,8 @@ php artisan make:migration add_votes_to_users_table --table=users
 ```
 
 # Database seeding:
+
+`php artisan make:seeder UsersTableSeeder`
 
 `php artisan db:seed`
 

@@ -26,7 +26,7 @@ class World extends Model
     private function getBiomes() {
         $pixels = array();
 
-        $resource = imagecreatefrompng("./world_images/pangea_biome.png");
+        $resource = imagecreatefrompng("resources/world_images/pangea_biome.png");
         $width = imagesx($resource);
         $height = imagesy($resource);
 
@@ -134,7 +134,7 @@ class World extends Model
     }
 
     private function getHeights() {
-        $resource = imagecreatefrompng("./world_images/pangea_grayscale.png");
+        $resource = imagecreatefrompng("resources//world_images/pangea_grayscale.png");
         $width = imagesx($resource);
         $height = imagesy($resource);
 
@@ -150,7 +150,7 @@ class World extends Model
     }
 
     private function getRainfall() {
-        $resource = imagecreatefrompng("./world_images/pangea_precipitation.png");
+        $resource = imagecreatefrompng("resources//world_images/pangea_precipitation.png");
         $width = imagesx($resource);
         $height = imagesy($resource);
 
@@ -187,7 +187,7 @@ class World extends Model
     }
 
     private function getTemperature() {
-        $resource = imagecreatefrompng("./world_images/pangea_temperature.png");
+        $resource = imagecreatefrompng("resources//world_images/pangea_temperature.png");
         $width = imagesx($resource);
         $height = imagesy($resource);
 
@@ -223,7 +223,7 @@ class World extends Model
     }
 
     private function getHasRiver() {
-        $resource = imagecreatefrompng("./world_images/pangea_rivers.png");
+        $resource = imagecreatefrompng("resources//world_images/pangea_rivers.png");
         $width = imagesx($resource);
         $height = imagesy($resource);
 

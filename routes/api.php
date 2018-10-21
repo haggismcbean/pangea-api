@@ -43,5 +43,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('characters', 'CharacterController@show');
 });
 
-// image reading (note to self: remove these endpoints or make them private :P)
+////////////
+// World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');
+Route::get('plant', 'PlantController@show');
+//
+////////////

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Location;
+use App\WorldGenerator\World;
 
 class LocationTableSeeder extends Seeder
 {
@@ -15,10 +16,20 @@ class LocationTableSeeder extends Seeder
         //Let's clear the location table first
         Location::truncate();
 
-        DB::table('locations')->insert([
-            'x_coord' => 0,
-            'y_coord' => 0,
-            'z_coord' => 0,
-        ]);
+        $world = new World();
+
+        foreach ($world->pixels as $location) {
+            DB::table('locations')->insert([
+                'x_coord' => $location->x,
+                'y_coord' => $location->y,
+                'z_coord' => $location->height,
+                'color' => $location->color,
+                'biome' => $location->biome,
+                'rainfall' => $location->rainfall,
+                'temperature' => $location->temperature,
+                'has_river' => $location->hasRiver,
+            ]);
+        }
+
     }
 }

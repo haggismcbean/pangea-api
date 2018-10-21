@@ -54,7 +54,7 @@ class Traits extends Model
         foreach( $this->traits as $trait ) {
             $currentProbability += $trait->probability;
 
-            if ($currentProbability >= $traitIndex) {
+            if ($currentProbability >= $traitIndex && $trait->probability > 0) {
                 $this->trait = $trait->trait;
                 return $this;
             }
