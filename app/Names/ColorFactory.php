@@ -11,24 +11,40 @@ class ColorFactory extends Model
     public static function getRandomColor()
     {
         $color = ["red", "orange", "yellow", "green", "blue", "purple", "brown", "black", "white", "pink"];
-        $length = count($size) - 1;
+        $length = count($color) - 1;
         $randomIndex = rand(0, $length);
-        return $size[$randomIndex];
+        return $color[$randomIndex];
+    }
+
+    public static function getRandomAutumnColor()
+    {
+        $color = ["red", "orange", "yellow", "green"];
+        $length = count($color) - 1;
+        $randomIndex = rand(0, $length);
+        return $color[$randomIndex];
+    }
+
+    public static function getRandomLeafColor()
+    {
+        $color = ["yellow", "green", "purple"];
+        $length = count($color) - 1;
+        $randomIndex = rand(0, $length);
+        return $color[$randomIndex];
     }
 
     public static function getRandomShade()
     {
-        $color = ["pale", "bright", "pastle", "muted", "vibrant"];
-        $length = count($size) - 1;
+        $shade = ["pale", "bright", "pastle", "muted", "vibrant", "kind of", "dull"];
+        $length = count($shade) - 1;
         $randomIndex = rand(0, $length);
-        return $size[$randomIndex];
+        return $shade[$randomIndex];
     }
 
     public static function getRandomPattern()
     {
-        $color = ["spots", "checkers", "lines", "slits", "strips", "dimples", "blops", "dots"];
-        $length = count($size) - 1;
+        $pattern = ["spots", "checkers", "lines", "slits", "strips", "dimples", "blops", "dots"];
+        $length = count($pattern) - 1;
         $randomIndex = rand(0, $length);
-        return $size[$randomIndex];
+        return $pattern[$randomIndex];
     }
 }

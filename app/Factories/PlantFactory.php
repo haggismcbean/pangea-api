@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Traits\PlantTraits\PlantAppearanceTraits;
 use App\MessageFormer\MessageFormer;
+use App\Names\ColorFactory;
+use App\Names\SizeFactory;
 
 class PlantFactory extends Model
 {
@@ -54,19 +56,48 @@ class PlantFactory extends Model
         PlantAppearanceTraits::init();
 
         // $this->sproutAppearance = PlantAppearanceTraits::getRandomTrait("sprout", $this);
-        $this->seedAppearance = PlantAppearanceTraits::getRandomTrait("seed", $this);
+        // $this->seedAppearance = PlantAppearanceTraits::getRandomTrait("seed", $this);
+        $this->seedSize = SizeFactory::getRandomSize();
+        $this->seedColor = ColorFactory::getRandomColor();
+        $this->seedShape = SizeFactory::getRandomShape();
+        $this->seedPattern = ColorFactory::getRandomPattern();
+        $this->fruitSize = SizeFactory::getRandomSize();
+        $this->fruitColor = ColorFactory::getRandomColor();
+        $this->fruitShape = SizeFactory::getRandomShape();
+        $this->fruitPattern = ColorFactory::getRandomPattern();
+        // $message = new MessageFormer();
+        // $message->formSentence($this->seedAppearance, $this);
+        // $this->seedAppearance = $message->message;
         // $this->flowerAppearance = PlantAppearanceTraits::getRandomTrait("flower", $this);
+        $this->flowerSize = SizeFactory::getRandomSize();
+        $this->flowerColor = ColorFactory::getRandomColor();
+        $this->flowerShape = SizeFactory::getRandomFlowerShape();
+        $this->flowerColourModifier = ColorFactory::getRandomShade();
+        // $message = new MessageFormer();
+        // $message->formSentence($this->flowerAppearance, $this);
+        // $this->flowerAppearance = $message->message;
         // $this->deathAppearance = PlantAppearanceTraits::getRandomTrait("death", $this);
         // $this->outerStalkAppearance = PlantAppearanceTraits::getRandomTrait("outerStalk", $this);
         // $this->innerStalkAppearance = PlantAppearanceTraits::getRandomTrait("innerStalk", $this);
-        // $this->leafAppearance = PlantAppearanceTraits::getRandomTrait("leaf", $this);
+        $this->leafSize = SizeFactory::getRandomSize();
+        $this->leafColor = ColorFactory::getRandomLeafColor();
+        $this->leafShape = SizeFactory::getRandomFlowerShape();
+        $this->leafColourModifier = ColorFactory::getRandomShade();
+        $this->leafAppearance = PlantAppearanceTraits::getRandomTrait("leaf", $this);
+        $this->leafAutumnAppearance = $this->leafAppearance;
+        $message = new MessageFormer();
+        $message->formSentence($this->leafAppearance, $this);
+        $this->leafAppearance = $message->message;
 
-        // $message = new MessageFormer();
+        $this->leafColor = ColorFactory::getRandomAutumnColor();
+        $message = new MessageFormer();
+        $message->formSentence($this->leafAutumnAppearance, $this);
+        $this->leafAutumnAppearance = $message->message;
+
         // $message->addSentence("{{name}} is a {{gender}}", $this);
         // $message->addSentence("{{pronoun}} is " . $this->age . " years old", $this);
         // $message->addSentence("{{pronoun}} is " . $this->height . "cm tall", $this);
         // $message->addSentence("{{pronoun}} weighs " . $this->weight . "kg", $this);
-        // $message->formSentence($this->skin_colour, $this);
         // $message->formSentence($this->skin_type, $this);
         // $message->formSentence($this->skin_hairiness, $this);
         // $message->formSentence($this->cheek_type, $this);
