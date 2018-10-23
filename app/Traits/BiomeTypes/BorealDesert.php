@@ -3,9 +3,10 @@
 namespace App\Traits\BiomeTypes;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BiomeTypes\Biome;
 use Carbon\Carbon;
 
-class BorealDesert
+class BorealDesert extends Biome
     //"rainfall": 0,
     //"temperature": 2, 
 {

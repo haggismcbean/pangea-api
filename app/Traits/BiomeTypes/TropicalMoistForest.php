@@ -4,8 +4,9 @@ namespace App\Traits\BiomeTypes;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Traits\BiomeTypes\Biome;
 
-class CoolTemperateMoistForest
+class TropicalMoistForest extends Biome
 {
     public $name;
     public $sproutRainfall;
@@ -15,7 +16,7 @@ class CoolTemperateMoistForest
 
     public function __construct()
     {
-        $this->name = "Boreal Rain Forest";
+        $this->name = "Tropical Moist Forest";
         $this->sproutRainfall = 2;
         $this->sproutTemperature = 2;
         $this->deathRainfall = 1;

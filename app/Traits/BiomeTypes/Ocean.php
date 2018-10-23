@@ -3,12 +3,13 @@
 namespace App\Traits\BiomeTypes;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BiomeTypes\Biome;
 use Carbon\Carbon;
 
 // plant types
 use App\Traits\PlantTypes\Seaweed;
 
-class Ocean
+class Ocean extends Biome
     //"rainfall": any,
     //"temperature": any,
 {

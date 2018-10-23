@@ -3,9 +3,10 @@
 namespace App\Traits\BiomeTypes;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BiomeTypes\Biome;
 use Carbon\Carbon;
 
-class SubpolarDryTundra
+class SubpolarTundra extends Biome
     //"rainfall": 0,
     //"temperature": 1,
 {
@@ -17,7 +18,7 @@ class SubpolarDryTundra
 
     public function __construct()
     {
-        $this->name = "Subpolar Dry Tundra";
+        $this->name = "Subpolar Tundra";
         $this->sproutRainfall = 1;
         $this->sproutTemperature = 2;
         $this->deathRainfall = 0;
