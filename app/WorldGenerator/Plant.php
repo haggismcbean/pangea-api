@@ -7,6 +7,10 @@ use Carbon\Carbon;
 use App\Factories\PlantFactory;
 use Auth;
 
+// biome types
+use App\Traits\BiomeTypes\Ocean;
+use App\Traits\BiomeTypes\SubpolarDryTundra;
+
 class Plant extends Model
 {
     /**
@@ -16,6 +20,7 @@ class Plant extends Model
      */
     public function __construct()
     {
-        $this->plant = new PlantFactory();
+    	$biome = new SubpolarDryTundra();
+        $this->plant = new PlantFactory($biome);
     }
 }
