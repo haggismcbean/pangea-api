@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\BiomeTypes\Biome;
 use Carbon\Carbon;
 
+// plant types
+use App\Traits\PlantTypes\Shrub;
+
 class SubpolarTundra extends Biome
     //"rainfall": 0,
     //"temperature": 1,
