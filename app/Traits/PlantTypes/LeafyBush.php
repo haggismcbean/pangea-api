@@ -5,7 +5,7 @@ namespace App\Traits\PlantTypes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Seaweed
+class LeafyBush
 {
     public $name;
     public $maxHeight;
@@ -23,17 +23,18 @@ class Seaweed
 
     public function __construct()
     {
-        $this->name = "seaweed";
-        $this->maxHeight = rand(0, 20);
-        $this->growthRate = rand(0, 10);
+        $this->name = "leafy bush";
+        $this->maxHeight = rand(10, 25);
+        $this->growthRate = rand(10, 15);
         $this->isSeasonal = true;
         $this->hasFruit = rand(0, 20) === 1 ? true : false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
-        $this->hasFlower = false;
+        $this->hasFlower = rand(0, 1) === 1 ? true : false;
 
-        $this->rainfallMin = 0;
+        $this->leafAppearance = "broad";
+        $this->rainfallMin = 4;
         $this->rainfallMax = 7;
-        $this->temperatureMin = 0;
+        $this->temperatureMin = 3;
         $this->temperatureMax = 6;
     }
 }

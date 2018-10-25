@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Seeder;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\WorldGenerator\PlantGenerator;
+use App\Plant;
 
-use App\Traits\PlantTypes\Seaweed;
 use App\Traits\PlantTypes\Broadleaf;
 use App\Traits\PlantTypes\Cactus;
 use App\Traits\PlantTypes\Climber;
@@ -15,15 +13,24 @@ use App\Traits\PlantTypes\Creeper;
 use App\Traits\PlantTypes\Fern;
 use App\Traits\PlantTypes\Grass;
 use App\Traits\PlantTypes\LeafyBush;
+use App\Traits\PlantTypes\Seaweed;
 use App\Traits\PlantTypes\Shrub;
 use App\Traits\PlantTypes\Succulent;
 use App\Traits\PlantTypes\ThornyBush;
 
-class PlantController extends Controller
+class PlantsTableSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //Let's clear the location table first
+        Plant::truncate();
 
-    public function show() {
-    	$plants = [];
+        $plants = [];
 
         for ($i=0; $i < 100; $i++) { 
         	$type = new Broadleaf();
@@ -102,6 +109,36 @@ class PlantController extends Controller
         	$plant = new PlantGenerator($type);
         	array_push($plants, $plant);
         }
-        return response()->json($plants);
+
+        foreach ($plants as $plant) {
+        	$plant = $plant->plant;
+            DB::table('plants')->insert([
+                'typeName' => $plant->type->name,
+				'maxHeight' => $plant->type->maxHeight,
+				'growthRate' => $plant->type->growthRate,
+				'isSeasonal' => $plant->type->isSeasonal,
+				'hasFruit' => $plant->type->hasFruit,
+				'isPoisonous' => $plant->type->isPoisonous,
+				'hasFlower' =>  $plant->type->hasFlower,
+				'rainfallMin' =>  $plant->type->rainfallMin,
+				'rainfallMax' =>  $plant->type->rainfallMax,
+				'temperatureMin' =>  $plant->type->temperatureMin,
+				'temperatureMax' =>  $plant->type->temperatureMax,
+				'rotRate' => $plant->rotRate,
+				'seedAppearance' => $plant->seedAppearance,
+				'seedSize' => $plant->seedSize,
+				'seedColor' => $plant->seedColor,
+				'seedShape' => $plant->seedShape,
+				'seedPattern' => $plant->seedPattern,
+				'flowerAppearance' => $plant->flowerAppearance,
+				'flowerSize' => $plant->flowerSize,
+				'flowerColor' => $plant->flowerColor,
+				'flowerShape' => $plant->flowerShape,
+				'leafAppearance' =>$plant->leafAppearance, 
+				'leafSize' => $plant->leafSize,
+				'leafColor' => $plant->leafColor,
+				'leafShape' => $plant->leafShape,
+            ]);
+        }
     }
 }

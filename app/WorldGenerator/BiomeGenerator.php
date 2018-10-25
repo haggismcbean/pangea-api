@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Traits\BiomeTypes;
+namespace App\WorldGenerator;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\User;
+use Auth;
 
-class Biome
+
+class BiomeGenerator extends Model
 {
     public function __construct($name, $rainfall, $temperature)
     {
@@ -76,7 +79,7 @@ class Biome
                 }
 
                 if ($averageRainfall < 6) {
-                    return 6
+                    return 6;
                 }
 
                 return 7;
@@ -91,7 +94,7 @@ class Biome
                 }
 
                 if ($averageRainfall < 6) {
-                    return 7
+                    return 7;
                 }
 
                 return 9;
@@ -108,7 +111,7 @@ class Biome
                 }
 
                 if ($averageRainfall < 6) {
-                    return 8
+                    return 8;
                 }
 
                 return 10;

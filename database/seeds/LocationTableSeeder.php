@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Location;
+use App\Biome;
 use App\WorldGenerator\World;
 
 class LocationTableSeeder extends Seeder
@@ -19,6 +20,7 @@ class LocationTableSeeder extends Seeder
         $world = new World();
 
         foreach ($world->pixels as $location) {
+            $biome = Biome::where('temperature', 1)->where('rainfall', 1)->first();
             DB::table('locations')->insert([
                 'x_coord' => $location->x,
                 'y_coord' => $location->y,
@@ -28,6 +30,7 @@ class LocationTableSeeder extends Seeder
                 'rainfall' => $location->rainfall,
                 'temperature' => $location->temperature,
                 'has_river' => $location->hasRiver,
+                'biome_id' => $biome->id
             ]);
         }
 

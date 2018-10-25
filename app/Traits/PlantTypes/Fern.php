@@ -5,7 +5,7 @@ namespace App\Traits\PlantTypes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Grass
+class Fern
 {
     public $name;
     public $maxHeight;
@@ -23,17 +23,18 @@ class Grass
 
     public function __construct()
     {
-        $this->name = "grass";
-        $this->maxHeight = rand(10, 20);
-        $this->growthRate = rand(10, 25);
-        $this->isSeasonal = false;
+        $this->name = "fern";
+        $this->maxHeight = rand(0, 5);
+        $this->growthRate = rand(5, 15);
+        $this->isSeasonal = true;
         $this->hasFruit = false;
-        $this->isPoisonous = rand(0, 20) === 1 ? true : false;
+        $this->isPoisonous = false;
         $this->hasFlower = false;
 
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 5;
+        $this->leafAppearance = "fern";
+        $this->rainfallMin = 3;
+        $this->rainfallMax = 7;
         $this->temperatureMin = 1;
-        $this->temperatureMax = 4;
+        $this->temperatureMax = 6;
     }
 }

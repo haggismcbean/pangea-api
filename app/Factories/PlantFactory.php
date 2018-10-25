@@ -12,18 +12,19 @@ use App\Names\SizeFactory;
 class PlantFactory extends Model
 {
     private $age;
+    private $_leafAutumnAppearance;
+    public $type;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($biome)
+    public function __construct($type)
     {
         // So each location will have a log of how many of each plant it has, the average age of the stock. The average age will increase/reduce based on whether people plant, harvest, or time elapses. In that way we kind of keep track of the ages without individually recording each plant's age. For plants that are seasonal, it will be pretty bloody accurate. For plants that life over many many years, it will be a bit more hit and miss. It's a bit of a hack which means in theory people will be able to harvest a plant that doesn't exist. We'll limit people to only be able to harvest really old plants if the stock is really big somehow.
 
-        $this->biome = $biome;
-        $this->type = $this->biome->getRandomPlantType();
+        $this->type = $type;
 
         // $this->seedsStartDate = Carbon::now();
         // $this->seedsEndDate = Carbon::now();
@@ -42,10 +43,10 @@ class PlantFactory extends Model
         $this->rotRate = rand(0, 10);
 
         // sproutAppearance, seedAppearance, flowerAppearance, deathAppearance, outerStalkAppearance, innerStalkAppearance, leafAppearance
-        $this->createRandomPlantAppearance($biome);
+        $this->createRandomPlantAppearance($type);
     }
 
-    private function createRandomPlantAppearance($biome)
+    private function createRandomPlantAppearance($type)
     {
         PlantAppearanceTraits::init();
 
@@ -82,25 +83,25 @@ class PlantFactory extends Model
         }
 
         // leaf
-        if ($this->type->leafAppearance) {
-            $this->leafAppearance = $this->type->leafAppearance;
-        } else {
+        // if ($type->leafAppearance) {
+            // $this->leafAppearance = $type->leafAppearance;
+        // } else {
             $this->leafSize = SizeFactory::getRandomSize();
             $this->leafColor = ColorFactory::getRandomLeafColor();
             $this->leafShape = SizeFactory::getRandomLeafShape();
             $this->leafColourModifier = ColorFactory::getRandomShade();
             $this->leafAppearance = PlantAppearanceTraits::getRandomTrait("leaf", $this);
-            $this->leafAutumnAppearance = $this->leafAppearance;
+            $this->_leafAutumnAppearance = $this->leafAppearance;
             $message = new MessageFormer();
             $message->formSentence($this->leafAppearance, $this);
             $this->leafAppearance = $message->message;
-        }
+        // }
         
         // autumn leaf
         if ($this->type->isSeasonal) {
             $this->leafColor = ColorFactory::getRandomAutumnColor();
             $message = new MessageFormer();
-            $message->formSentence($this->leafAutumnAppearance, $this);
+            $message->formSentence($this->_leafAutumnAppearance, $this);
             $this->leafAutumnAppearance = $message->message;
         }
 

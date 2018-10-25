@@ -31,4 +31,14 @@ class Location extends Model
     {
       return $this->hasMany(Character::class);
     }
+
+    public function biome()
+    {
+        return $this->belongsTo('App\Biome');
+    }
+
+    public function plants()
+    {
+        return $this->belongsToMany('App\Plant');
+    }
 }
