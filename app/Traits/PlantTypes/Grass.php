@@ -31,9 +31,9 @@ class Grass
         $this->isPoisonous = rand(0, 20) === 1 ? true : false;
         $this->hasFlower = false;
 
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 5;
-        $this->temperatureMin = 1;
-        $this->temperatureMax = 4;
+        $this->rainfallMin = rand(1, 4);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 5);
+        $this->temperatureMin = rand(1, 4);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 5);
     }
 }

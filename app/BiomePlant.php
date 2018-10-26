@@ -12,7 +12,7 @@ class Biome extends Model
 
     public function plants()
     {
-        return $this->belongsToMany('App\Plant');
+        return $this->belongsToMany(Plant::class);
     }
 
     public function locations()

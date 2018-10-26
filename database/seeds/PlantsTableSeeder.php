@@ -86,11 +86,11 @@ class PlantsTableSeeder extends Seeder
         	array_push($plants, $plant);
         }
 
-        for ($i=0; $i < 20; $i++) { 
-        	$type = new Seaweed();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
+        // for ($i=0; $i < 20; $i++) { 
+        // 	$type = new Seaweed();
+        // 	$plant = new PlantGenerator($type);
+        // 	array_push($plants, $plant);
+        // }
 
         for ($i=0; $i < 60; $i++) { 
         	$type = new Shrub();

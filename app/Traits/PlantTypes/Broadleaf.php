@@ -32,9 +32,9 @@ class Broadleaf
         $this->hasFlower = true;
 
         $this->leafAppearance = "broad";
-        $this->rainfallMin = 3;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 3;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(3, 8);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 3);
+        $this->temperatureMin = rand(3, 5);
+        $this->temperatureMax = $this->rainfallMin + rand(0, 3);
     }
 }

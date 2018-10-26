@@ -11,7 +11,7 @@ class Plant extends Model
 {
     public function biomes()
     {
-        return $this->belongsToMany(Biome::class);
+        return $this->belongsToMany('App\Biome');
     }
 
     public function locations()

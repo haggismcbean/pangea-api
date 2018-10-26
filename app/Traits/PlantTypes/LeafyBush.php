@@ -32,9 +32,9 @@ class LeafyBush
         $this->hasFlower = rand(0, 1) === 1 ? true : false;
 
         $this->leafAppearance = "broad";
-        $this->rainfallMin = 4;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 3;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(4, 6);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 4);
+        $this->temperatureMin = rand(3, 5);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 6);
     }
 }

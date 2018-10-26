@@ -32,9 +32,9 @@ class Fern
         $this->hasFlower = false;
 
         $this->leafAppearance = "fern";
-        $this->rainfallMin = 3;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 1;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(3, 7);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 2);
+        $this->temperatureMin = rand(1, 4);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 2);
     }
 }

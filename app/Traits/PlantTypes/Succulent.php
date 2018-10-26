@@ -32,9 +32,9 @@ class Succulent
         $this->hasFlower = false;
 
         $this->leafAppearance = "succulent";
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 5;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(1, 2);
+        $this->rainfallMax = $this->rainfallMin + rand(0 ,2);
+        $this->temperatureMin = rand(5, 6);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 2);
     }
 }

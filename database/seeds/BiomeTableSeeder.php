@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\WorldGenerator\BiomeGenerator;
+use App\Biome;
 use App\Location;
 
 class BiomeTableSeeder extends Seeder
@@ -13,6 +14,8 @@ class BiomeTableSeeder extends Seeder
      */
     public function run()
     {
+    	Biome::truncate();
+
     	$biomes = [];
 
         for ($averageRainfall=0; $averageRainfall < 8; $averageRainfall++) { 
@@ -21,6 +24,9 @@ class BiomeTableSeeder extends Seeder
         		if ($name) {
 	        		$biome = new BiomeGenerator($name->biome, $averageTemperature, $averageRainfall);
 	        		array_push($biomes, $biome);
+
+                    $biome = new BiomeGenerator('Ocean', $averageTemperature, $averageRainfall);
+                    array_push($biomes, $biome);
         		}
         	}
         }
@@ -30,10 +36,10 @@ class BiomeTableSeeder extends Seeder
                 'name' => $biome->name,
 				'rainfall' => $biome->rainfall,
 				'temperature' => $biome->temperature,
-				'sproutRainfall' => $biome->sproutRainfall,
-				'sproutTemperature' => $biome->sproutTemperature,
-				'deathRainfall' => $biome->deathRainfall,
-				'deathTemperature' =>  $biome->deathTemperature,
+				'highestRainfall' => $biome->highestRainfall,
+				'hottestTemperature' => $biome->hottestTemperature,
+				'lowestRainfall' => $biome->lowestRainfall,
+				'coldestTemperature' =>  $biome->coldestTemperature,
 				'plantDensity' =>  $biome->plantDensity,
             ]);
         }

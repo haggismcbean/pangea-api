@@ -13,9 +13,9 @@ class AddForeignKeysToLocations extends Migration
      */
     public function up()
     {
-        Schema::table('locations', function (Blueprint $table) {
-            $table->integer('biome_id')->unsigned();
-        });
+        // Schema::table('locations', function (Blueprint $table) {
+        //     $table->integer('biome_id')->unsigned();
+        // });
 
         Schema::table('biomes', function (Blueprint $table) {
             $table->dropColumn('plant_id');
@@ -29,8 +29,8 @@ class AddForeignKeysToLocations extends Migration
      */
     public function down()
     {
-        Schema::table('biomes', function (Blueprint $table) {
-            $table->dropColumn('biome_id');
-        });
+        // Schema::table('biomes', function (Blueprint $table) {
+        //     $table->dropColumn('biome_id');
+        // });
     }
 }

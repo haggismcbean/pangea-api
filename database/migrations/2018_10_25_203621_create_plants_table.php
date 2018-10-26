@@ -16,8 +16,6 @@ class CreatePlantsTable extends Migration
         Schema::create('plants', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('location_id')->unsigned();
-            $table->integer('biome_id')->unsigned();
             $table->string('typeName');
             $table->integer('maxHeight');
             $table->integer('growthRate');

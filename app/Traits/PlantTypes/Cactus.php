@@ -32,9 +32,9 @@ class Cactus
         $this->hasFlower = true;
 
         $this->leafAppearance = "thorn";
-        $this->rainfallMin = 0;
-        $this->rainfallMax = 2;
-        $this->temperatureMin = 5;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(0, 2);
+        $this->rainfallMax = $this->rainfallMin + 1;
+        $this->temperatureMin = rand(5, 6);
+        $this->temperatureMax = 999;
     }
 }

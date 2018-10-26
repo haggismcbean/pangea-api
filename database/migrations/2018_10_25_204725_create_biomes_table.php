@@ -20,11 +20,11 @@ class CreateBiomesTable extends Migration
             $table->integer('rainfall');
             $table->integer('temperature');
 
-            $table->integer('sproutRainfall');
-            $table->integer('sproutTemperature');
+            $table->integer('highestRainfall');
+            $table->integer('hottestTemperature');
 
-            $table->integer('deathRainfall');
-            $table->integer('deathTemperature');
+            $table->integer('lowestRainfall');
+            $table->integer('coldestTemperature');
 
             $table->integer('plantDensity');
         });

@@ -32,9 +32,9 @@ class Shrub
         $this->hasFlower = true;
 
         $this->leafAppearance = rand(0, 1) === 1 ? "broad" : "narrow";
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 1;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(1, 6);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 4);
+        $this->temperatureMin = rand(1, 8);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 6);
     }
 }

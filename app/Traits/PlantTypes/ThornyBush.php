@@ -32,9 +32,9 @@ class ThornyBush
         $this->hasFlower = true;
 
         $this->leafAppearance = "thorn";
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 3;
-        $this->temperatureMin = 1;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(1, 3);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 2);
+        $this->temperatureMin = rand(1, 8);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 6);
     }
 }

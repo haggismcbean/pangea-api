@@ -14,8 +14,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         // $this->call(CharacterTableSeeder::class);
         // $this->call(MessagesTableSeeder::class);
-        $this->call(PlantsTableSeeder::class);
-        $this->call(BiomeTableSeeder::class);
-        $this->call(LocationTableSeeder::class); //Warning - this takes a minute or so to run
+        // $this->call(PlantsTableSeeder::class);
+        // $this->call(BiomeTableSeeder::class);
+        // $this->call(LocationTableSeeder::class); //Warning - this takes a minute or so to run
+        // $this->call(BiomePlantTableSeeder::class);
+        // $this->call(LocationPlantTableSeeder::class); //Warning - this takes a couple of minutes
     }
 }

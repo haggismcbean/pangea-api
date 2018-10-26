@@ -32,9 +32,9 @@ class Conifer
         $this->hasFlower = false;
 
         $this->leafAppearance = "needle";
-        $this->rainfallMin = 1;
-        $this->rainfallMax = 4;
-        $this->temperatureMin = 0;
-        $this->temperatureMax = 3;
+        $this->rainfallMin = rand(1, 3);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 2);
+        $this->temperatureMin = rand(0, 2);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 2);
     }
 }

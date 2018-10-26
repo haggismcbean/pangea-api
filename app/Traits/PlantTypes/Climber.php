@@ -32,9 +32,9 @@ class Climber
         $this->hasFlower = false;
 
         $this->leafAppearance = "broad";
-        $this->rainfallMin = 3;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 3;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(3, 5);
+        $this->rainfallMax = $this->rainfallMin + 2;
+        $this->temperatureMin = rand(3, 7);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 2);
     }
 }

@@ -19,11 +19,11 @@ class BiomeGenerator extends Model
     }
 
     public function setSeasonConditions($averageRainfall, $averageTemperature) {
-        $this->sproutRainfall = $averageRainfall + $this->getSeasonVariation($averageRainfall);
-        $this->sproutTemperature = $averageTemperature + $this->getSeasonVariation($averageTemperature);
+        $this->highestRainfall = $averageRainfall + 1;
+        $this->hottestTemperature = $averageTemperature + $this->getSeasonVariation($averageTemperature);
 
-        $this->deathRainfall = $averageRainfall - $this->getSeasonVariation($averageRainfall);
-        $this->deathTemperature = $averageTemperature - $this->getSeasonVariation($averageTemperature);
+        $this->lowestRainfall = $averageRainfall - 1;
+        $this->coldestTemperature = $averageTemperature - $this->getSeasonVariation($averageTemperature);
 
         $this->plantDensity = $this->getPlantDensity($averageRainfall, $averageTemperature);
     }
@@ -32,7 +32,7 @@ class BiomeGenerator extends Model
         switch ($averageValue) {
             case 0:
             case 1:
-                return 3;
+                return 1;
             
             case 2: 
             case 3: 

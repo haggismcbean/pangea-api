@@ -32,9 +32,9 @@ class Creeper
         $this->hasFlower = true;
 
         $this->leafAppearance = "broad";
-        $this->rainfallMin = 3;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 2;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(3, 5);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 5);
+        $this->temperatureMin = rand(2, 6);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 2);
     }
 }

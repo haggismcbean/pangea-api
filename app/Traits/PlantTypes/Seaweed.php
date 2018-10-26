@@ -31,9 +31,9 @@ class Seaweed
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = false;
 
-        $this->rainfallMin = 0;
-        $this->rainfallMax = 7;
-        $this->temperatureMin = 0;
-        $this->temperatureMax = 6;
+        $this->rainfallMin = rand(0, 8);
+        $this->rainfallMax = $this->rainfallMin + rand(0, 8);
+        $this->temperatureMin = rand(0, 8);
+        $this->temperatureMax = $this->temperatureMin + rand(0, 8);
     }
 }
