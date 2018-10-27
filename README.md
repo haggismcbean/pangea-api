@@ -14,19 +14,19 @@
 
 ## Webhook
 ### Actions
-- [ ] combat (manual & auto modes)
-- [ ] farming
-- [ ] hunting
-- [ ] foraging/mining
-- [ ] manufacturing (this can easily be split into many more parts)
-- [ ] travelling
 - [ ] talking
-- [ ] child birth (automatically)
 - [ ] waking up
+- [ ] foraging/mining
+- [ ] combat (manual & auto modes)
+- [ ] travelling
+- [ ] farming
+- [ ] manufacturing (this can easily be split into many more parts)
+- [ ] hunting
 - [ ] aging
+- [ ] child birth (automatically)
 
 ### States
-- [ ] location
+- [x] location
 - [ ] weather
 - [ ] day/night
 - [ ] hunger/health
