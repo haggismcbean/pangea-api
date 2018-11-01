@@ -43,6 +43,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('characters', 'CharacterController@show');
 });
 
+// resouce gathering
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::put('gather', 'PlantController@gather');
+	// Route::get('characters', 'CharacterController@show');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');

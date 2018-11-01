@@ -6,102 +6,55 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\WorldGenerator\PlantGenerator;
 
-use App\Traits\PlantTypes\Seaweed;
-use App\Traits\PlantTypes\Broadleaf;
-use App\Traits\PlantTypes\Cactus;
-use App\Traits\PlantTypes\Climber;
-use App\Traits\PlantTypes\Conifer;
-use App\Traits\PlantTypes\Creeper;
-use App\Traits\PlantTypes\Fern;
-use App\Traits\PlantTypes\Grass;
-use App\Traits\PlantTypes\LeafyBush;
-use App\Traits\PlantTypes\Shrub;
-use App\Traits\PlantTypes\Succulent;
-use App\Traits\PlantTypes\ThornyBush;
+use App\Plant;
+use App\Character;
 
 class PlantController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    public function show() {
-    	$plants = [];
+    public function gather(Request $request) {
+        $plantId = $request->input('plantId');
+        $character = $this->getCharacter($request->input('characterId'));
+        $location = $character->location()->first();
+        $locationPlant = $location->locationPlants()->where('plant_id', $plantId)->get()[0];
+        $plants = $location->plants()->find($plantId);
 
-        for ($i=0; $i < 100; $i++) { 
-        	$type = new Broadleaf();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
+        // to do : actually reduce this in the database!!!!
+        $locationPlant->count = $locationPlant->count - 1; 
+
+        return $locationPlant;
+
+        // $locationPlant = $this->getLocationPlant($location, $request->input('plantId'));
+
+        // reduce locationPlant count by one
+        // $locationPlant->count = $locationPlant->count - 1;
+    }
+
+    private function getCharacter($characterId) {
+        $user = Auth::user();
+        $characterId = $characterId;
+
+        $character = $user->characters()->find($characterId);
+
+        if ($character) {
+            return $character;
+        } else {
+            return null;
+        }
+    }
+
+    private function getLocationPlant($location, $plantId) {
+        $plant = $location->locationPlants()->find($plantId);
+
+        if ($plant) {
+            return $plant;
+        } else {
+            return null;
         }
 
-        for ($i=0; $i < 20; $i++) { 
-        	$type = new Cactus();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 50; $i++) { 
-        	$type = new Climber();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 50; $i++) { 
-        	$type = new Conifer();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 20; $i++) { 
-        	$type = new Creeper();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 20; $i++) { 
-        	$type = new Fern();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 70; $i++) { 
-        	$type = new Grass();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 60; $i++) { 
-        	$type = new LeafyBush();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 60; $i++) { 
-        	$type = new LeafyBush();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 20; $i++) { 
-        	$type = new Seaweed();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 60; $i++) { 
-        	$type = new Shrub();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 60; $i++) { 
-        	$type = new Succulent();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-
-        for ($i=0; $i < 60; $i++) { 
-        	$type = new ThornyBush();
-        	$plant = new PlantGenerator($type);
-        	array_push($plants, $plant);
-        }
-        return response()->json($plants);
     }
 }

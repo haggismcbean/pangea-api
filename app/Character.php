@@ -22,6 +22,9 @@ class Character extends Model
      * @return void
      */
     public function __construct($age = null)
+    {}
+
+    public function generate()
     {
         $character = new CharacterFactory();
 
@@ -61,5 +64,17 @@ class Character extends Model
     public function messages()
     {
       return $this->hasMany(Message::class);
+    }
+
+    public function get($characterId) {
+        $user = Auth::user();
+
+        $character = $user->characters()->find($characterId);
+
+        if ($character) {
+            return $character;
+        } else {
+            return null;
+        }
     }
 }
