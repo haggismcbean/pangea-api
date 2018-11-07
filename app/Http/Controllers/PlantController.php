@@ -8,6 +8,7 @@ use App\WorldGenerator\PlantGenerator;
 
 use App\Plant;
 use App\Character;
+use App\LocationPlant;
 
 class PlantController extends Controller
 {
@@ -21,17 +22,13 @@ class PlantController extends Controller
         $character = $this->getCharacter($request->input('characterId'));
         $location = $character->location()->first();
         $locationPlant = $location->locationPlants()->where('plant_id', $plantId)->get()[0];
-        $plants = $location->plants()->find($plantId);
 
-        // to do : actually reduce this in the database!!!!
-        $locationPlant->count = $locationPlant->count - 1; 
-
-        return $locationPlant;
-
-        // $locationPlant = $this->getLocationPlant($location, $request->input('plantId'));
-
-        // reduce locationPlant count by one
-        // $locationPlant->count = $locationPlant->count - 1;
+        if ($locationPlant->count > 0) {
+            LocationPlant::where('id', $locationPlant->id)->update(array('count' => $locationPlant->count - 1));
+            return $location->plants()->find($plantId);
+        } else {
+            return response()->json(['status' => 'No plants left'], 403);
+        }
     }
 
     private function getCharacter($characterId) {
