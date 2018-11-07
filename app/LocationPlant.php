@@ -9,7 +9,7 @@ use Auth;
 
 class LocationPlant extends Model
 {
-	protected $table = 'location_plant';
+    protected $table = 'location_plant';
 
     public function plant()
     {

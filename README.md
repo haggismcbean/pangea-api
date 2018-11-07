@@ -16,7 +16,7 @@
 ### Actions
 - [ ] talking
 - [ ] waking up
-- [ ] foraging/mining
+- [.] foraging/mining
 - [ ] combat (manual & auto modes)
 - [ ] travelling
 - [ ] farming

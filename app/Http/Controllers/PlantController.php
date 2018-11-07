@@ -25,6 +25,7 @@ class PlantController extends Controller
 
         if ($locationPlant->count > 0) {
             LocationPlant::where('id', $locationPlant->id)->update(array('count' => $locationPlant->count - 1));
+            // to do - move plant into the player's inventory! Unless it's too large, then it just goes on the floor.
             return $location->plants()->find($plantId);
         } else {
             return response()->json(['status' => 'No plants left'], 403);
