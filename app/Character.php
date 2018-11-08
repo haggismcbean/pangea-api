@@ -57,7 +57,7 @@ class Character extends Model
     }
 
     public function items() {
-        return $this->belongsToMany('App\Item');
+        return $this->belongsToMany('App\Item', 'item_owner', 'ownerId', 'itemId')->where('ownerType', 'character');
     }
 
     /**
