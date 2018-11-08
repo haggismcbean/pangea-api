@@ -56,6 +56,10 @@ class Character extends Model
         return $this->belongsTo('App\Location');
     }
 
+    public function items() {
+        return $this->belongsToMany('App\Item');
+    }
+
     /**
      * A character can have many messages
      *

@@ -9,6 +9,8 @@ use App\WorldGenerator\PlantGenerator;
 use App\Plant;
 use App\Character;
 use App\LocationPlant;
+use App\Item;
+use App\ItemOwner;
 
 class PlantController extends Controller
 {
@@ -23,10 +25,28 @@ class PlantController extends Controller
         $location = $character->location()->first();
         $locationPlant = $location->locationPlants()->where('plant_id', $plantId)->get()[0];
 
-        if ($locationPlant->count > 0) {
+        if ($locationPlant && $locationPlant->count > 0) {
             LocationPlant::where('id', $locationPlant->id)->update(array('count' => $locationPlant->count - 1));
-            // to do - move plant into the player's inventory! Unless it's too large, then it just goes on the floor.
-            return $location->plants()->find($plantId);
+
+            // first we find the item
+            $item = Item::where('itemType', 'plant')->where('typeId', $plantId)->where('name', 'leaf')->first();
+
+            if (!$item) {
+                $item = $this->createNewItem($plantId);
+            }
+
+            // then we make an entry in the item owner table
+            $itemOwner = ItemOwner::where('ownerType', 'character')->where('ownerId', $character->id)->where('itemId', $item->id)->first();
+
+            // todo : check if the owner is carrying too many things, in which case move it to some other place.
+            if (!$itemOwner) {
+                $itemOwner = $this->createNewItemOwner($character, $item);
+            } else {
+                $itemOwner->count = $itemOwner->count + 1;
+                $itemOwner->save();
+            }
+
+            return $itemOwner;
         } else {
             return response()->json(['status' => 'No plants left'], 403);
         }
@@ -53,6 +73,36 @@ class PlantController extends Controller
         } else {
             return null;
         }
+    }
 
+    private function createNewItem($plantId) {
+        $item = new Item;
+
+        $item->itemType = 'plant';
+        $item->typeId = $plantId;
+        $item->unitWeight = 1;
+        $item->unitVolume = 1;
+        $item->rotRate = 1;
+        $item->name = 'leaf';
+        $item->description = 'A big leaf';
+
+        $item->save();
+
+        return $item;
+    }
+
+    private function createNewItemOwner($character, $item) {
+        $itemOwner = new ItemOwner;
+
+        $itemOwner->ownerType = 'character';
+        $itemOwner->ownerId = $character->id;
+        $itemOwner->itemId = $item->id;
+        $itemOwner->count = 1;
+        $itemOwner->age = 0;
+        $itemOwner->quality = 0;
+
+        $itemOwner->save();
+
+        return $itemOwner;
     }
 }
