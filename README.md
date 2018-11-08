@@ -14,9 +14,10 @@
 
 ## Webhook
 ### Actions
-- [ ] talking
+- [x] talking
 - [ ] waking up
-- [.] foraging/mining
+- [x] foraging
+- [ ] mining
 - [ ] combat (manual & auto modes)
 - [ ] travelling
 - [ ] farming
@@ -56,6 +57,8 @@
 	- [x] character 'speak' event (to start, this is the only event). start just pushing straight to relevent webhooks
 	- [x] GameStateManager as intermediary between speech and user alerts
 	- [ ] User channel priorities (basic)
+
+- [ ] Inventory management
 
 - [ ] Increasing user's available actions
 	- [ ] things characters can do to each other
