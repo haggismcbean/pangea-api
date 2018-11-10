@@ -50,4 +50,10 @@ class Location extends Model
     public function zones() {
         return $this->hasMany('App\Zone');
     }
+
+    public function getLocationPlant($plantId) {
+        return $this->locationPlants()
+            ->where('plant_id', $plantId)
+            ->get()[0];
+    }
 }

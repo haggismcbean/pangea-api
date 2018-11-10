@@ -57,12 +57,12 @@ class Character extends Model
     }
 
     public function items() {
-        return $this->belongsToMany('App\Item', 'item_owner', 'ownerId', 'itemId')->where('ownerType', 'character');
+        return $this->belongsToMany('App\Item', 'item_owner', 'owner_id', 'item_id')->where('owner_type', 'character');
     }
 
     public function itemOwners() {
-        return ItemOwner::where('ownerType', 'character')
-            ->where('ownerId', $this->id);
+        return ItemOwner::where('owner_type', 'character')
+            ->where('owner_id', $this->id);
     }
 
     public function zone() {

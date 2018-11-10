@@ -18,11 +18,11 @@ class ItemOwner extends Model
 
     public function owner()
     {
-    	if ($this->ownerType === 'character') {
+    	if ($this->owner_type === 'character') {
         	return $this->belongsTo(Character::class);
     	}
 
-        if ($this->ownerType === 'zone') {
+        if ($this->owner_type === 'zone') {
             return $this->belongsTo(Zone::class);
         }
     }

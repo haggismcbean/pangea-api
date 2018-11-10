@@ -22,4 +22,17 @@ class CharacterController extends Controller
 
         return $user->characters()->get();
     }
+
+    public static function getCharacter($characterId) {
+        $user = Auth::user();
+
+        $character = $user->characters()
+            ->find($characterId);
+
+        if ($character) {
+            return $character;
+        } else {
+            return null;
+        }
+    }
 }

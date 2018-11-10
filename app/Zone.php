@@ -28,4 +28,9 @@ class Zone extends Model
     public function items() {
         return $this->belongsToMany('App\Item', 'item_owner', 'ownerId', 'itemId')->where('ownerType', 'zone');
     }
+
+    public function itemOwners() {
+        return ItemOwner::where('owner_type', 'zone')
+            ->where('owner_id', $this->id);
+    }
 }

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\WorldGenerator\PlantGenerator;
+
+use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemOwnerController;
 
 use App\Plant;
 use App\Character;
 use App\Zone;
 use App\LocationPlant;
-use App\Item;
-use App\ItemOwner;
 
 class PlantController extends Controller
 {
@@ -22,109 +22,58 @@ class PlantController extends Controller
 
     public function gather(Request $request) {
         $plantId = $request->input('plantId');
-        $character = $this->getCharacter($request->input('characterId'));
-        $location = $character->location()
-            ->first();
-        $locationPlant = $location->locationPlants()
-            ->where('plant_id', $plantId)
-            ->get()[0];
+        $character = CharacterController::getCharacter($request->input('characterId'));
+        $location = $character->location()->first();
+        $locationPlant = $location->getLocationPlant($plantId);
 
         if ($locationPlant && $locationPlant->count > 0) {
-            LocationPlant::where('id', $locationPlant->id)
-                ->update(array('count' => $locationPlant->count - 1));
+            $this->removePlantFromLocation($locationPlant);
 
-            // first we find the item
-            $item = Item::where('itemType', 'plant')
-                ->where('typeId', $plantId)
-                ->where('name', 'leaf')
-                ->first();
-
-            if (!$item) {
-                $item = $this->createNewItem($plantId);
-            }
-
-            if ($character->hasInventorySpace()) {
-                $itemOwner = ItemOwner::where('ownerType', 'character')
-                    ->where('ownerId', $character->id)
-                    ->where('itemId', $item->id)
-                    ->first();
-
-                if (!$itemOwner) {
-                    $itemOwner = $this->createNewItemOwner($character, $item);
-                }
-
-            } else {
-                $zone = $character->zone()
-                    ->first();
-                $itemOwner = ItemOwner::where('ownerType', 'zone')
-                    ->where('ownerId', $zone->id)
-                    ->where('itemId', $item->id)
-                    ->first();
-            }
-
-            
-            $itemOwner->count = $itemOwner->count + 1;
-            $itemOwner->save();
-
-            return $itemOwner;
+            return $this->addPlantToNewOwner($plantId, $character, $locationPlant);
         } else {
             return response()->json(['status' => 'No plants left'], 403);
         }
     }
 
-    private function getCharacter($characterId) {
-        $user = Auth::user();
-        $characterId = $characterId;
+    private function removePlantFromLocation($locationPlant) {
+        LocationPlant::where('id', $locationPlant->id)
+            ->update(array('count' => $locationPlant->count - 1));
+    }
 
-        $character = $user->characters()
-            ->find($characterId);
+    private function addPlantToNewOwner($plantId, $character, $locationPlant) {
+        $item = $this->getItem($plantId);
 
-        if ($character) {
-            return $character;
+        if ($character->hasInventorySpace()) {
+            $itemOwner = $this->getItemOwner('character', $character, $item);
         } else {
-            return null;
+            $zone = $character->zone()->first();
+            $itemOwner = $this->getItemOwner('zone', $zone, $item);
         }
-    }
-
-    private function getLocationPlant($location, $plantId) {
-        $plant = $location->locationPlants()
-            ->find($plantId);
-
-        if ($plant) {
-            return $plant;
-        } else {
-            return null;
-        }
-    }
-
-    private function createNewItem($plantId) {
-        $item = new Item;
-
-        $item->itemType = 'plant';
-        $item->typeId = $plantId;
-        $item->unitWeight = 1;
-        $item->unitVolume = 1;
-        $item->rotRate = 1;
-        $item->name = 'leaf';
-        $item->description = 'A big leaf';
-
-        $item->save();
-
-        return $item;
-    }
-
-    private function createNewItemOwner($character, $item) {
-        $itemOwner = new ItemOwner;
-
-        $itemOwner->ownerType = 'character';
-        $itemOwner->ownerId = $character->id;
-        $itemOwner->itemId = $item->id;
-        $itemOwner->count = 1;
-        $itemOwner->age = 0;
-        $itemOwner->quality = 0;
-
+        
+        $itemOwner->count = $itemOwner->count + 1;
         $itemOwner->save();
 
-        return $itemOwner;
+        return response()->json($itemOwner, 200);
+    }
+
+    private function getItem($plantId) {
+        $item = ItemController::getItem('plant', $plantId);
+
+        if (!$item) {
+            return ItemController::createNewItem($plantId);
+        } else {
+            return $item;
+        }
+    }
+
+    private function getItemOwner($type, $owner, $item) {
+        $itemOwner = $owner->itemOwners()->first();
+
+        if (!$itemOwner) {
+            return ItemOwnerController::createNewItemOwner($type, $owner, $item);
+        } else {
+            return $itemOwner;
+        }
+
     }
 }
