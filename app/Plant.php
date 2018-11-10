@@ -18,4 +18,8 @@ class Plant extends Model
     {
         return $this->belongsToMany(Location::class);
     }
+
+    public function items() {
+    	return $this->hasMany(Item::class, 'type_id')->where('item_type', 'plant');
+    }
 }

@@ -54,6 +54,12 @@ class Location extends Model
     public function getLocationPlant($plantId) {
         return $this->locationPlants()
             ->where('plant_id', $plantId)
-            ->get()[0];
+            ->first();
+    }
+
+    public function getPlant($plantId) {
+        return $this->plants()
+            ->where('plant_id', $plantId)
+            ->first();
     }
 }

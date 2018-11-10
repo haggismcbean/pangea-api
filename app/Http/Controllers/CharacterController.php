@@ -8,6 +8,18 @@ use App\Character;
 
 class CharacterController extends Controller
 {
+    public static function getCharacter($characterId) {
+        $user = Auth::user();
+
+        $character = $user->characters()
+            ->find($characterId);
+
+        if ($character) {
+            return $character;
+        } else {
+            return null;
+        }
+    }
 
     public function create() {
         // okay so users create a new character. It's randomly assigned appearance, backstory, personality.
@@ -21,18 +33,5 @@ class CharacterController extends Controller
         $user = Auth::user();
 
         return $user->characters()->get();
-    }
-
-    public static function getCharacter($characterId) {
-        $user = Auth::user();
-
-        $character = $user->characters()
-            ->find($characterId);
-
-        if ($character) {
-            return $character;
-        } else {
-            return null;
-        }
     }
 }
