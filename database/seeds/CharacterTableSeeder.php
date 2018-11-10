@@ -20,7 +20,8 @@ class CharacterTableSeeder extends Seeder
 
         DB::table('characters')->insert([
             'user_id' => 1,
-            'location_id' => 1,
+            'location_id' => 13236,
+            'zone_id' => 1,
             'birthday' => $character->birthday,
             'gender' => $character->gender,
             'height' => $character->height,
@@ -40,7 +41,8 @@ class CharacterTableSeeder extends Seeder
 
         DB::table('characters')->insert([
             'user_id' => 2,
-            'location_id' => 1,
+            'location_id' => 13236,
+            'zone_id' => 1,
             'birthday' => $character->birthday,
             'gender' => $character->gender,
             'height' => $character->height,

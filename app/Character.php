@@ -60,6 +60,15 @@ class Character extends Model
         return $this->belongsToMany('App\Item', 'item_owner', 'ownerId', 'itemId')->where('ownerType', 'character');
     }
 
+    public function itemOwners() {
+        return ItemOwner::where('ownerType', 'character')
+            ->where('ownerId', $this->id);
+    }
+
+    public function zone() {
+        return $this->belongsTo('App\Zone');
+    }
+
     /**
      * A character can have many messages
      *
@@ -70,15 +79,16 @@ class Character extends Model
       return $this->hasMany(Message::class);
     }
 
-    public function get($characterId) {
-        $user = Auth::user();
+    public function hasInventorySpace() {
+        // TODO = be cleverer with inventory space
+        $inventorySpace = 10;
+        $totalItems = 0;
+        $items = $this->itemOwners()->get();
 
-        $character = $user->characters()->find($characterId);
-
-        if ($character) {
-            return $character;
-        } else {
-            return null;
+        foreach ($items as $item) {
+            $totalItems = $totalItems + $item->count;
         }
+
+        return $totalItems < $inventorySpace;
     }
 }

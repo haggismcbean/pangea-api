@@ -8,6 +8,7 @@ use App\WorldGenerator\PlantGenerator;
 
 use App\Plant;
 use App\Character;
+use App\Zone;
 use App\LocationPlant;
 use App\Item;
 use App\ItemOwner;
@@ -22,29 +23,48 @@ class PlantController extends Controller
     public function gather(Request $request) {
         $plantId = $request->input('plantId');
         $character = $this->getCharacter($request->input('characterId'));
-        $location = $character->location()->first();
-        $locationPlant = $location->locationPlants()->where('plant_id', $plantId)->get()[0];
+        $location = $character->location()
+            ->first();
+        $locationPlant = $location->locationPlants()
+            ->where('plant_id', $plantId)
+            ->get()[0];
 
         if ($locationPlant && $locationPlant->count > 0) {
-            LocationPlant::where('id', $locationPlant->id)->update(array('count' => $locationPlant->count - 1));
+            LocationPlant::where('id', $locationPlant->id)
+                ->update(array('count' => $locationPlant->count - 1));
 
             // first we find the item
-            $item = Item::where('itemType', 'plant')->where('typeId', $plantId)->where('name', 'leaf')->first();
+            $item = Item::where('itemType', 'plant')
+                ->where('typeId', $plantId)
+                ->where('name', 'leaf')
+                ->first();
 
             if (!$item) {
                 $item = $this->createNewItem($plantId);
             }
 
-            // then we make an entry in the item owner table
-            $itemOwner = ItemOwner::where('ownerType', 'character')->where('ownerId', $character->id)->where('itemId', $item->id)->first();
+            if ($character->hasInventorySpace()) {
+                $itemOwner = ItemOwner::where('ownerType', 'character')
+                    ->where('ownerId', $character->id)
+                    ->where('itemId', $item->id)
+                    ->first();
 
-            // todo : check if the owner is carrying too many things, in which case move it to some other place.
-            if (!$itemOwner) {
-                $itemOwner = $this->createNewItemOwner($character, $item);
+                if (!$itemOwner) {
+                    $itemOwner = $this->createNewItemOwner($character, $item);
+                }
+
             } else {
-                $itemOwner->count = $itemOwner->count + 1;
-                $itemOwner->save();
+                $zone = $character->zone()
+                    ->first();
+                $itemOwner = ItemOwner::where('ownerType', 'zone')
+                    ->where('ownerId', $zone->id)
+                    ->where('itemId', $item->id)
+                    ->first();
             }
+
+            
+            $itemOwner->count = $itemOwner->count + 1;
+            $itemOwner->save();
 
             return $itemOwner;
         } else {
@@ -56,7 +76,8 @@ class PlantController extends Controller
         $user = Auth::user();
         $characterId = $characterId;
 
-        $character = $user->characters()->find($characterId);
+        $character = $user->characters()
+            ->find($characterId);
 
         if ($character) {
             return $character;
@@ -66,7 +87,8 @@ class PlantController extends Controller
     }
 
     private function getLocationPlant($location, $plantId) {
-        $plant = $location->locationPlants()->find($plantId);
+        $plant = $location->locationPlants()
+            ->find($plantId);
 
         if ($plant) {
             return $plant;

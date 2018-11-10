@@ -21,5 +21,9 @@ class ItemOwner extends Model
     	if ($this->ownerType === 'character') {
         	return $this->belongsTo(Character::class);
     	}
+
+        if ($this->ownerType === 'zone') {
+            return $this->belongsTo(Zone::class);
+        }
     }
 }

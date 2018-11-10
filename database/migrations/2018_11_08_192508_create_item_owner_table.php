@@ -16,9 +16,9 @@ class CreateItemOwnerTable extends Migration
         Schema::create('item_owner', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('ownerId')->unsigned();
-            $table->string('ownerType');
-            $table->integer('itemId')->unsigned();
+            $table->integer('owner_id')->unsigned();
+            $table->string('owner_type');
+            $table->integer('item_id')->unsigned();
             $table->integer('count');
             $table->integer('age');
             $table->integer('quality');

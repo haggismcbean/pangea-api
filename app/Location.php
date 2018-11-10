@@ -46,4 +46,8 @@ class Location extends Model
     {
         return $this->hasMany('App\LocationPlant');
     }
+
+    public function zones() {
+        return $this->hasMany('App\Zone');
+    }
 }
