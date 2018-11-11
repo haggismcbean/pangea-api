@@ -26,7 +26,7 @@ class Zone extends Model
     }
 
     public function items() {
-        return $this->belongsToMany('App\Item', 'item_owner', 'ownerId', 'itemId')->where('ownerType', 'zone');
+        return $this->belongsToMany('App\Item', 'item_owner', 'owner_id', 'item_id')->where('owner_type', 'zone');
     }
 
     public function itemOwners() {

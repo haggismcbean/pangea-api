@@ -15,16 +15,16 @@
 ## Webhook
 ### Actions
 - [x] talking
-- [ ] waking up
 - [x] foraging
-- [ ] mining
-- [ ] combat (manual & auto modes)
 - [ ] travelling
-- [ ] farming
+- [ ] combat (manual & auto modes)
+- [ ] waking up
 - [ ] manufacturing (this can easily be split into many more parts)
+- [ ] mining
+- [ ] farming
 - [ ] hunting
 - [ ] aging
-- [ ] child birth (automatically)
+- [ ] child birth (automatically) (actually do I even want this? I have a pretty plausible excuse now)
 
 ### States
 - [x] location
@@ -58,7 +58,7 @@
 	- [x] GameStateManager as intermediary between speech and user alerts
 	- [ ] User channel priorities (basic)
 
-- [ ] Inventory management
+- [x] Inventory management
 
 - [ ] Increasing user's available actions
 	- [ ] things characters can do to each other
