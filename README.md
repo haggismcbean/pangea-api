@@ -18,6 +18,7 @@
 - [x] foraging
 - [ ] travelling
 - [ ] combat (manual & auto modes)
+- [ ] eating
 - [ ] waking up
 - [ ] manufacturing (this can easily be split into many more parts)
 - [ ] mining
@@ -30,7 +31,7 @@
 - [x] location
 - [ ] weather
 - [ ] day/night
-- [ ] hunger/health
+- [x] hunger/health
 
 ### Webhook Manager
 - [ ] GameStateManager
