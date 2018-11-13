@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 	// Route::get('characters', 'CharacterController@show');
 });
 
+// travelling and location
+// Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('borders', 'ZoneController@getBorderingZones');
+	// Route::get('characters', 'CharacterController@show');
+// });
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');
