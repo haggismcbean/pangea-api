@@ -1,6 +1,9 @@
-- [x] Add support for gathering all the different bits of a plant
-- [x] Ensure you aren't creating loads of duplicate item entries
-
-- [ ] Add things like hunger values to the current plant generator code... Or maybe start with an recipes thing and add them to that! No, it should be on the item. The reason? Once we start creating meals, they'll be items. And they'll have a hunger value. BUT not all items will have a hunger value. So maybe the meals aren't items, but MEALS and items can be of type meal. That works for me. SO - first, add base hunger values to plants, and then after that, add recipes one day (not urgent)
-
-- [ ] I think after that it makes sense to start storing hunger and health on characters as well :)
+- [x] Okay next on the list comes travelling! 
+- [x] So we get a list of bordering zones and locations
+    + Zones of the same layer (ie zones with the same parentZone)
+    + Parent zone
+    + if zone is layer 0, also bordering locations.
+- [ ] Add character validation on zones endpoint so you can't just get the whole map :P
+- [ ] User can then send the id of the zone or location they want to travel to
+- [ ] If they want to travel to a location, we must find the outer zone there and turn up somewhere in that
+- [ ] Travelling takes some amount of time, and generates some kind of a message. It must be none blocking. 'You begin travelling', 'You end travelling' - and on you end, your zone has changed. Your visibility to people in your zone will change though unless they are in your travel group, but that's just normal.
