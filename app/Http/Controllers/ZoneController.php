@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Zone;
 
@@ -12,10 +13,17 @@ class ZoneController extends Controller
 {
 
     public function getBorderingZones(Request $request) {
-        // todo - check the zoneId is the character's current zoneId.
+        $user = Auth::user();
+
         $zoneId = $request->input('zone_id');
 
-        $currentZone = Zone::find($zoneId);
+        $newZones = $this->getBorderingZonesById($zoneId, $user);
+
+        return response()->json($newZones, 200);
+    }
+
+    private function getBorderingZonesById($zoneId, $user) {
+        $currentZone = $user->characters()->where('zone_id', $zoneId)->first();
 
         if (!$currentZone) {
             return response()->json(['status' => 'Zone could not be found'], 403);
@@ -28,7 +36,12 @@ class ZoneController extends Controller
                 ->orWhere('parent_zone', $currentZone->id)
                 ->get();
 
-            return response()->json($newZones, 200);
+            $newZones = (object) [
+                'zones' => $newZones,
+                'borderZones' => null
+            ];
+
+            return $newZones;
         } else {
             $newZones = Zone::where('location_id', $currentZone->location_id)
                 ->where('parent_zone', $currentZone->id)
@@ -36,12 +49,62 @@ class ZoneController extends Controller
 
             $borderZones = LocationController::getBorderingZones($currentZone->location_id);
 
-            $response = (object) [
+            $newZones = (object) [
                 'zones' => $newZones,
                 'borderZones' => $borderZones
             ];
 
-            return response()->json($response, 200);
+            return $newZones;
+        }
+    }
+
+    public function changeZones(Request $request) {
+        $user = Auth::user();
+
+        $newZoneId = $request->input('zone_id');
+
+        $character = $user->characters()->first();
+        $currentZone = $character->zone()->first();
+
+        if (!$currentZone) {
+            return response()->json(['status' => 'Current zone could not be found'], 403);
+        }
+
+        $borderingZones = $this->getBorderingZonesById($currentZone->id, $user);
+
+        $targetZone = null;
+
+        $targetZone = $this->getTargetZoneFromCurrentLocation($borderingZones, $newZoneId);
+
+        if (!$targetZone) {
+            $targetZone = $this->getTargetZoneFromNeighbouringLocation($borderingZones, $newZoneId);
+        }
+
+        if (!$targetZone) {
+            return response()->json(['status' => 'Target zone could not be found'], 403);
+        }
+
+        $character->zone_id = $targetZone->id;
+        $character->location_id = $targetZone->location_id;
+        $character->save();
+
+        return response()->json($targetZone, 200);
+    }
+
+    private function getTargetZoneFromCurrentLocation($borderingZones, $newZoneId) {
+        foreach($borderingZones->zones as $borderingZone) {
+            if ($newZoneId == $borderingZone->id) {
+                return $borderingZone;
+            }
+        }
+    }
+
+    private function getTargetZoneFromNeighbouringLocation($borderingZones, $newZoneId) {
+        $borderZoneCardinals = array("north", "east", "south", "west");
+        foreach($borderZoneCardinals as $cardinal) {
+            if ($borderingZones->borderZones->$cardinal && $newZoneId == $borderingZones->borderZones->$cardinal->id) {
+                return $borderingZones->borderZones->$cardinal;
+            }
         }
     }
 }

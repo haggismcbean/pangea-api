@@ -50,10 +50,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 
 // travelling and location
-// Route::group(['middleware' => 'auth:api'], function() {
+Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('borders', 'ZoneController@getBorderingZones');
-	// Route::get('characters', 'CharacterController@show');
-// });
+	Route::post('move', 'ZoneController@changeZones');
+});
 
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
