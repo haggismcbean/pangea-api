@@ -124,4 +124,5 @@ https://laravel.com/docs/5.7/eloquent-relationships#many-to-many
 `php artisan db:seed`
 
 # If you Forget How to Generate Worlds
+- https://worldengine.readthedocs.io
 - /www/world-generator/bin -> edit the docker file, then run in docker by cd'ing to world-generator and running `bin/run_in_docker.sh` - note the world will be saved in a random folder -> `/var/folders/_v/nc4.../T`
