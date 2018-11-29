@@ -17,7 +17,7 @@
 - [x] talking
 - [x] foraging
 - [ ] travelling
-- [ ] combat (manual & auto modes)
+- [ ] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person.
 - [ ] eating
 - [ ] waking up
 - [ ] manufacturing (this can easily be split into many more parts)
@@ -32,6 +32,12 @@
 - [ ] weather
 - [ ] day/night
 - [x] hunger/health
+
+### Moderation
+- [ ] Deleting speech
+- [ ] Deleting characters (comical drone explanations for this)
+- [ ] Deleting users
+- [ ] Blocking users
 
 ### Webhook Manager
 - [ ] GameStateManager

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\LabourCalculator\LabourCalculator;
+
 use App\Zone;
 
 use App\Http\Controllers\LocationController;

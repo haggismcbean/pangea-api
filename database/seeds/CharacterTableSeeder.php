@@ -35,6 +35,8 @@ class CharacterTableSeeder extends Seeder
             'appearance' => $character->appearance,
             'personality' => $character->personality,
             'backstory' => $character->backstory,
+            'health' => 100,
+            'hunger' => 100
         ]);
 
         $character = new CharacterFactory();
@@ -56,6 +58,8 @@ class CharacterTableSeeder extends Seeder
             'appearance' => $character->appearance,
             'personality' => $character->personality,
             'backstory' => $character->backstory,
+            'health' => 100,
+            'hunger' => 100
         ]);
     }
 }
