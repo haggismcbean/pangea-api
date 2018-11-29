@@ -19,6 +19,8 @@
 - [ ] travelling
 - [ ] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person.
 - [ ] eating
+- [ ] building/terraforming
+- [ ] talking in groups/cleverly
 - [ ] waking up
 - [ ] manufacturing (this can easily be split into many more parts)
 - [ ] mining
