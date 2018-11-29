@@ -29,6 +29,7 @@
 
 ### States
 - [x] location
+- [ ] biome descriptions
 - [ ] weather
 - [ ] day/night
 - [x] hunger/health

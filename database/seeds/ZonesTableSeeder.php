@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Zone;
 use App\Location;
+use App\WorldGenerator\BiomeDescriptionGenerator;
 
 class ZonesTableSeeder extends Seeder
 {
@@ -23,14 +24,9 @@ class ZonesTableSeeder extends Seeder
 
                 DB::table('zones')->insert([
                     'location_id' => $location->id,
-                    'name' => 'Campsite',
-                    'size' => 1,
-                ]);
-
-                DB::table('zones')->insert([
-                    'location_id' => $location->id,
                     'name' => 'Wilderness',
-                    'size' => 99,
+                    'size' => 100,
+                    'description' => BiomeDescriptionGenerator::getDescription($location->biome)
                 ]);
             }
         }

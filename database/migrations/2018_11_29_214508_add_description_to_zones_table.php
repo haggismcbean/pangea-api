@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLayerToZonesTable extends Migration
+class AddDescriptionToZonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddLayerToZonesTable extends Migration
     public function up()
     {
         Schema::table('zones', function (Blueprint $table) {
-            $table->integer('parent_zone')->unsigned()->nullable();
+            $table->string('description');
         });
     }
 
@@ -26,7 +26,7 @@ class AddLayerToZonesTable extends Migration
     public function down()
     {
         Schema::table('zones', function (Blueprint $table) {
-            $table->dropColumn('parent_zone')->unsigned()->nullable();
+            $table->dropColumn('description');
         });
     }
 }

@@ -41,7 +41,7 @@ class LocationController extends Controller
     private static function getBaseZone($location) {
         if ($location) {
             return $location->zones()
-                ->where('parent_zone', 0)
+                ->where('parent_zone', null)
                 ->first();
         }
     }
