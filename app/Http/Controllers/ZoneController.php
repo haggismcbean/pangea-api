@@ -86,11 +86,19 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Target zone could not be found'], 403);
         }
 
+        $timeLock = LabourCalculator::calculateTimeLock('travel.land', $character);
+
         $character->zone_id = $targetZone->id;
         $character->location_id = $targetZone->location_id;
+        $character->time_lock = $timeLock;
         $character->save();
 
-        return response()->json($targetZone, 200);
+        $response = (object) [
+            'timeLock' => $timeLock,
+            'targetZone' => $targetZone
+        ];
+
+        return response()->json($response, 200);
     }
 
     private function getTargetZoneFromCurrentLocation($borderingZones, $newZoneId) {

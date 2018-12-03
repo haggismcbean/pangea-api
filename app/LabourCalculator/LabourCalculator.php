@@ -6,43 +6,48 @@ use App\Task;
 
 class LabourCalculator
 {
-    public calculateLabourCost($taskName, $character, $toolId=null, $machineId=null) {
-        $baseValue = $this->getTaskLabourCost($taskName);
+    public static function calculateTimeLock($taskName, $character, $toolId=null, $machineId=null) {
+        $baseValue = LabourCalculator::getTaskLabourCost($taskName);
 
         if ($machineId) {
-            $machine = $this->findMachine($machine)
-            return $this->calculateLabourCost($machine->taskName, $character, $toolId)
+            $machine = LabourCalculator::findMachine($machine);
+            return LabourCalculator::calculateLabourCost($machine->taskName, $character, $toolId);
         }
 
-        $characterLabourChange = $this->getCharacterLabourChange($taskName, $character);
+        $characterLabourChange = LabourCalculator::getCharacterLabourChange($taskName, $character);
 
         // if we have no tool or machine
         if ($toolId) {
-            $toolLabourChange = $this->getToolLabourChange($taskName, $toolId);
+            $toolLabourChange = LabourCalculator::getToolLabourChange($taskName, $toolId);
         } else {
             $toolLabourChange = 1;
         }
 
-        return $baseValue * $toolLabourChange * $characterLabourChange;
+        // set the default timezone to use. Available since PHP 5.1
+        date_default_timezone_set('UTC');
+
+        $delay = $baseValue * $toolLabourChange * $characterLabourChange;
+
+        return date('Y-m-d H:i:s', strtotime($delay . ' second'));
     }
 
-    private getTaskLabourCost($taskName) {
+    private static function getTaskLabourCost($taskName) {
         return Task::where('name', $taskName)->first()->labour_cost;
     }
 
-    private findMachine($taskName) {
+    private static function findMachine($taskName) {
         return false;
     }
 
-    private getCharacterLabourChange($taskName) {
+    private static function getCharacterLabourChange($taskName) {
         return 1;
     }
 
-    private getToolLabourChange($taskName) {
+    private static function getToolLabourChange($taskName) {
         return 1;
     }
 
-    public calculateOutput($taskName, $character, $toolId=null, $machineId=null) {
+    public static function calculateOutput($taskName, $character, $toolId=null, $machineId=null) {
         return 1;
     }
 }
