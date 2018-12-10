@@ -6,6 +6,12 @@ use App\Task;
 
 class LabourCalculator
 {
+    public static function isTimeLockActive($character) {
+        $now = date_create(date('Y-m-d H:i:s'));
+        $timeLock = date_create($character->time_lock);
+        return $timeLock > $now;
+    }
+
     public static function calculateTimeLock($taskName, $character, $toolId=null, $machineId=null) {
         $baseValue = LabourCalculator::getTaskLabourCost($taskName);
 

@@ -72,6 +72,10 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Current zone could not be found'], 403);
         }
 
+        if (LabourCalculator::isTimeLockActive($character)) {
+            return response()->json(['status' => 'Time lock active'], 403);
+        }
+
         $borderingZones = $this->getBorderingZonesById($currentZone->id, $user);
 
         $targetZone = null;

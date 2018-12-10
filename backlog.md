@@ -1,7 +1,8 @@
 - [x] Travelling takes some amount of time
 - [x] and generates some kind of a message.
 'You begin travelling', 'You end travelling' - and on you end, your zone has changed. Your visibility to people in your zone will change though unless they are in your travel group, but that's just normal.
-- [ ] Okay so here's how we want to do travelling. And actually basically everything else. You send off your travel request. You get a response back that tells you the response AND the time lock. In the meantime, there's a lock on your character. A lock is basically a timestamp (server time) of when you can next make an action. It'll be a few hundred milliseconds for most things I guess. Then when the next request is made we check if we're in the lock time or not.
+- [x] Okay so here's how we want to do travelling. And actually basically everything else. You send off your travel request. You get a response back that tells you the response AND the time lock. In the meantime, there's a lock on your character. A lock is basically a timestamp (server time) of when you can next make an action. It'll be a few hundred milliseconds for most things I guess. Then when the next request is made we check if we're in the lock time or not.
+- [ ] To do: ACTUALLY CHECK THE TIMELOCK LOL
 - [ ] I think it'd be good to get talking right at an early stage. I think one of the reasons the internet is such a hateful police is because of mob mentality, so it'd be cool if the game really embraces more personal interactions and interacting at 'mob' level is much less common. It is important and needs to be possible (eg at the very first spawn), but it'd be good if it was also lost/difficult/uncommon in some way. I think people not hearing things if they aren't logged in is a good way. Also no speech bleeding - if you're speaking to one person, usually they're the only one to hear anything. People have to specifically gather together to hear each other.
 
 -----
