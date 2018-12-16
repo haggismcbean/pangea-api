@@ -51,8 +51,13 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 // travelling and location
 Route::group(['middleware' => 'auth:api'], function() {
-	Route::get('borders', 'ZoneController@getBorderingZones');
-	Route::post('move', 'ZoneController@changeZones');
+	Route::get('zone/{zone}/borders', 'ZoneController@getBorderingZones');
+	Route::post('zone/{zone}/move', 'ZoneController@changeZones');
+});
+
+// current location
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('zone/{zone}/characters', 'ZoneController@getZoneCharacters');
 });
 
 ////////////

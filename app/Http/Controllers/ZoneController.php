@@ -13,13 +13,24 @@ use App\Http\Controllers\LocationController;
 
 class ZoneController extends Controller
 {
-
-    public function getBorderingZones(Request $request) {
+    public function getZoneCharacters(Zone $zone) {
         $user = Auth::user();
 
-        $zoneId = $request->input('zone_id');
+        $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
 
-        $newZones = $this->getBorderingZonesById($zoneId, $user);
+        if (!$currentZone) {
+            return response()->json(['status' => 'Zone could not be found'], 403);
+        }
+
+        $characters = $zone->characters()->get();
+
+        return response()->json($characters, 200);
+    }
+
+    public function getBorderingZones(Zone $zone) {
+        $user = Auth::user();
+
+        $newZones = $this->getBorderingZonesById($zone->id, $user);
 
         return response()->json($newZones, 200);
     }
@@ -60,10 +71,10 @@ class ZoneController extends Controller
         }
     }
 
-    public function changeZones(Request $request) {
+    public function changeZones(Zone $zone) {
         $user = Auth::user();
 
-        $newZoneId = $request->input('zone_id');
+        $newZoneId = $zone->id;
 
         $character = $user->characters()->first();
         $currentZone = $character->zone()->first();
