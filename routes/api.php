@@ -60,6 +60,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('zone/{zone}/characters', 'ZoneController@getZoneCharacters');
 });
 
+// combat
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('character/{character}/attack', 'CharacterController@attack');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');

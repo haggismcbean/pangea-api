@@ -17,8 +17,9 @@ class SpeakEvent
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([
                 'message' => $request->input('message'),
-                'source' => 'character',
-                'sourceName' => $activeCharacter->name
+                'source_type' => 'character',
+                'source_name' => $activeCharacter->name,
+                'source_id' => $activeCharacter->id,
             ]);
 
             if ($nearbyCharacter->id !== $activeCharacter->id) {
