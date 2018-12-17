@@ -38,43 +38,13 @@ class CharacterController extends Controller
     }
 
     public function attack(Character $character) {
-        //DEV
-        // $user = Auth::user();
-        // $character = $user->characters()->first();
-        // //END DEV
-
-        // $character->health = 22;
-        // $character->save();
-
-        // AttackCharacter::dispatch($character)->delay(now()->addSeconds(10));
-
-        // return response()->json($character, 200);
-
-        //working
-
-        //DEV
         $user = Auth::user();
-        $character = $user->characters()->first();
-        //END DEV
+        $attacker = $user->characters()->first();
 
-        $job = new AttackCharacter($character);
+        $job = new AttackCharacter($attacker, $character);
 
-        $job->dispatch($character);
+        $job->dispatch($attacker, $character);
 
         return response()->json($character, 200);
-        //end working
-        // $character is the character to be attacked
-
-        // the user's character is the character doing the attacking.
-
-        // so we add to the queue, the request to do the attacking. 
-
-        // 1 - create a job ('attack character' or some such)
-
-        // 2 - dispatch the job
-
-        // 3 - when the job is done, broadcast the results
-
-        // 4 - test it out!
     }
 }

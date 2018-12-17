@@ -17,16 +17,18 @@ class AttackCharacter implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $tries = 1;
-    public $character;
+    public $attacker;
+    public $defender;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($character)
+    public function __construct($attacker, $defender)
     {
-        $this->character = $character;
+        $this->attacker = $attacker;
+        $this->defender = $defender;
     }
 
     /**
@@ -36,18 +38,16 @@ class AttackCharacter implements ShouldQueue
      */
     public function handle()
     {
-        //todo: actually implement the attack. random roll on how much damage it does.
-        $message = "test";
-        $this->character->health = 99;
-        $this->character->save();
+        // to do: items etc.
+        $this->defender->health = $this->defender->health - 20;
+        $this->defender->save();
+        
         $attackCharacterEvent = new AttackCharacterEvent();
-        $attackCharacterEvent->handle($this->character);
-        return true;
+        $attackCharacterEvent->handle($this->attacker, $this->defender);
 
+        return true;
     }
 
     public function failed(Exception $exception) {
-        // $attackCharacterEvent = new AttackCharacterEvent();
-        // $attackCharacterEvent->handle($attacker);
     }
 }
