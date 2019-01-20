@@ -28,7 +28,6 @@ class Character extends Model
     {
         $character = new CharacterFactory();
 
-        $this->user_id = Auth::id();
         $this->location_id = 0;
         $this->birthday = $character->birthday;
         $this->gender = $character->gender;
@@ -44,6 +43,8 @@ class Character extends Model
         $this->appearance = $character->appearance;
         $this->personality = $character->personality;
         $this->backstory = $character->backstory;
+        $this->health = 100;
+        $this->hunger = 100;
     }
 
     public function user()

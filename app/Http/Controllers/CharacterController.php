@@ -24,8 +24,16 @@ class CharacterController extends Controller
     }
 
     public function create() {
+        $user = Auth::user();
+
         // okay so users create a new character. It's randomly assigned appearance, backstory, personality.
         $character = new Character();
+        $character->generate();
+        $character->user_id = $user->id;
+
+        // TODO - spawn stuff/embark stuff
+        $character->zone_id = 1;
+
         $character->save();
         return response()->json($character, 201);
     }
