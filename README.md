@@ -12,6 +12,15 @@
 - [ ] registration
 - [ ] deletion
 
+### Embark Process
+- [ ] fresh embark
+- [ ] join existing community
+	+ Community size
+	+ Communities provide history
+	+ Regular embarks once every x days
+	+ Note communities can close their doors at any time.
+	+ Note we need to disable some wonky form of 'fast travel' through spawn points.
+
 ## Webhook
 ### Actions
 - [x] talking
@@ -28,6 +37,7 @@
 - [ ] hunting
 - [ ] aging
 - [ ] child birth (automatically) (actually do I even want this? I have a pretty plausible excuse now)
+- [ ] skills
 
 ### States
 - [x] location
@@ -73,7 +83,7 @@
 - [ ] Increasing user's available actions
 	- [ ] things characters can do to each other
 	- [ ] things characters can do to their surroundings
-	- [ ] there being more than one town! (travel)
+	- [x] there being more than one town! (travel)
 
 - [ ] Voice colours settable and saveable
 
