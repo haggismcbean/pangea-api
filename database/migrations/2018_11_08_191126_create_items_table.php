@@ -18,11 +18,12 @@ class CreateItemsTable extends Migration
             $table->timestamps();
             $table->string('item_type');
             $table->integer('type_id')->unsigned();
-            $table->integer('unit_weight');
-            $table->integer('unit_volume');
-            $table->integer('rot_rate');
+            $table->integer('unit_weight'); //weight
+            $table->integer('unit_volume'); //size
+            $table->integer('rot_rate'); //durability
             $table->string('name');
             $table->string('description');
+            // 'efficiency' // strength
         });
     }
 

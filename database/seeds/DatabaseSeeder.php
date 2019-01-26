@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(LocationTableSeeder::class); //Warning - this takes a minute or so to run
         // $this->call(BiomePlantTableSeeder::class);
         // $this->call(LocationPlantTableSeeder::class); //Warning - this takes a couple of minutes
-        $this->call(ZonesTableSeeder::class); //Warning - this takes a minute or so
-        $this->call(TasksTableSeeder::class);
+        // $this->call(ZonesTableSeeder::class); //Warning - this takes a minute or so
+        // $this->call(TasksTableSeeder::class);
+        $this->call(ItemTableSeeder::class);
     }
 }
