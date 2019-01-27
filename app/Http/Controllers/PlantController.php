@@ -40,6 +40,10 @@ class PlantController extends Controller
     private function addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece) {
         $plant = $this->getPlant($plantId, $plantPiece, $location);
 
+        if (!$plant) {
+            return response()->json(['status' => 'Cannot find plant or plant part'], 403);
+        }
+
         if ($character->hasInventorySpace()) {
             $plantOwner = $this->getPlantOwner('character', $character, $plant);
         } else {
@@ -59,6 +63,11 @@ class PlantController extends Controller
         if (!$plant) {
             $descriptionKey = $plantPiece . 'Appearance';
             $description = $location->plants()->find($plantId)->$descriptionKey;
+
+            if (!$description) {
+                return;
+            }
+
             return ItemController::createNewItem($plantId, $plantPiece, $description);
         } else {
             return $plant;

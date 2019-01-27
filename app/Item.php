@@ -25,11 +25,6 @@ class Item extends Model
             return $this->belongsTo('App\Plant', 'type_id')->first();
         }
 
-        // TODO - seed the wood table
-        if ($this->item_type === 'wood') {
-            return $this->belongsTo('App\Wood', 'type_id')->first();
-        }
-
         // TODO - seed the stone table
         if ($this->item_type === 'stone') {
             return $this->belongsTo('App\Stone', 'type_id')->first();

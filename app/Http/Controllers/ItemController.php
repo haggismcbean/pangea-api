@@ -18,11 +18,21 @@ class ItemController extends Controller
 
         $item->item_type = 'plant';
         $item->type_id = $typeId;
-        $item->unit_weight = 1;
-        $item->unit_volume = 1;
-        $item->rot_rate = 1;
         $item->name = $name;
         $item->description = $description;
+
+        if ($name === 'wood') {
+            $item->unit_weight = rand(31, 57);
+            $item->unit_volume = rand(8, 12);
+            $item->efficiency = rand(8, 12);
+            $item->rot_rate = 2;
+        } else {
+            // leaf, fruit, seed
+            $item->unit_weight = rand(8, 12);
+            $item->unit_volume = rand(8, 12);
+            $item->efficiency = 1;
+            $item->rot_rate = 1;
+        }
 
         $item->save();
 
