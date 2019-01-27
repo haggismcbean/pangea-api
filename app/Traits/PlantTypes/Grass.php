@@ -15,6 +15,8 @@ class Grass
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Grass
         $this->hasFruit = false;
         $this->isPoisonous = rand(0, 20) === 1 ? true : false;
         $this->hasFlower = false;
+        $this->hasWood = false;
 
         $this->rainfallMin = rand(1, 4);
         $this->rainfallMax = $this->rainfallMin + rand(0, 5);

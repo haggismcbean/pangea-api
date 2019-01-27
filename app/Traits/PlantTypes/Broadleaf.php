@@ -15,6 +15,8 @@ class Broadleaf
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Broadleaf
         $this->hasFruit = rand(0, 50) === 1 ? true : false;
         $this->isPoisonous = rand(0, 30) === 1 ? true : false;
         $this->hasFlower = true;
+        $this->hasWood = true;
 
         $this->leafAppearance = "broad";
         $this->rainfallMin = rand(3, 8);

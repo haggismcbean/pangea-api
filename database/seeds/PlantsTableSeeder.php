@@ -138,6 +138,8 @@ class PlantsTableSeeder extends Seeder
 				'leafSize' => $plant->leafSize,
 				'leafColor' => $plant->leafColor,
 				'leafShape' => $plant->leafShape,
+                'hasWood' => $plant->type->hasWood,
+                'woodAppearance' => $plant->woodAppearance,
             ]);
         }
     }

@@ -15,6 +15,8 @@ class Conifer
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Conifer
         $this->hasFruit = rand(0, 20) === 1 ? true : false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = false;
+        $this->hasWood = true;
 
         $this->leafAppearance = "needle";
         $this->rainfallMin = rand(1, 3);

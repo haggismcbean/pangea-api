@@ -15,6 +15,8 @@ class Cactus
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Cactus
         $this->hasFruit = rand(0, 20) === 1 ? true : false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = true;
+        $this->hasWood = false;
 
         $this->leafAppearance = "thorn";
         $this->rainfallMin = rand(0, 2);

@@ -105,6 +105,12 @@ class PlantFactory extends Model
             $this->leafAutumnAppearance = $message->message;
         }
 
+        // wood
+        if ($this->type->hasWood) {
+            $this->woodColor = ColorFactory::getRandomAutumnColor();
+            $this->woodAppearance = $this->woodColor;
+        }
+
         // todos/other
         // $this->sproutAppearance = PlantAppearanceTraits::getRandomTrait("sprout", $this);
         // $this->deathAppearance = PlantAppearanceTraits::getRandomTrait("death", $this);

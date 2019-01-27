@@ -15,6 +15,8 @@ class Succulent
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Succulent
         $this->hasFruit = false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = false;
+        $this->hasWood = false;
 
         $this->leafAppearance = "succulent";
         $this->rainfallMin = rand(1, 2);

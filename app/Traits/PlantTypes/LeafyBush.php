@@ -15,6 +15,8 @@ class LeafyBush
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class LeafyBush
         $this->hasFruit = rand(0, 20) === 1 ? true : false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = rand(0, 1) === 1 ? true : false;
+        $this->hasWood = false;
 
         $this->leafAppearance = "broad";
         $this->rainfallMin = rand(4, 6);

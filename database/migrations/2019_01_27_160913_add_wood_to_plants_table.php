@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEfficiencyToItemsTable extends Migration
+class AddWoodToPlantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddEfficiencyToItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('items', function (Blueprint $table) {
-            $table->dateTime('efficiency')->nullable();
+        Schema::table('plants', function (Blueprint $table) {
+            $table->boolean('hasWood');
+            $table->text('woodAppearance')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ class AddEfficiencyToItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('items', function (Blueprint $table) {
-            $table->dropColumn('efficiency');
+        Schema::table('plants', function (Blueprint $table) {
+            $table->dropColumn('woodAppearance');
+            $table->dropColumn('hasWood');
         });
     }
 }

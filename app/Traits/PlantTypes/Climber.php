@@ -15,6 +15,8 @@ class Climber
     public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
+    public $hasWood;
+    public $woodAppearance;
 
     public $rainfallMin;
     public $rainfallMax;
@@ -30,6 +32,7 @@ class Climber
         $this->hasFruit = false;
         $this->isPoisonous = rand(0, 7) === 1 ? true : false;
         $this->hasFlower = false;
+        $this->hasWood = false;
 
         $this->leafAppearance = "broad";
         $this->rainfallMin = rand(3, 5);
