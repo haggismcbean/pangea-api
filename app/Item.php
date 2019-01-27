@@ -25,6 +25,10 @@ class Item extends Model
             return $this->belongsTo('App\Plant', 'type_id')->first();
         }
 
+        if ($this->item_type === 'metal') {
+            return $this->belongsTo('App\Metal', 'type_id')->first();
+        }
+
         // TODO - seed the stone table
         if ($this->item_type === 'stone') {
             return $this->belongsTo('App\Stone', 'type_id')->first();
@@ -33,11 +37,6 @@ class Item extends Model
         // TODO - seed the animal_product table (first create animals though!)
         if ($this->item_type === 'animal_product') {
             return $this->belongsTo('App\AnimalProduct', 'type_id')->first();
-        }
-
-        // TODO - seed the metal table (by hand)
-        if ($this->item_type === 'metal') {
-            return $this->belongsTo('App\Metal', 'type_id')->first();
         }
 
         // TODO - seed the mineral table (by hand)
