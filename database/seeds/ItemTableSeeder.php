@@ -13,6 +13,7 @@ class ItemTableSeeder extends Seeder
     public function run()
     {
         //Let's clear the location table first
+        // NOTE TO SELF - Maybe I shouldn't do this??
         Item::truncate();
 
         // TODO - seed this table!

@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(TasksTableSeeder::class);
 
         $this->call(MetalsTableSeeder::class);
+        $this->call(MineralsTableSeeder::class);
     }
 }
