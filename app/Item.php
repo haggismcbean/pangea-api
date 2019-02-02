@@ -33,9 +33,14 @@ class Item extends Model
             return $this->belongsTo('App\Mineral', 'type_id')->first();
         }
 
-        // TODO - seed the stone table
+        // TODO - seed the stone table. note that metals can be found IN stone, but minerals only near stone.
         if ($this->item_type === 'stone') {
             return $this->belongsTo('App\Stone', 'type_id')->first();
+        }
+
+        // TODO - seed the animals table
+        if ($this->item_type === 'animal') {
+            return $this->belongsTo('App\Animal', 'type_id')->first();
         }
 
         // TODO - seed the animal_product table (first create animals though!)

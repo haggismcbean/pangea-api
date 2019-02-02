@@ -69,5 +69,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');
 Route::get('plant', 'PlantController@show');
+Route::get('animal', 'AnimalController@show');
 //
 ////////////
