@@ -43,7 +43,7 @@ class Deer extends AnimalType
 
     public function __construct()
     {
-        $this->name = "deer";
+        $this->name = "herbivore";
         $this->maxSize = rand(10, 30);
         $this->sizeString = $this->getSizeString($this->maxSize);
         $this->growthRate = rand(1, 5);
