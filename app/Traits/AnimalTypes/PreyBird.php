@@ -7,7 +7,7 @@ use App\Traits\AnimalTypes\AnimalType;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class PredatorMammal extends AnimalType
+class PreyBird extends AnimalType
 {
     public $name;
     public $maxSize; // 0-100
@@ -43,33 +43,33 @@ class PredatorMammal extends AnimalType
 
     public function __construct()
     {
-        $this->name = "predator";
-        $this->maxSize = rand(10, 40);
+        $this->name = "bird";
+        $this->maxSize = rand(1, 20);
         $this->sizeString = $this->getSizeString($this->maxSize);
-        $this->growthRate = rand(1, 5);
+        $this->growthRate = rand(4, 5);
 
         $this->hasHorn = false;
-        $this->hasFur = true;
-        $this->hasHide = true;
-        $this->hasFeathers = false;
+        $this->hasFur = false;
+        $this->hasHide = false;
+        $this->hasFeathers = true;
         $this->isPoisonous = false;
 
-        $this->isMeatEater = true;
-        $this->isPlantEater = false;
-        $this->isScavenger = rand(0, 1) === 1 ? true: false;
+        $this->isMeatEater = false;
+        $this->isPlantEater = true;
+        $this->isScavenger = false;
 
-        $this->isHumanEater = rand(0, 7) === 1 ? true: false;
+        $this->isHumanEater = false;
         $this->fearOfHumans = rand(0, 9);
-        $this->isPest = false;
+        $this->isPest = rand(0, 9) === 1 ? true: false;
 
-        $this->maxHerdSize = rand(0, 1) === 1 ? 1 : rand(3,10);
-        $this->maxSpeed = rand(5, 8);
+        $this->maxHerdSize = rand(0, 1) === 1 ? 1 : rand(5,20);
+        $this->maxSpeed = rand(0, 8);
         $this->fleeDistance = $this->fearOfHumans ? rand(1, 9) : 0;
-        $this->canHide = true;
+        $this->canHide = false;
 
-        $this->hasHole = rand(0, 8) === 1 ? true: false;
+        $this->hasHole = false;
 
-        $this->isNocturnal = rand(0, 5) === 1 ? true: false;
+        $this->isNocturnal = false;
 
         $this->isBeastOfBurden = false;
         $this->isDomesticatable = false;

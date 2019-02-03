@@ -8,8 +8,8 @@
 - [x] password reset/change
 - [x] login
 - [ ] 'settings'
-- [ ] character creation
-- [ ] registration
+- [x] character creation
+- [x] registration
 - [ ] deletion
 
 ### Embark Process
@@ -26,7 +26,7 @@
 - [x] talking
 - [x] foraging
 - [x] travelling
-- [ ] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person. It should be pretty hard to kill an awake person by yourself. But as part of a group? Not hard. But still sometimes they can run away.
+- [x] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person. It should be pretty hard to kill an awake person by yourself. But as part of a group? Not hard. But still sometimes they can run away.
 - [ ] eating
 - [ ] building/terraforming
 - [ ] talking in groups/cleverly
@@ -129,7 +129,7 @@ https://laravel.com/docs/5.7/eloquent-relationships#many-to-many
 
 # Database seeding:
 
-`php artisan make:seeder UsersTableSeeder`
+`php artisan make:seeder MetalsTableSeeder`
 
 `php artisan db:seed`
 

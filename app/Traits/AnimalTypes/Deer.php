@@ -7,7 +7,7 @@ use App\Traits\AnimalTypes\AnimalType;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class PredatorMammal extends AnimalType
+class Deer extends AnimalType
 {
     public $name;
     public $maxSize; // 0-100
@@ -43,31 +43,31 @@ class PredatorMammal extends AnimalType
 
     public function __construct()
     {
-        $this->name = "predator";
-        $this->maxSize = rand(10, 40);
+        $this->name = "deer";
+        $this->maxSize = rand(10, 30);
         $this->sizeString = $this->getSizeString($this->maxSize);
         $this->growthRate = rand(1, 5);
 
-        $this->hasHorn = false;
+        $this->hasHorn = rand(0, 5) === 3 ? true: false;
         $this->hasFur = true;
         $this->hasHide = true;
         $this->hasFeathers = false;
         $this->isPoisonous = false;
 
-        $this->isMeatEater = true;
-        $this->isPlantEater = false;
-        $this->isScavenger = rand(0, 1) === 1 ? true: false;
+        $this->isMeatEater = false;
+        $this->isPlantEater = true;
+        $this->isScavenger = false;
 
-        $this->isHumanEater = rand(0, 7) === 1 ? true: false;
-        $this->fearOfHumans = rand(0, 9);
+        $this->isHumanEater = false;
+        $this->fearOfHumans = rand(6, 9);
         $this->isPest = false;
 
         $this->maxHerdSize = rand(0, 1) === 1 ? 1 : rand(3,10);
-        $this->maxSpeed = rand(5, 8);
-        $this->fleeDistance = $this->fearOfHumans ? rand(1, 9) : 0;
+        $this->maxSpeed = rand(6, 9);
+        $this->fleeDistance = rand(6, 9);
         $this->canHide = true;
 
-        $this->hasHole = rand(0, 8) === 1 ? true: false;
+        $this->hasHole = false;
 
         $this->isNocturnal = rand(0, 5) === 1 ? true: false;
 

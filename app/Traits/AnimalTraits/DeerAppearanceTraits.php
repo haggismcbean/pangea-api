@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\Traits;
 use Carbon\Carbon;
 
-class PredatorMammalAppearanceTraits extends Model
+class DeerAppearanceTraits extends Model
 {
     private static $defaultLayout = "It has {{value}} {{key}}";
 
     private static $legsArray = ["{{legCount}}", "{{legLength}}"];
     private static $legs;
-    private static $legsDefaultLayout = "It is a {{value}} legged beast";
+    private static $legsDefaultLayout = "It is a {{value}} legged deer";
 
     private static $furArray = ["It has {{furLustre}} {{furColour}} fur", "It has {{furLength}} {{furColour}} fur", "It has {{furLength}} {{furLustre}} {{furColour}} fur"];
     private static $fur;
@@ -22,25 +22,29 @@ class PredatorMammalAppearanceTraits extends Model
     private static $posture;
     private static $postureDefaultLayout = "{{value}}";
 
+    private static $hornArray = ["It has {{size}} antlers", "It has a {{size}} twisted horn", "It has two {{size}} curving horns"];
+    private static $horn;
+    private static $hornDefaultLayout = "{{value}}";
+
     public static function init()
     {
         $traits = [
-            'fur', 'legs', 'posture'
+            'fur', 'legs', 'posture', 'horn'
         ];
 
         foreach( $traits as $trait) {
-            PredatorMammalAppearanceTraits::${$trait} = new Traits($trait);
+            DeerAppearanceTraits::${$trait} = new Traits($trait);
             $traitArray = $trait . 'Array';
             $defaultLayout = $trait . 'DefaultLayout';
 
-            if (property_exists(new PredatorMammalAppearanceTraits, $defaultLayout)) {
-                PredatorMammalAppearanceTraits::${$trait}->defaultLayout = PredatorMammalAppearanceTraits::${$defaultLayout};
-            } else if (property_exists(new PredatorMammalAppearanceTraits, 'defaultLayout')) {
-                PredatorMammalAppearanceTraits::${$trait}->defaultLayout = PredatorMammalAppearanceTraits::$defaultLayout;
+            if (property_exists(new DeerAppearanceTraits, $defaultLayout)) {
+                DeerAppearanceTraits::${$trait}->defaultLayout = DeerAppearanceTraits::${$defaultLayout};
+            } else if (property_exists(new DeerAppearanceTraits, 'defaultLayout')) {
+                DeerAppearanceTraits::${$trait}->defaultLayout = DeerAppearanceTraits::$defaultLayout;
             }
 
-            PredatorMammalAppearanceTraits::${$trait}->addTraitProperties(
-                PredatorMammalAppearanceTraits::${$traitArray},
+            DeerAppearanceTraits::${$trait}->addTraitProperties(
+                DeerAppearanceTraits::${$traitArray},
                 function($location) {
                     return 1;
                 }
@@ -50,7 +54,7 @@ class PredatorMammalAppearanceTraits extends Model
 
     public static function getRandomTrait($traitName, $animal)
     {
-        $trait = PredatorMammalAppearanceTraits::$$traitName;
+        $trait = DeerAppearanceTraits::$$traitName;
         return $trait->getRandomTrait($animal);
     }
 }
