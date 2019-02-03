@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\Traits;
 use Carbon\Carbon;
 
-class PredatorMammalAppearanceTraits extends Model
+class PreyBirdAppearanceTraits extends Model
 {
     private static $defaultLayout = "It has {{value}} {{key}}";
 
-    private static $legsArray = ["{{legCount}}", "{{legLength}}"];
-    private static $legs;
-    private static $legsDefaultLayout = "It is a {{value}} legged beast";
+    // private static $legsArray = ["{{legCount}}", "{{legLength}}"];
+    // private static $legs;
+    // private static $legsDefaultLayout = "It is a {{value}} legged beast";
 
-    private static $furArray = ["It has {{furLustre}} {{furColour}} fur", "It has {{furLength}} {{furColour}} fur", "It has {{furLength}} {{furLustre}} {{furColour}} fur"];
-    private static $fur;
-    private static $furDefaultLayout = "{{value}}";
+    private static $feathersArray = ["It has {{featherColour}} {{featherColour}} feathers", "It has {{featherLength}} {{featherColour}} feathers", "It has {{featherLength}} {{featherLustre}} {{featherColour}} feathers"];
+    private static $feathers;
+    private static $feathersDefaultLayout = "{{value}}";
 
-    private static $postureArray = ["It holds itself low to the ground {{personality}}", "It holds itself {{personality}}", "It scurries around {{personality}}", "It slinks back and forth {{personality}}", "Its tail swishes {{personality}}", "It blinks {{personality}}", "It licks its lips {{personality}}", "Its ear flicks {{personality}}"];
+    private static $postureArray = ["It hops around {{personality}}", "It holds itself {{personality}}", "It scurries around {{personality}}", "It flitters around {{personality}}", "Its flutters around {{personality}}", "It blinks {{personality}}", "It chirrups {{personality}}", "Its squawks {{personality}}"];
     private static $posture;
     private static $postureDefaultLayout = "{{value}}";
 
@@ -41,7 +41,7 @@ class PredatorMammalAppearanceTraits extends Model
     public static function init()
     {
         $traits = [
-            'fur', 'legs', 'posture'
+            'feathers', 'legs', 'posture'
             // , 'feet', 'ears', 'head', 'tail'
         ];
 

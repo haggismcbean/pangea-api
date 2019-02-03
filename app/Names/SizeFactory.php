@@ -39,4 +39,20 @@ class SizeFactory extends Model
         $randomIndex = rand(0, $length);
         return $size[$randomIndex];
     }
+
+    public static function getRandomHairLength()
+    {
+        $size = ["long", "short", "cropped", "matted"];
+        $length = count($size) - 1;
+        $randomIndex = rand(0, $length);
+        return $size[$randomIndex];
+    }
+
+    public static function getRandomRodLength()
+    {
+        $size = ["long", "short", "dangly", "bow"];
+        $length = count($size) - 1;
+        $randomIndex = rand(0, $length);
+        return $size[$randomIndex];
+    }
 }

@@ -32,6 +32,14 @@ class ColorFactory extends Model
         return $color[$randomIndex];
     }
 
+    public static function getRandomFurColor()
+    {
+        $color = ["brown", "yellow", "orange", "black", "white"];
+        $length = count($color) - 1;
+        $randomIndex = rand(0, $length);
+        return $color[$randomIndex];
+    }
+
     public static function getRandomShade()
     {
         $shade = ["pale", "bright", "pastle", "muted", "vibrant", "kind of", "dull"];
