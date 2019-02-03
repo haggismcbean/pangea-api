@@ -123,16 +123,16 @@ class AnimalFactory extends Model
             }
         }
 
-        // opening line
-        
-        // mammal
+        // hog
 
-        // bird
+        // rodent
 
-        // amphibian
-
-        // reptile
+        // monkey
 
         // fish
+
+        // snake
+
+        // lizard
     }
 }
