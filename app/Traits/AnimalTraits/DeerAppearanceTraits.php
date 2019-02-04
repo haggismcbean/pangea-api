@@ -12,7 +12,7 @@ class DeerAppearanceTraits extends Model
 
     private static $legsArray = ["{{legCount}}", "{{legLength}}"];
     private static $legs;
-    private static $legsDefaultLayout = "It is a {{value}} legged deer";
+    private static $legsDefaultLayout = "It is a {{value}} legged herbivore";
 
     private static $furArray = ["It has {{furLustre}} {{furColour}} fur", "It has {{furLength}} {{furColour}} fur", "It has {{furLength}} {{furLustre}} {{furColour}} fur"];
     private static $fur;

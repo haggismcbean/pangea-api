@@ -76,7 +76,7 @@ class AnimalFactory extends Model
             $this->feathersAppearance = $message->message;
 
             $this->legAppearance = PreyBirdAppearanceTraits::getRandomTrait("legs", $this);
-            $this->legCount = "two small";
+            $this->legCount = "two";
             $this->legLength = SizeFactory::getRandomRodLength();
             $message = new MessageFormer();
             $message->formSentence($this->legAppearance, $this);
@@ -102,7 +102,7 @@ class AnimalFactory extends Model
             $this->furAppearance = $message->message;
 
             $this->legAppearance = DeerAppearanceTraits::getRandomTrait("legs", $this);
-            $this->legCount = "two small";
+            $this->legCount = "four";
             $this->legLength = SizeFactory::getRandomRodLength();
             $message = new MessageFormer();
             $message->formSentence($this->legAppearance, $this);
