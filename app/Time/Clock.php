@@ -21,27 +21,86 @@ class Clock
         // returns a number between 0 and 39.
     }
 
+    public static function getSeason()
+    {
+        $dayOfYear = Clock::getDayOfYear();
+
+        if ($dayOfYear < 10) {
+            return 'winter';
+        }
+
+        if ($dayOfYear < 20) {
+            return 'spring';
+        }
+
+        if ($dayOfYear < 30) {
+            return 'summer';
+        }
+
+        if ($dayOfYear < 40) {
+            return 'autumn';
+        }
+    }
+
     public static function getLocationTimezone($location)
     {
         $totalXCords = $location->orderBy('id', 'DESC')->first()->x_coord;
         $xCordsPerTimezone = $totalXCords / 24;
 
         return ($location->x_coord / $xCordsPerTimezone) - 12;
+        // returns a number between -12 and 12
     }
 
-    // public static function getDayOfSeason($biome)
-    // {
-    //     $surnames = json_decode(file_get_contents("/www/pangea-api/app/Names/DataStores/Surnames.json"), true);
-    //     $length = count($surnames) - 1;
-    //     $randomIndex = rand(0, $length);
-    //     return $surnames[$randomIndex];
-    // }
+    public static function getLocationRainzone($location) {
+        $totalXCords = $location->orderBy('id', 'DESC')->first()->x_coord;
+        $xCordsPerRainzone = $totalXCords / 24;
 
-    // public static function getDayOfSeason($biome)
-    // {
-    //     $surnames = json_decode(file_get_contents("/www/pangea-api/app/Names/DataStores/Surnames.json"), true);
-    //     $length = count($surnames) - 1;
-    //     $randomIndex = rand(0, $length);
-    //     return $surnames[$randomIndex];
-    // }
+        return ($location->x_coord / $xCordsPerRainzone) % 4;
+        // returns a number between 0 and 3 
+    }
+
+    public static function getTemperature($location)
+    {
+        if (Clock::getSeason() === 'winter') {
+            return $location->biome()->coldestTemperature;
+        }
+
+        if (Clock::getSeason() === 'summer') {
+            return $location->biome()->hottestTemperature;
+        }
+        
+        return $location->biome()->averageTemperature;
+    }
+
+    public static function getRainfall($location)
+    {
+        $dayOfYear = Clock::getDayOfYear();
+        $rainzone = Clock::getLocationRainzone($location);
+
+        if ($rainzone === 0 && (Clock::isBetween($dayOfYear, 0, 4) || Clock::isBetween($dayOfYear, 35, 39))) {
+            // rainy season
+            return $location->biome()->first()->highestRainfall;
+        }
+
+        if ($rainzone === 1 && (Clock::isBetween($dayOfYear, 5, 9) || Clock::isBetween($dayOfYear, 30, 34))) {
+            // rainy season
+            return $location->biome()->first()->highestRainfall;
+        }
+
+        if ($rainzone === 2 && (Clock::isBetween($dayOfYear, 10, 14) || Clock::isBetween($dayOfYear, 25, 29))) {
+            // rainy season
+            return $location->biome()->first()->highestRainfall;
+        }
+
+        if ($rainzone === 3 && (Clock::isBetween($dayOfYear, 15, 24))) {
+            // rainy season
+            return $location->biome()->first()->highestRainfall;
+        }
+
+        return $location->biome()->first()->lowestRainfall;
+    }
+
+    private static function isBetween($number, $min, $max) {
+        return $number >= $min && $number <= $max;
+    }
 }
