@@ -21,6 +21,14 @@ class Clock
         // returns a number between 0 and 39.
     }
 
+    public static function getLocationTimezone($location)
+    {
+        $totalXCords = $location->orderBy('id', 'DESC')->first()->x_coord;
+        $xCordsPerTimezone = $totalXCords / 24;
+
+        return ($location->x_coord / $xCordsPerTimezone) - 12;
+    }
+
     // public static function getDayOfSeason($biome)
     // {
     //     $surnames = json_decode(file_get_contents("/www/pangea-api/app/Names/DataStores/Surnames.json"), true);
