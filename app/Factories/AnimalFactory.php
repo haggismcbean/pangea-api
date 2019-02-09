@@ -8,10 +8,12 @@ use Carbon\Carbon;
 use App\Traits\AnimalTypes\PredatorMammal;
 use App\Traits\AnimalTypes\PreyBird;
 use App\Traits\AnimalTypes\Deer;
+use App\Traits\AnimalTypes\Fish;
 
 use App\Traits\AnimalTraits\PredatorMammalAppearanceTraits;
 use App\Traits\AnimalTraits\PreyBirdAppearanceTraits;
 use App\Traits\AnimalTraits\DeerAppearanceTraits;
+use App\Traits\AnimalTraits\FishAppearanceTraits;
 
 use App\MessageFormer\MessageFormer;
 use App\Names\ColorFactory;
@@ -121,6 +123,25 @@ class AnimalFactory extends Model
                 $message->formSentence($this->hornAppearance, $this);
                 $this->hornAppearance = $message->message;
             }
+        }
+
+        if ($type == "fish") {
+            $this->stats = new Fish();
+            FishAppearanceTraits::init();
+
+            $this->scalesAppearance = FishAppearanceTraits::getRandomTrait("scales", $this);
+            $this->shape = SizeFactory::getRandomShape();
+            $this->lustre = TextureFactory::getRandomLustre();
+            $this->colour = ColorFactory::getRandomColor();
+            $message = new MessageFormer();
+            $message->formSentence($this->scalesAppearance, $this);
+            $this->scalesAppearance = $message->message;
+
+            $this->postureAppearance = FishAppearanceTraits::getRandomTrait("posture", $this);
+            $this->shape = SizeFactory::getRandomShape();
+            $message = new MessageFormer();
+            $message->formSentence($this->postureAppearance, $this);
+            $this->postureAppearance = $message->message;
         }
 
         // hog

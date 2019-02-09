@@ -10,7 +10,7 @@ class AnimalController extends Controller
 {
 
     public function show() {
-        $animal = new AnimalGenerator("deer");
+        $animal = new AnimalGenerator("fish");
         return response()->json($animal);
     }
 }
