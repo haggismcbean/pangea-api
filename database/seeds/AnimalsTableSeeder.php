@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\WorldGenerator\AnimalGenerator;
+use App\Animal;
+
 class AnimalsTableSeeder extends Seeder
 {
     /**
@@ -13,18 +16,92 @@ class AnimalsTableSeeder extends Seeder
     {
         Animal::truncate();
 
-        //so we need to create the animals in biomes, a bit like the plants
+        $animals = [];
 
-        //the difference is, the animals may occur in different biomes at different times of the year
+        for ($temperature=2; $temperature < 7; $temperature++) {
+            for ($rainfall=2; $rainfall < 8; $rainfall++) { 
+                $deer = new AnimalGenerator("deer");
+                $deer->animal->temperatureMin = $temperature;
+                $deer->animal->temperatureMax = $temperature;
+                $deer->animal->rainfallMin = $rainfall;
+                $deer->animal->rainfallMax = $rainfall;
 
-        //it is based on the seasons of food
+                array_push($animals, $deer);
+            }
+        }
 
-        //which i have not yet established.
+        for ($temperature=2; $temperature < 7; $temperature++) {
+            for ($rainfall=2; $rainfall < 8; $rainfall++) { 
+                $predatorMammal = new AnimalGenerator("predator-mammal");
+                $predatorMammal->animal->temperatureMin = $temperature;
+                $predatorMammal->animal->temperatureMax = $temperature;
+                $predatorMammal->animal->rainfallMin = $rainfall;
+                $predatorMammal->animal->rainfallMax = $rainfall;
 
-        //i think it's fairly important to get migration and seasonal food working for the mvp
+                array_push($animals, $predatorMammal);
+            }
+        }
 
-        //so i may as well do that now!
+        for ($temperature=2; $temperature < 7; $temperature++) {
+            for ($rainfall=2; $rainfall < 8; $rainfall++) { 
+                $preyBird = new AnimalGenerator("prey-bird");
+                $preyBird->animal->temperatureMin = $temperature;
+                $preyBird->animal->temperatureMax = $temperature;
+                $preyBird->animal->rainfallMin = $rainfall;
+                $preyBird->animal->rainfallMax = $rainfall;
 
-        //including re-seeding the plants!!
+                array_push($animals, $preyBird);
+            }
+        }
+
+        for ($temperature=0; $temperature < 7; $temperature++) {
+            for ($rainfall=0; $rainfall < 8; $rainfall++) { 
+                $fish = new AnimalGenerator("fish");
+                $fish->animal->temperatureMin = $temperature;
+                $fish->animal->temperatureMax = $temperature;
+                $fish->animal->rainfallMin = $rainfall;
+                $fish->animal->rainfallMax = $rainfall;
+
+                array_push($animals, $fish);
+            }
+        }
+
+        foreach ($animals as $animal) {
+            $animal = $animal->animal;
+            DB::table('animals')->insert([
+                'name' => $animal->stats->name,
+                'maxSize' => $animal->stats->maxSize,
+                'sizeString' => $animal->stats->sizeString,
+                'growthRate' => $animal->stats->growthRate,
+                'hasHorn' => $animal->stats->hasHorn,
+                'hasFur' => $animal->stats->hasFur,
+                'hasHide' =>  $animal->stats->hasHide,
+                'hasFeathers' =>  $animal->stats->hasFeathers,
+                'isPoisonous' =>  $animal->stats->isPoisonous,
+                'isMeatEater' =>  $animal->stats->isMeatEater,
+                'isPlantEater' =>  $animal->stats->isPlantEater,
+                'isScavenger' => $animal->stats->isScavenger,
+                'isHumanEater' => $animal->stats->isHumanEater,
+                'fearOfHumans' => $animal->stats->fearOfHumans,
+                'isPest' => $animal->stats->isPest,
+                'maxHerdSize' => $animal->stats->maxHerdSize,
+                'maxSpeed' => $animal->stats->maxSpeed,
+                'fleeDistance' => $animal->stats->fleeDistance,
+                'canHide' => $animal->stats->canHide,
+                'hasHole' => $animal->stats->hasHole,
+                'isNocturnal' => $animal->stats->isNocturnal,
+                'isBeastOfBurden' =>$animal->stats->isBeastOfBurden, 
+                'isDomesticatable' => $animal->stats->isDomesticatable,
+                'temperatureMin' => $animal->temperatureMin,
+                'temperatureMax' => $animal->temperatureMax,
+                'rainfallMin' => $animal->rainfallMin,
+                'rainfallMax' => $animal->rainfallMax,
+                'furAppearance' => $animal->furAppearance,
+                'legAppearance' => $animal->legAppearance,
+                'feathersAppearance' => $animal->feathersAppearance,
+                'scalesAppearance' => $animal->scalesAppearance,
+                'postureAppearance' => $animal->postureAppearance,
+            ]);
+        }
     }
 }

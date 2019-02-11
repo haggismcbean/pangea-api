@@ -21,8 +21,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(LocationPlantTableSeeder::class); //Warning - this takes a couple of minutes
         // $this->call(ZonesTableSeeder::class); //Warning - this takes a minute or so
         // $this->call(TasksTableSeeder::class);
+        // $this->call(MetalsTableSeeder::class);
+        // $this->call(MineralsTableSeeder::class);
 
-        $this->call(MetalsTableSeeder::class);
-        $this->call(MineralsTableSeeder::class);
+        $this->call(AnimalsTableSeeder::class);
+
     }
 }

@@ -18,7 +18,7 @@ class PredatorMammalAppearanceTraits extends Model
     private static $fur;
     private static $furDefaultLayout = "{{value}}";
 
-    private static $postureArray = ["It holds itself low to the ground {{personality}}", "It holds itself {{personality}}", "It scurries around {{personality}}", "It slinks back and forth {{personality}}", "Its tail swishes {{personality}}", "It blinks {{personality}}", "It licks its lips {{personality}}", "Its ear flicks {{personality}}"];
+    private static $postureArray = ["It holds itself low to the ground {{personality}}", "It holds itself {{personality}}", "It scurries around {{personality}}", "It slinks back and forth {{personality}}", "Its tail swishes {{personality}}", "It blinks {{personality}}", "It licks its lips {{personality}}", "Its ears flick {{personality}}"];
     private static $posture;
     private static $postureDefaultLayout = "{{value}}";
 
