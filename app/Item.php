@@ -38,7 +38,6 @@ class Item extends Model
             return $this->belongsTo('App\Stone', 'type_id')->first();
         }
 
-        // TODO - seed the animals table
         if ($this->item_type === 'animal') {
             return $this->belongsTo('App\Animal', 'type_id')->first();
         }
