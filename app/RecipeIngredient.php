@@ -11,6 +11,6 @@ class RecipeIngredient extends Model
 {
     public function recipe()
     {
-        return $this->belongsTo('App\MadeItemRecipe', 'item_id');
+        return $this->belongsTo('App\MadeItemRecipe', 'recipe_id');
     }
 }
