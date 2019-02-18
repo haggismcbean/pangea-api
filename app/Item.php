@@ -41,7 +41,6 @@ class Item extends Model
             return $this->belongsTo('App\Animal', 'type_id')->first();
         }
 
-        // TODO - seed the animal_product table (first create animals though!)
         if ($this->item_type === 'animal_product') {
             return $this->belongsTo('App\AnimalProduct', 'type_id')->first();
         }
