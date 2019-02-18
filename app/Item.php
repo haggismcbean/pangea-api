@@ -46,9 +46,6 @@ class Item extends Model
             return $this->belongsTo('App\AnimalProduct', 'type_id')->first();
         }
 
-        // TODO - seed the made table (by hand)
-        // TODO - seed the made item recipes table (by hand)
-        // TODO - seed the made item recipe ingredients table (by hand)
         if ($this->item_type === 'made_item') {
             return $this->belongsTo('App\Made', 'type_id')->first();
         }
