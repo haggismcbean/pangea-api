@@ -15,6 +15,7 @@ class MineralsTableSeeder extends Seeder
     public function run()
     {
         Mineral::truncate();
+        Item::truncate();
 
         Mineral::create([
             'id' => 1,

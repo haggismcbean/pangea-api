@@ -16,7 +16,7 @@ class CreateRecipeIngredientsTable extends Migration
         Schema::create('recipe_ingredients', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('item_id')->nullable();
+            $table->integer('item_id')->nullable(); //made item recipe id
             $table->string('item_type')->nullable(); //wood, metal, stone, etc...?
             $table->integer('quantity_min');
             $table->integer('quantity_max');

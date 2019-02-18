@@ -33,7 +33,6 @@ class Item extends Model
             return $this->belongsTo('App\Mineral', 'type_id')->first();
         }
 
-        // TODO - seed the stone table. note that metals can be found IN stone, but minerals only near stone.
         if ($this->item_type === 'stone') {
             return $this->belongsTo('App\Stone', 'type_id')->first();
         }
@@ -50,9 +49,6 @@ class Item extends Model
         // TODO - seed the made table (by hand)
         // TODO - seed the made item recipes table (by hand)
         // TODO - seed the made item recipe ingredients table (by hand)
-        // It might be useful to just make a little helper webpage for this. And for adding items in general.
-        // Seems less painful than entering things directly into a database.
-        // Bear in mind you want to be able to seed things though
         if ($this->item_type === 'made_item') {
             return $this->belongsTo('App\Made', 'type_id')->first();
         }
