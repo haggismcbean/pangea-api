@@ -139,3 +139,7 @@ https://laravel.com/docs/5.7/eloquent-relationships#many-to-many
 
 # If you Forget How to Clear Redis Jobs:
 `redis-cli flushall`
+
+# If you Forget How to Create a Cron Job:
+https://www.sitepoint.com/managing-cronjobs-with-laravel/
+`php artisan make:console HappyBirthday --command=sms:birthday`

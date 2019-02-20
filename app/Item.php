@@ -20,6 +20,11 @@ class Item extends Model
         return $this->belongsToMany('App\Zone', 'item_owner', 'item_id', 'owner_id')->where('owner_type', 'zone');
     }
 
+    public function owners()
+    {
+        return ItemOwner::where('item_id', $this->id);
+    }
+
     public function itemDetails() {
         if ($this->item_type === 'plant') {
             return $this->belongsTo('App\Plant', 'type_id')->first();
