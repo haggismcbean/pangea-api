@@ -55,9 +55,6 @@ class Item extends Model
             return $this->belongsTo('App\MadeFood', 'type_id')->first();
         }
 
-        // WHEN ALL OF THE ABOVE IS DONE, WE CAN WORK OUT THE ITEMS TABLE STUFF
-        // I think it might be easier to get all this stuff working if i have a big excel table and then we read the stuff from there
-        // One for each seeded thing
-        // And different rows in it seed different tables.
+        // TODO - 'plant_product' table with food items etc.
     }
 }
