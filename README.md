@@ -27,7 +27,7 @@
 - [x] foraging
 - [x] travelling
 - [x] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person. It should be pretty hard to kill an awake person by yourself. But as part of a group? Not hard. But still sometimes they can run away.
-- [ ] eating
+- [x] eating
 - [ ] building/terraforming
 - [ ] talking in groups/cleverly
 - [ ] waking up

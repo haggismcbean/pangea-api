@@ -8,6 +8,8 @@ use App\Character;
 use App\Message;
 use App\Events\MessageSent;
 
+use App\Time\Clock;
+
 class BreakfastTime extends Command
 {
     /**
@@ -44,6 +46,12 @@ class BreakfastTime extends Command
         $characters = Character::get();
 
         foreach( $characters as $character ) {
+            // if it is not morning for this character, then he shouldnt eat breakfast
+            $location = $character->location()->first();
+            if (!Clock::isBreakfastHour($location)) {
+                return;
+            }
+
             $food = $character->items()
                 ->where('item_type', 'made_food')
                 ->first();

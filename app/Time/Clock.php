@@ -51,6 +51,17 @@ class Clock
         // returns a number between -12 and 12
     }
 
+    public static function isBreakfastHour($location) {
+        // on pangea it is always night except from 12noon to 3pm
+        $timezone = $this->getLocationTimezone($location);
+        $currentHour = date('H'); // a number between 0 and 23
+        if (($currentHour + $timezone == 12 || $currentHour + $timezone == -12) {
+            return true;
+        }
+
+        return false;
+    }
+
     public static function getLocationRainzone($location) {
         $totalXCords = $location->orderBy('id', 'DESC')->first()->x_coord;
         $xCordsPerRainzone = $totalXCords / 24;
