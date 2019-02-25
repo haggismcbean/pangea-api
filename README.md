@@ -28,6 +28,7 @@
 - [x] travelling
 - [x] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person. It should be pretty hard to kill an awake person by yourself. But as part of a group? Not hard. But still sometimes they can run away.
 - [x] eating
+- [ ] dying
 - [ ] building/terraforming
 - [ ] talking in groups/cleverly
 - [ ] waking up
@@ -90,6 +91,7 @@
 # Before Launch Remember to:
 - [ ] Look into what happens if I crash (I need to restart all the webhook stuff)
 - [ ] Make new images and use them to create the world so people can't check git commits
+- [ ] Check the hunger cron job is running correctly (you might need to drop a character into each timezone and see if/when they get hungry)
 
 
 # If You Forgot How to Spin Things Up:
