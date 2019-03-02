@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 // current location
 Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('zone/{zone}', 'ZoneController@getZoneDescription');
 	Route::get('zone/{zone}/characters', 'ZoneController@getZoneCharacters');
 });
 

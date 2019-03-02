@@ -11,8 +11,24 @@ use App\Zone;
 
 use App\Http\Controllers\LocationController;
 
+use App\Factories\BiomeFactory;
+
 class ZoneController extends Controller
 {
+    public function getZoneDescription(Zone $zone) {
+        $user = Auth::user();
+
+        $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
+
+        if (!$currentZone) {
+            return response()->json(['status' => 'Zone could not be found'], 403);
+        }
+
+        $biomeDescription = new BiomeFactory();
+
+        return response()->json($biomeDescription, 200);
+    }
+
     public function getZoneCharacters(Zone $zone) {
         $user = Auth::user();
 
