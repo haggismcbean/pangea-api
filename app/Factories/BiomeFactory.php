@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 use App\Traits\BiomeTraits\BiomeAppearanceTraits;
+
+use App\Names\SoundFactory;
+use App\Names\ColorFactory;
+
 use App\MessageFormer\MessageFormer;
 
 class BiomeFactory extends Model
@@ -26,28 +30,31 @@ class BiomeFactory extends Model
         BiomeAppearanceTraits::init();
         
         $message = new MessageFormer();
-        $this->colour = "Red";
-        $this->flyingInsectType = "bee";
+        $this->colour = ColorFactory::getRandomColor();
+        $this->flyingInsectType = "bees";
         $this->crawlingInsectType = "beetle";
 
-        $this->biome = BiomeAppearanceTraits::getRandomTrait("intro", $this);
-        $message = new MessageFormer();
-        $message->formSentence($this->biome, $this);
-        $this->biome = $message->message;
+        $this->sound = SoundFactory::getRandomAnimalSound();
+        $this->soundAction = SoundFactory::getRandomAnimalSoundAction();
 
-        $this->farNature = BiomeAppearanceTraits::getRandomTrait("farNature", $this);
         $message = new MessageFormer();
+        $this->intro = BiomeAppearanceTraits::getRandomTrait("intro", $this);
+        $message->formSentence($this->intro, $this);
+        $this->intro = $message->message;
+
+        $message = new MessageFormer();
+        $this->farNature = BiomeAppearanceTraits::getRandomTrait("farNature", $this);
         $message->formSentence($this->farNature, $this);
         $this->farNature = $message->message;
 
-        $this->wildlife = BiomeAppearanceTraits::getRandomTrait("closeNature", $this);
         $message = new MessageFormer();
-        $message->formSentence($this->wildlife, $this);
-        $this->wildlife = $message->message;
+        $this->closeNature = BiomeAppearanceTraits::getRandomTrait("closeNature", $this);
+        $message->formSentence($this->closeNature, $this);
+        $this->closeNature = $message->message;
 
-        $this->weatherDescription = BiomeAppearanceTraits::getRandomTrait("drone", $this);
         $message = new MessageFormer();
-        $message->formSentence($this->weatherDescription, $this);
-        $this->weatherDescription = $message->message;
+        $this->drone = BiomeAppearanceTraits::getRandomTrait("drone", $this);
+        $message->formSentence($this->drone, $this);
+        $this->drone = $message->message;
     }
 }
