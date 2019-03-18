@@ -39,7 +39,7 @@ class CharacterController extends Controller
     }
 
     public function show() {
-        // fetch all characters
+        // fetch all characters for this user
         $user = Auth::user();
 
         return $user->characters()->get();

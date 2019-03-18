@@ -46,7 +46,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 // resouce gathering
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::put('gather', 'PlantController@gather');
-	// Route::get('characters', 'CharacterController@show');
 });
 
 // travelling and location
