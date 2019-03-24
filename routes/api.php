@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('zone/{zone}', 'ZoneController@getZoneDescription');
 	Route::get('zone/{zone}/characters', 'ZoneController@getZoneCharacters');
+	Route::get('zone/{zone}/plants', 'ZoneController@getZonePlants');
 });
 
 // combat

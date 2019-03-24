@@ -15,6 +15,18 @@ use App\Factories\BiomeFactory;
 
 class ZoneController extends Controller
 {
+    public function getZonePlants(Zone $zone) {
+        $user = Auth::user();
+
+        $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
+
+        if (!$currentCharacter) {
+            return response()->json(['status' => 'Zone could not be found'], 403);
+        }
+
+        return response()->json($zone->location()->first()->plants()->get(), 200);
+    }
+
     public function getZoneDescription(Zone $zone) {
         $user = Auth::user();
 

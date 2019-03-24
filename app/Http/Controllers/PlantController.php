@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Zone;
 
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ItemController;
@@ -16,11 +19,15 @@ class PlantController extends Controller
     }
 
     public function gather(Request $request) {
+        $user = Auth::user();
+
         $plantId = $request->input('plantId');
         $plantPiece = $request->input('plantPiece');
 
-        $character = CharacterController::getCharacter($request->input('characterId'));
+        $character = $user->characters()->first();
+
         $location = $character->location()->first();
+
         $locationPlant = $location->getLocationPlant($plantId);
 
         if ($locationPlant && $locationPlant->count > 0) {
