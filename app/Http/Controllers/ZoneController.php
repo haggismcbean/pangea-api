@@ -15,7 +15,7 @@ use App\Factories\BiomeFactory;
 
 class ZoneController extends Controller
 {
-    public function getZonePlants(Zone $zone) {
+    public function plants(Zone $zone) {
         $user = Auth::user();
 
         $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
@@ -27,7 +27,7 @@ class ZoneController extends Controller
         return response()->json($zone->location()->first()->plants()->get(), 200);
     }
 
-    public function getZoneDescription(Zone $zone) {
+    public function description(Zone $zone) {
         $user = Auth::user();
 
         $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
@@ -41,7 +41,7 @@ class ZoneController extends Controller
         return response()->json($biomeDescription, 200);
     }
 
-    public function getZoneCharacters(Zone $zone) {
+    public function characters(Zone $zone) {
         $user = Auth::user();
 
         $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
@@ -53,6 +53,22 @@ class ZoneController extends Controller
         $characters = $zone->characters()->get();
 
         return response()->json($characters, 200);
+    }
+
+    public function inventory(Zone $zone) {
+        $user = Auth::user();
+
+        $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
+
+        if (!$currentZone) {
+            return response()->json(['status' => 'Zone could not be found'], 403);
+        }
+
+        $inventory = $zone->itemOwners()
+            ->leftJoin('items', 'item_id', '=', 'items.id')
+            ->get();
+
+        return response()->json($inventory, 200);
     }
 
     public function getBorderingZones(Zone $zone) {

@@ -58,7 +58,8 @@ class Character extends Model
     }
 
     public function items() {
-        return $this->belongsToMany('App\Item', 'item_owner', 'owner_id', 'item_id')->where('owner_type', 'character');
+        return $this->belongsToMany('App\Item', 'item_owner', 'owner_id', 'item_id')
+            ->where('owner_type', 'character');
     }
 
     public function itemOwners() {
@@ -81,8 +82,7 @@ class Character extends Model
     }
 
     public function hasInventorySpace() {
-        // TODO = be cleverer with inventory space
-        $inventorySpace = 10;
+        $inventorySpace = 100;
         $totalItems = 0;
         $items = $this->itemOwners()->get();
 

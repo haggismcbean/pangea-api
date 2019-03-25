@@ -23,6 +23,20 @@ class CharacterController extends Controller
         }
     }
 
+    public function inventory(Character $character) {
+        $user = Auth::user();
+
+        if ($character == $user->characters()->first()) {
+            $result = $character->itemOwners()
+                ->leftJoin('items', 'item_id', '=', 'items.id')
+                ->get();
+
+            return response()->json($result, 200);
+        } else {
+            return response()->json("Cannot get inventory of another character", 401);
+        }
+    }
+
     public function create() {
         $user = Auth::user();
 

@@ -56,14 +56,20 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 // current location
 Route::group(['middleware' => 'auth:api'], function() {
-	Route::get('zone/{zone}', 'ZoneController@getZoneDescription');
-	Route::get('zone/{zone}/characters', 'ZoneController@getZoneCharacters');
-	Route::get('zone/{zone}/plants', 'ZoneController@getZonePlants');
+	Route::get('zone/{zone}', 'ZoneController@description');
+	Route::get('zone/{zone}/characters', 'ZoneController@characters');
+	Route::get('zone/{zone}/plants', 'ZoneController@plants');
 });
 
 // combat
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('character/{character}/attack', 'CharacterController@attack');
+});
+
+// inventory
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('character/{character}/inventory', 'CharacterController@inventory');
+	Route::get('zone/{zone}/inventory', 'ZoneController@inventory');
 });
 
 ////////////
