@@ -20,4 +20,31 @@ class ItemOwnerController extends Controller
 
         return $itemOwner;
     }
+
+    public static function moveItemFromTo($from, $to, $toString, $itemId, $itemQuantity) {
+        $fromItem = $from->itemOwners()->where('item_id', $itemId)->first();
+        $toItem = $to->itemOwners()->where('item_id', $itemId)->first();
+
+        $item = $fromItem->item()->first();
+
+        if (!$item || !$fromItem) {
+            return response()->json("Item could not be found", 400);
+        }
+
+        if ($fromItem->count < $itemQuantity) {
+            return response()->json("Item quantity greater than count of items", 400);
+        }
+
+        $fromItem->count = $fromItem->count - $itemQuantity;
+        $fromItem->save();
+
+        if (!$toItem) {
+            ItemOwnerController::createNewItemOwner($toString, $to, $item, $itemQuantity);
+        } else {
+            $toItem->count = $toItem->count + $itemQuantity;
+            $toItem->save();
+        }
+
+        return response()->json($item, 200);
+    }
 }

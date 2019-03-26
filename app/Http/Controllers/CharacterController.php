@@ -83,29 +83,7 @@ class CharacterController extends Controller
         $character = $user->characters()->first();
         $zone = $character->zone()->first();
 
-        $characterItem = $character->itemOwners()->where('item_id', $itemId)->first();
-        $zoneItem = $zone->itemOwners()->where('item_id', $itemId)->first();
-        $item = $characterItem->item()->first();
-
-        if ($characterItem->count < $itemQuantity) {
-            return response()->json("Must be less than number of items in your inventory", 400);
-        }
-
-        if (!$item || !$characterItem) {
-            return response()->json("Item could not be found", 400);
-        }
-
-        $characterItem->count = $characterItem->count - $itemQuantity;
-        $characterItem->save();
-
-        if (!$zoneItem) {
-            ItemOwnerController::createNewItemOwner('zone', $zone, $item, $itemQuantity);
-        } else {
-            $zoneItem->count = $zoneItem->count + $itemQuantity;
-            $zoneItem->save();
-        }
-
-        return response()->json($item, 200);
+        return ItemOwnerController::moveItemFromTo($character, $zone, 'zone', $itemId, $itemQuantity);
     }
 
     private function isInteger($variable) {

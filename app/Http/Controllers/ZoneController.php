@@ -160,6 +160,22 @@ class ZoneController extends Controller
         return response()->json($response, 200);
     }
 
+    public function pickUp(Request $request) {
+        $user = Auth::user();
+
+        $itemId = $request->input('itemId');
+        $itemQuantity = $request->input('itemQuantity');
+
+        if ($itemQuantity < 0 || !$this->isInteger($itemQuantity)) {
+            return response()->json("Must be a positive whole number", 400);
+        }
+
+        $character = $user->characters()->first();
+        $zone = $character->zone()->first();
+
+        return ItemOwnerController::moveItemFromTo($zone, $character, 'character', $itemId, $itemQuantity);
+    }
+
     private function getTargetZoneFromCurrentLocation($borderingZones, $newZoneId) {
         foreach($borderingZones->zones as $borderingZone) {
             if ($newZoneId == $borderingZone->id) {
@@ -175,5 +191,13 @@ class ZoneController extends Controller
                 return $borderingZones->borderZones->$cardinal;
             }
         }
+    }
+
+    private function isInteger($variable) {
+        if ( strval($variable) !== strval(intval($variable)) ) {
+            return false;
+        }
+
+        return true;
     }
 }
