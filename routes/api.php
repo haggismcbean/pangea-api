@@ -69,7 +69,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 // inventory
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('character/{character}/inventory', 'CharacterController@inventory');
+	Route::put('put_down', 'CharacterController@putDown');
 	Route::get('zone/{zone}/inventory', 'ZoneController@inventory');
+	// Route::put('pick_up', 'ZoneController@pickUp');
 });
 
 ////////////
