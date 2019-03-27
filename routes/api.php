@@ -74,6 +74,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::put('zone/pick_up', 'ZoneController@pickUp');
 });
 
+// crafting
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('character/{character}/get_craftables', 'CharacterController@getCraftables');
+	// Route::post('character/{character}/craft', 'CharacterController@craft');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');

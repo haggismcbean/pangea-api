@@ -13,4 +13,9 @@ class MadeItemRecipe extends Model
     {
         return $this->belongsTo('App\MadeItem', 'made_item_id');
     }
+
+    public function ingredients()
+    {
+    	return $this->hasMany('App\RecipeIngredient', 'recipe_id');
+    }
 }

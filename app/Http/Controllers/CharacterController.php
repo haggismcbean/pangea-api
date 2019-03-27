@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Character;
+use App\MadeItem;
 
 use App\Jobs\AttackCharacter;
 
@@ -84,6 +85,27 @@ class CharacterController extends Controller
         $zone = $character->zone()->first();
 
         return ItemOwnerController::moveItemFromTo($character, $zone, 'zone', $itemId, $itemQuantity);
+    }
+
+    public function getCraftables() {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $madeItems = MadeItem::get();
+
+        foreach ($madeItems as $key => $madeItem) {
+            $madeItem->recipes = $madeItem->recipes()->get();
+
+            foreach($madeItem->recipes as $key => $recipe) {
+                $recipe->ingredients = $recipe->ingredients()->get();
+
+                foreach($recipe->ingredients as $key => $ingredient) {
+                    $ingredient->item = $ingredient->item()->first();
+                }
+            }
+        }
+
+        return response()->json($madeItems, 200);
     }
 
     private function isInteger($variable) {
