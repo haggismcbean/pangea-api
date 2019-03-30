@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Character;
 use App\MadeItem;
+use App\MadeItemRecipe;
 
 use App\Jobs\AttackCharacter;
 
@@ -91,6 +92,8 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
+        // TODO - only return craftables that can be made by this particular character (once skills implemented)
+
         $madeItems = MadeItem::get();
 
         foreach ($madeItems as $key => $madeItem) {
@@ -106,6 +109,28 @@ class CharacterController extends Controller
         }
 
         return response()->json($madeItems, 200);
+    }
+
+    public function craft(Request $request) {
+        $user = Auth::user();
+
+        $recipeId = $request->input('recipeId');
+
+        $character = $user->characters->first();
+        $zone = $character->zone()->first();
+        $recipe = MadeItemRecipe::find($recipeId);
+
+        // TODO - check if recipe requires any machines that are in current zone!
+
+        // TODO - automatically add any ingredients the user is already carrying (which are added to the request)
+
+        $activity = ActivityController::createActivity($zone, $character, $recipe);
+
+        foreach ($recipe->ingredients as $key => $ingredient) {
+            ActivityItemController::createActivityItem($activity, $ingredient);
+        }
+
+        return $activity;
     }
 
     private function isInteger($variable) {

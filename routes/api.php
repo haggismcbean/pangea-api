@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 // crafting
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('character/{character}/get_craftables', 'CharacterController@getCraftables');
-	// Route::post('character/{character}/craft', 'CharacterController@craft');
+	Route::put('character/craft', 'CharacterController@craft');
 });
 
 ////////////
