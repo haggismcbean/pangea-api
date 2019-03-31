@@ -33,4 +33,8 @@ class Zone extends Model
         return ItemOwner::where('owner_type', 'zone')
             ->where('owner_id', $this->id);
     }
+
+    public function activities() {
+      return $this->hasMany(Activity::class);
+    }
 }

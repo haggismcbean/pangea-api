@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(MadeItemRecipesSeeder::class);
         // $this->call(RecipeIngredientsSeeder::class);
 
-        $this->call(AnimalProductsTableSeeder::class);
+        // $this->call(AnimalProductsTableSeeder::class);
 
     }
 }

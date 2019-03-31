@@ -18,6 +18,10 @@ class Activity extends Model
     }
 
     public function recipe() {
-    	return $this->hasOne(MadeItemRecipe::class, 'recipe_id');
+    	return $this->hasOne(MadeItemRecipe::class, 'id');
+    }
+
+    public function ingredients() {
+    	return $this->hasMany(ActivityItem::class);
     }
 }

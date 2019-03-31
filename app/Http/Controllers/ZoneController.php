@@ -71,6 +71,28 @@ class ZoneController extends Controller
         return response()->json($inventory, 200);
     }
 
+    public function activities(Zone $zone) {
+        $user = Auth::user();
+
+        $currentZone = $user->characters()->first()->zone()->first();
+
+        if ($currentZone != $zone) {
+            return response()->json(['status' => 'Can\'t get activities of zone character is not in'], 403);
+        }
+
+        $activities = $currentZone->activities()->get();
+
+        foreach ($activities as $key => $activity) {
+            $activity->ingredients = $activity->ingredients()->get();
+
+            foreach ($activity->ingredients as $key => $ingredient) {
+                $ingredient->item = $ingredient->item()->first();
+            }
+        }
+
+        return response()->json($activities, 200);
+    }
+
     public function getBorderingZones(Zone $zone) {
         $user = Auth::user();
 

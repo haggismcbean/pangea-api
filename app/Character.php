@@ -71,6 +71,10 @@ class Character extends Model
         return $this->belongsTo('App\Zone');
     }
 
+    public function activities() {
+        return $this->hasMany('App\Activity');
+    }
+
     /**
      * A character can have many messages
      *

@@ -14,13 +14,13 @@ class LocationTableSeeder extends Seeder
      */
     public function run()
     {
-        //Let's clear the location table first
+        // Let's clear the location table first
         Location::truncate();
 
         $world = new World();
 
         foreach ($world->pixels as $location) {
-            $biome = Biome::where('temperature', 1)->where('rainfall', 1)->first();
+            $biome = Biome::where('temperature', $location->temperature)->where('rainfall', $location->rainfall)->first();
             DB::table('locations')->insert([
                 'x_coord' => $location->x,
                 'y_coord' => $location->y,
@@ -33,6 +33,5 @@ class LocationTableSeeder extends Seeder
                 'biome_id' => $biome->id
             ]);
         }
-
     }
 }

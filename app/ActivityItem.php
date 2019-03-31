@@ -20,4 +20,8 @@ class ActivityItem extends Model
     public function recipe() {
     	return $this->hasOne(MadeItemRecipe::class, 'recipe_id');
     }
+
+    public function item() {
+    	return $this->belongsTo('App\Item', 'item_id');
+    }
 }

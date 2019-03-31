@@ -33,6 +33,5 @@ class LocationPlantTableSeeder extends Seeder
 		        ]);
     		}
     	}
-
     }
 }

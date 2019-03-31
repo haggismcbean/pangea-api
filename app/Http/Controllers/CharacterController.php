@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Character;
+use App\Item;
+
 use App\MadeItem;
 use App\MadeItemRecipe;
 
@@ -111,7 +113,7 @@ class CharacterController extends Controller
         return response()->json($madeItems, 200);
     }
 
-    public function craft(Request $request) {
+    public function createNewActivity(Request $request) {
         $user = Auth::user();
 
         $recipeId = $request->input('recipeId');
@@ -131,6 +133,46 @@ class CharacterController extends Controller
         }
 
         return $activity;
+    }
+
+    public function addItemsToActivity(Request $request) {
+        $user = Auth::user();
+
+        $input = $request->json()->all();
+
+        $character = $user->characters()->first();
+
+        $activityId = $input['activityId'];
+        $itemIds = $input['itemIds'];
+
+        $characterItems = $character->itemOwners()->get();
+        $activity = $character->activities()->find($activityId);
+
+        foreach ($itemIds as $key => $itemId) {
+            $item = Item::find($itemId);
+
+            foreach ($characterItems as $characterItemKey => $characterItem) {
+
+                if ($characterItem->item_id == $item->id) {
+                    // TODO - validation and remove the correct number of items.
+                    $characterItem->count = $characterItem->count - 1;
+                    $characterItem->save();
+
+                    $ingredient = $activity->ingredients()->where('item_id', $item->id)->first();
+
+                    if (!$ingredient) {
+                        $ingredient = $activity->ingredients()->where('item_type', $item->name)->first();
+                    }
+
+                    if (!$ingredient) {
+                        return response()->json("Item could not be found in this activity", 400);
+                    }
+
+                    $ingredient->quantity_added = $ingredient->quantity_added + 1;
+                    $ingredient->save();
+                }
+            }
+        }
     }
 
     private function isInteger($variable) {
