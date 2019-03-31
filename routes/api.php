@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('character/{character}/get_craftables', 'CharacterController@getCraftables');
 	Route::get('zone/{zone}/activities', 'ZoneController@activities');
 	Route::put('character/create_new_activity', 'CharacterController@createNewActivity');
-	Route::post('character/add_items_to_activity', 'CharacterController@addItemsToActivity');
+	Route::post('character/add_item_to_activity', 'CharacterController@addItemToActivity');
 });
 
 ////////////

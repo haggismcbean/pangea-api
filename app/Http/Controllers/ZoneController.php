@@ -84,6 +84,7 @@ class ZoneController extends Controller
 
         foreach ($activities as $key => $activity) {
             $activity->ingredients = $activity->ingredients()->get();
+            $activity->item = $activity->recipe()->first()->item()->first();
 
             foreach ($activity->ingredients as $key => $ingredient) {
                 $ingredient->item = $ingredient->item()->first();

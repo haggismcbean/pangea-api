@@ -135,42 +135,42 @@ class CharacterController extends Controller
         return $activity;
     }
 
-    public function addItemsToActivity(Request $request) {
+    public function addItemToActivity(Request $request) {
         $user = Auth::user();
 
         $input = $request->json()->all();
 
         $character = $user->characters()->first();
 
-        $activityId = $input['activityId'];
-        $itemIds = $input['itemIds'];
+        $activityId = $request->activityId;
+        $itemId = $request->itemId;
+        $amount = $request->amount;
 
         $characterItems = $character->itemOwners()->get();
         $activity = $character->activities()->find($activityId);
 
-        foreach ($itemIds as $key => $itemId) {
-            $item = Item::find($itemId);
+        $item = Item::find($itemId);
 
-            foreach ($characterItems as $characterItemKey => $characterItem) {
+        foreach ($characterItems as $characterItemKey => $characterItem) {
 
-                if ($characterItem->item_id == $item->id) {
-                    // TODO - validation and remove the correct number of items.
-                    $characterItem->count = $characterItem->count - 1;
-                    $characterItem->save();
+            if ($characterItem->item_id == $item->id) {
+                // TODO - validation and remove the correct number of items.
+                $characterItem->count = $characterItem->count - $amount;
 
-                    $ingredient = $activity->ingredients()->where('item_id', $item->id)->first();
+                $ingredient = $activity->ingredients()->where('item_id', $item->id)->first();
 
-                    if (!$ingredient) {
-                        $ingredient = $activity->ingredients()->where('item_type', $item->name)->first();
-                    }
-
-                    if (!$ingredient) {
-                        return response()->json("Item could not be found in this activity", 400);
-                    }
-
-                    $ingredient->quantity_added = $ingredient->quantity_added + 1;
-                    $ingredient->save();
+                if (!$ingredient) {
+                    $ingredient = $activity->ingredients()->where('item_type', $item->name)->first();
                 }
+
+                if (!$ingredient) {
+                    return response()->json("Item could not be found in this activity", 400);
+                }
+
+                $ingredient->quantity_added = $ingredient->quantity_added + 1;
+                $ingredient->save();
+
+                $characterItem->save();
             }
         }
     }
