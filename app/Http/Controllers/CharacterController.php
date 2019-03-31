@@ -138,8 +138,6 @@ class CharacterController extends Controller
     public function addItemToActivity(Request $request) {
         $user = Auth::user();
 
-        $input = $request->json()->all();
-
         $character = $user->characters()->first();
 
         $activityId = $request->activityId;
@@ -147,7 +145,7 @@ class CharacterController extends Controller
         $amount = $request->amount;
 
         $characterItems = $character->itemOwners()->get();
-        $activity = $character->activities()->find($activityId);
+        $activity = $character->zone()->first()->activities()->find($activityId);
 
         $item = Item::find($itemId);
 
@@ -173,6 +171,33 @@ class CharacterController extends Controller
                 $characterItem->save();
             }
         }
+    }
+
+    public function workOnActivity(Request $request) {
+        $user = Auth::user();
+
+        $character = $user->characters()->first();
+        $activityId = $request->activityId;
+
+        $activity = $character->zone()->first()->activities()->find($activityId);
+
+        if ($activity) {
+            $character->activity_id = $activity->id;
+            $character->save();
+            return response()->json($activity, 200);
+        } else {
+            return response()->json('Activity could not be found', 400);
+        }
+    }
+
+    public function stopWorkingOnActivity(Request $request) {
+        $user = Auth::user();
+
+        $character = $user->characters()->first();
+        $character->activity_id = null;
+        $character->save();
+            
+        return response()->json($activity, 200);
     }
 
     private function isInteger($variable) {

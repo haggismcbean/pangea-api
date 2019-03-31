@@ -9,6 +9,7 @@ use Auth;
 
 class Activity extends Model
 {
+	// Character who created it
     public function character() {
         return $this->hasOne(Character::class, 'character_id');
     }
@@ -23,5 +24,10 @@ class Activity extends Model
 
     public function ingredients() {
     	return $this->hasMany(ActivityItem::class);
+    }
+
+    // Characters currently working on it
+    public function characters() {
+    	return $this->hasMany(Character::class);
     }
 }

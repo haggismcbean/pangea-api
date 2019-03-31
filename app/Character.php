@@ -71,8 +71,14 @@ class Character extends Model
         return $this->belongsTo('App\Zone');
     }
 
+    // activities created by this character
     public function activities() {
         return $this->hasMany('App\Activity');
+    }
+
+    // activity currently working on
+    public function activity() {
+        return $this->belongsTo('App\Activity');
     }
 
     /**

@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('zone/{zone}/activities', 'ZoneController@activities');
 	Route::put('character/create_new_activity', 'CharacterController@createNewActivity');
 	Route::post('character/add_item_to_activity', 'CharacterController@addItemToActivity');
+	Route::post('character/work_on_activity', 'CharacterController@workOnActivity');
+	Route::post('character/stop_working_on_activity', 'CharacterController@stopWorkingOnActivity');
 });
 
 ////////////
