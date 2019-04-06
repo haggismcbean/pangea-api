@@ -11,6 +11,7 @@ use App\MadeItem;
 use App\MadeItemRecipe;
 
 use App\Jobs\AttackCharacter;
+use App\Jobs\WorkOnActivity;
 
 class CharacterController extends Controller
 {
@@ -184,6 +185,11 @@ class CharacterController extends Controller
         if ($activity) {
             $character->activity_id = $activity->id;
             $character->save();
+        
+            $job = new WorkOnActivity($character, $activity);
+
+            $job->dispatch($character, $activity);
+
             return response()->json($activity, 200);
         } else {
             return response()->json('Activity could not be found', 400);

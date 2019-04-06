@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\BreakfastTime',
-        'App\Console\Commands\WorkOnActivityTime',
     ];
 
     /**
@@ -26,7 +25,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('character:breakfast-time')->hourly();
-        $schedule->command('character:work-on-activity-time')->everyMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }
