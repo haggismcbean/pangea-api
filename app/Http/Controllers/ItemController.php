@@ -6,11 +6,18 @@ use App\Item;
 
 class ItemController extends Controller
 {
-    public static function getItem($type, $typeId, $name) {
-        return Item::where('item_type', $type)
-            ->where('type_id', $typeId)
-            ->where('name', $name)
-            ->first();
+    public static function getItem($type, $typeId, $name = null) {
+
+        if ($name == null) {
+            return Item::where('item_type', $type)
+                ->where('type_id', $typeId)
+                ->first();
+        } else {
+            return Item::where('item_type', $type)
+                ->where('type_id', $typeId)
+                ->where('name', strtolower($name))
+                ->first();
+        }
     }
 
     public static function createNewItem($typeId, $name, $description) {

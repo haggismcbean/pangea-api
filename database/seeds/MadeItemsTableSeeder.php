@@ -55,7 +55,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 3,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -71,7 +71,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 4,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -87,7 +87,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 5,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -103,7 +103,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 6,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -119,7 +119,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 7,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -135,7 +135,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 8,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -151,7 +151,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 9,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -167,7 +167,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 10,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -183,7 +183,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 11,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -199,7 +199,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 12,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -215,7 +215,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 13,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -231,7 +231,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 14,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -247,7 +247,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 15,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -263,7 +263,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 16,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -279,7 +279,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 17,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -295,7 +295,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 18,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -311,7 +311,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 19,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -327,7 +327,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 20,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -343,7 +343,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 21,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -359,7 +359,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 22,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -375,7 +375,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 23,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -391,7 +391,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 24,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -407,7 +407,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 25,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -423,7 +423,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 26,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,
@@ -439,7 +439,7 @@ class MadeItemsTableSeeder extends Seeder
 
         Item::create([
             'item_type' => 'made_item',
-            'type_id' => 2,
+            'type_id' => 27,
             'unit_weight' => 150,
             'unit_volume' => 20,
             'rot_rate' => 100,

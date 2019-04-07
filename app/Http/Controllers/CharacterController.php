@@ -166,6 +166,10 @@ class CharacterController extends Controller
                     return response()->json("Item could not be found in this activity", 400);
                 }
 
+                if ($ingredient->quantity_added == $ingredient->quantity_required) {
+                    return response()->json("Item does not need more of that ingredient", 400);
+                }
+
                 $ingredient->quantity_added = $ingredient->quantity_added + 1;
                 $ingredient->save();
 
@@ -182,12 +186,15 @@ class CharacterController extends Controller
 
         $activity = $character->zone()->first()->activities()->find($activityId);
 
+        if (!$activity->isReadyForWork()) {
+            return response()->json('Activity not ready for work', 400);
+        }
+
         if ($activity) {
             $character->activity_id = $activity->id;
             $character->save();
         
             $job = new WorkOnActivity($character, $activity);
-
             $job->dispatch($character, $activity);
 
             return response()->json($activity, 200);
@@ -195,6 +202,25 @@ class CharacterController extends Controller
             return response()->json('Activity could not be found', 400);
         }
     }
+
+    // DEV 
+    private function getItemOwner($type, $owner, $item) {
+        $itemOwners = $owner->itemOwners()->get();
+        $itemOwner = null;
+
+        foreach ($itemOwners as $currentItemOwner) {
+            if ($currentItemOwner->item()->first()->name == $item->name) {
+                $itemOwner = $currentItemOwner;
+            }
+        }
+
+        if (!$itemOwner) {
+            return ItemOwnerController::createNewItemOwner($type, $owner, $item);
+        } else {
+            return $itemOwner;
+        }
+    }
+    // END DEV
 
     public function stopWorkingOnActivity(Request $request) {
         $user = Auth::user();

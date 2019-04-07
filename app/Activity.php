@@ -30,4 +30,17 @@ class Activity extends Model
     public function characters() {
     	return $this->hasMany(Character::class);
     }
+
+    public function isReadyForWork() {
+    	$ingredients = $this->ingredients()->get();
+    	$isReadyForWork = true;
+
+    	foreach ($ingredients as $key => $ingredient) {
+    		if ($ingredient->quantity_added != $ingredient->quantity_required) {
+    			$isReadyForWork = false;
+    		}
+    	}
+
+    	return $isReadyForWork;
+    }
 }
