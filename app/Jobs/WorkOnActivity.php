@@ -14,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 // use App\Events\MessageSent;
 use App\GameEvents\WorkOnActivityEvent;
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemOwnerController;
 
@@ -48,56 +49,12 @@ class WorkOnActivity implements ShouldQueue
         }
 
         if ($this->activity->progress < 99 && $this->activity->isReadyForWork()) {
-            $this->activity->progress = $this->activity->progress + 1;
-            $this->activity->save();
-
-            // recursion baby
-            $workOnActivityEvent = new WorkOnActivityEvent($this->character, $this->activity);
-            $workOnActivityEvent->handle($this->character, $this->activity);
-
-            $job = new WorkOnActivity($this->character, $this->activity);
-            $job->dispatch($this->character, $this->activity)
-                ->delay(now()->addSeconds(1));
+            ActivityController::workActivity($this->character, $this->activity);
         } else {
-            $itemType = $this->activity->recipe()->first()->item()->first();
-            $item = ItemController::getItem('made_item', $itemType->id);
-
-            if ($this->character->hasInventorySpace()) {
-                $itemOwner = $this->getItemOwner('character', $this->character, $item);
-            } else {
-                $zone = $this->character->zone()->first();
-                $itemOwner = $this->getItemOwner('zone', $zone, $item);
-            }
-
-            $itemOwner->count = $itemOwner->count + 1;
-            $itemOwner->save();
-
-            $this->activity->destroy($this->activity->id);
-            $this->character->activity_id = null;
-
-            // send item created message
-            $workOnActivityEvent = new WorkOnActivityEvent();
-            $workOnActivityEvent->handle($this->character, $this->activity);
+            ActivityController::completeActivity($this->character, $this->activity);
         }
 
         return true;
-    }
-
-    private function getItemOwner($type, $owner, $item) {
-        $itemOwners = $owner->itemOwners()->get();
-        $itemOwner = null;
-
-        foreach ($itemOwners as $currentItemOwner) {
-            if ($currentItemOwner->item()->first()->name == $item->name) {
-                $itemOwner = $currentItemOwner;
-            }
-        }
-
-        if (!$itemOwner) {
-            return ItemOwnerController::createNewItemOwner($type, $owner, $item);
-        } else {
-            return $itemOwner;
-        }
     }
 
     public function failed(Exception $exception) {

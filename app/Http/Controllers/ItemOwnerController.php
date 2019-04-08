@@ -6,6 +6,23 @@ use App\ItemOwner;
 
 class ItemOwnerController extends Controller
 {
+    public static function getItemOwner($type, $owner, $item) {
+        $itemOwners = $owner->itemOwners()->get();
+        $itemOwner = null;
+
+        foreach ($itemOwners as $currentItemOwner) {
+            if ($currentItemOwner->item()->first()->name == $item->name) {
+                $itemOwner = $currentItemOwner;
+            }
+        }
+
+        if (!$itemOwner) {
+            return ItemOwnerController::createNewItemOwner($type, $owner, $item);
+        } else {
+            return $itemOwner;
+        }
+    }
+
     public static function createNewItemOwner($type, $owner, $item, $count=1) {
         $itemOwner = new ItemOwner;
 

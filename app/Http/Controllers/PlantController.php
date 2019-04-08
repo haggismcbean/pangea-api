@@ -52,10 +52,10 @@ class PlantController extends Controller
         }
 
         if ($character->hasInventorySpace()) {
-            $plantOwner = $this->getPlantOwner('character', $character, $plant);
+            $plantOwner = ItemOwnerController::getItemOwner('character', $character, $plant);
         } else {
             $zone = $character->zone()->first();
-            $plantOwner = $this->getPlantOwner('zone', $zone, $plant);
+            $plantOwner = ItemOwnerController::getItemOwner('zone', $zone, $plant);
         }
 
         $plantOwner->count = $plantOwner->count + 1;
@@ -78,23 +78,6 @@ class PlantController extends Controller
             return ItemController::createNewItem($plantId, $plantPiece, $description);
         } else {
             return $plant;
-        }
-    }
-
-    private function getPlantOwner($type, $owner, $plant) {
-        $plantOwners = $owner->itemOwners()->get();
-        $plantOwner = null;
-
-        foreach ($plantOwners as $currentPlantOwner) {
-            if ($currentPlantOwner->item()->first()->name == $plant->name) {
-                $plantOwner = $currentPlantOwner;
-            }
-        }
-
-        if (!$plantOwner) {
-            return ItemOwnerController::createNewItemOwner($type, $owner, $plant);
-        } else {
-            return $plantOwner;
         }
     }
 }
