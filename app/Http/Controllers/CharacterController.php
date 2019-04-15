@@ -118,14 +118,18 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        $huntingMethod = ItemUse::where('activity', 'hunting')->where('item_id', $request->huntingToolId);
+        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->huntingToolId);
 
-        // TODO - implement the Hunt job!
-        $job = new Hunt($character, $huntingMethod);
+        if (!$itemUse) {
+            return response()->json("Can't hunt with that item", 400);
+        }
 
-        $job->dispatch($character, $huntingMethod);
+        $job = new Hunt($character, $itemUse);
 
-        return response()->json($huntingMethod, 200);
+        $job->dispatch($character, $itemUse)
+            ->delay(now()->addSeconds(10));
+
+        return response()->json($itemUse, 200);
     }
 
     private function isInteger($variable) {
