@@ -84,6 +84,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('activity/stop_working_on_activity', 'ActivityController@stopWorkingOnActivity');
 });
 
+// hunting
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::get('character/hunt', 'CharacterController@hunt');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');

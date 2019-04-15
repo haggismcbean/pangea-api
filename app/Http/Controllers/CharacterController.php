@@ -114,6 +114,20 @@ class CharacterController extends Controller
         return response()->json($madeItems, 200);
     }
 
+    public function hunt(Request $request) {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $huntingMethod = ItemUse::where('activity', 'hunting')->where('item_id', $request->huntingToolId);
+
+        // TODO - implement the Hunt job!
+        $job = new Hunt($character, $huntingMethod);
+
+        $job->dispatch($character, $huntingMethod);
+
+        return response()->json($huntingMethod, 200);
+    }
+
     private function isInteger($variable) {
         if ( strval($variable) !== strval(intval($variable)) ) {
             return false;
