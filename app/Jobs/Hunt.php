@@ -28,7 +28,7 @@ class Hunt implements ShouldQueue
     public function __construct($character, $itemUse)
     {
         $this->character = $character;
-        $this->itemUse = $itemUse;
+        // $this->itemUse = $itemUse;
     }
 
     /**
@@ -41,7 +41,8 @@ class Hunt implements ShouldQueue
         // roll for chances of success
         // TODO - skills
         $skillBoost = 0;
-        $itemBoost = $itemUse->item()->first()->items()->first()->efficiency;
+        // $itemBoost = $itemUse->item()->first()->items()->first()->efficiency;
+        $itemBoost = 0;
 
         $successChance = 0.01 * $skillBoost * $itemBoost;
 

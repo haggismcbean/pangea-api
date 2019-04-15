@@ -9,9 +9,11 @@ use App\Item;
 
 use App\MadeItem;
 use App\MadeItemRecipe;
+use App\ItemUse;
 
 use App\Jobs\AttackCharacter;
 use App\Jobs\WorkOnActivity;
+use App\Jobs\Hunt;
 
 class CharacterController extends Controller
 {
@@ -118,7 +120,7 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->huntingToolId);
+        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId);
 
         if (!$itemUse) {
             return response()->json("Can't hunt with that item", 400);

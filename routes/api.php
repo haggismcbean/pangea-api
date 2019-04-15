@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 // hunting
 Route::group(['middleware' => 'auth:api'], function() {
-	Route::get('character/hunt', 'CharacterController@hunt');
+	Route::post('character/hunt', 'CharacterController@hunt');
 });
 
 ////////////
