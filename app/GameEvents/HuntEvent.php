@@ -7,19 +7,21 @@ use App\Location;
 use App\Message;
 use App\Events\MessageSent;
 
+use App\WorldGenerator\HuntMessageGenerator;
+
 class HuntEvent
 {
-    public function handle($character, $item, $isSuccess) {
+    public function handle($character, $isSuccess) {
         if (!$isSuccess) {
             $message = $character->messages()->create([
-                'message' => 'You sat quietly but nothing happened',
+                'message' => HuntMessageGenerator::getFailureMessage(),
                 'source_type' => 'character',
                 'source_name' => $character->name,
                 'source_id' => $character->id,
             ]);
         } else {
             $message = $character->messages()->create([
-                'message' => 'A deer crept into view, nervously browsing on the grasses nearby. You stayed still until it was very close, then you launched a projectile. You hit your target. The deer ran away, but it left a trail of blood. Following the trail, you find the deer lying gasping for air a short distance away. You finish it off.',
+                'message' => HuntMessageGenerator::getSuccessMessage(),
                 'source_type' => 'character',
                 'source_name' => $character->name,
                 'source_id' => $character->id,

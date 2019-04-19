@@ -15,6 +15,10 @@ use App\Jobs\AttackCharacter;
 use App\Jobs\WorkOnActivity;
 use App\Jobs\Hunt;
 
+// DEV
+use App\Http\Controllers\HuntController;
+// END DEV
+
 class CharacterController extends Controller
 {
     public static function getCharacter($characterId) {
@@ -120,18 +124,17 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId);
-
+        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId)->first();
+        
         if (!$itemUse) {
             return response()->json("Can't hunt with that item", 400);
         }
+        
+        $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
 
-        $job = new Hunt($character, $itemUse);
+        HuntController::hunt($character, $efficiency);
 
-        $job->dispatch($character, $itemUse)
-            ->delay(now()->addSeconds(10));
-
-        return response()->json($itemUse, 200);
+        return response()->json($efficiency, 200);
     }
 
     private function isInteger($variable) {

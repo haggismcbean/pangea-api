@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\GameEvents\HuntEvent;
+use App\Http\Controllers\HuntController;
 
 class Hunt implements ShouldQueue
 {
@@ -18,17 +19,17 @@ class Hunt implements ShouldQueue
 
     public $tries = 1;
     public $character;
-    public $itemUse;
+    public $itemBoost;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($character, $itemUse)
+    public function __construct($character, $itemBoost)
     {
         $this->character = $character;
-        // $this->itemUse = $itemUse;
+        $this->itemBoost = $itemBoost;
     }
 
     /**
@@ -38,25 +39,8 @@ class Hunt implements ShouldQueue
      */
     public function handle()
     {
-        // roll for chances of success
-        // TODO - skills
-        $skillBoost = 0;
-        // $itemBoost = $itemUse->item()->first()->items()->first()->efficiency;
-        $itemBoost = 0;
 
-        $successChance = 0.01 * $skillBoost * $itemBoost;
-
-        $roll = rand(0, 100);
-        
-        $huntEvent = new HuntEvent();
-
-        if ($roll < $successChance) {
-            $isSuccess = true;
-        } else {
-            $isSuccess = false;
-        }
-        
-        $huntEvent->handle($this->character, $this->itemUse, $isSuccess);
+        HuntController::hunt($this->character, $this->itemBoost);
 
         return true;
     }
