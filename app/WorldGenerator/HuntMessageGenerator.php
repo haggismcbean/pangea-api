@@ -13,6 +13,7 @@ class HuntMessageGenerator extends Model
     public static function getFailureMessage()
     {
         $failureMessages = [
+            "Time passes",
             "You sat quietly but nothing happened",
             "You see nothing but a few birds fluttering about",
             "A deer creeps into view. It bends its head nervously to eat on some grass. But it walks off before it gets into range",
