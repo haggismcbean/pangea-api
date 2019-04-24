@@ -18,6 +18,10 @@ use App\GameEvents\HuntEvent;
 class HuntController extends Controller
 {
     public static function hunt($character, $itemBoost) {
+        if ($character->activity()->first()->type !== 'hunting') {
+            return;
+        }
+
         // roll for chances of success
         // TODO - skills
         $skillBoost = 0;
@@ -32,6 +36,9 @@ class HuntController extends Controller
 
             // REPEAT (todo - let users stop if they want!);
             HuntController::loopHuntJob($character, $itemBoost);
+
+            $activity = $character->activity()->first();
+            ActivityController::completeActivity($character, $activity);
         }
         
         $huntEvent = new HuntEvent();

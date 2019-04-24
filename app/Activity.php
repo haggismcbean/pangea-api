@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\User;
 use Auth;
 
+// Types: "hunting", "crafting" (others to come - "farming", "gathering", etc)
+
 class Activity extends Model
 {
 	// Character who created it

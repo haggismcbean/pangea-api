@@ -17,16 +17,22 @@ use App\GameEvents\WorkOnActivityEvent;
 
 class ActivityController extends Controller
 {
-    public static function createActivity($zone, $character, $recipe) {
+    public static function createActivity($zone, $character, $recipe, $type) {
         $activity = new Activity;
 
         $activity->zone_id = $zone->id;
         $activity->character_id = $character->id;
-        $activity->recipe_id = $recipe->id;
 
         $activity->progress = 0;
 
-        $recipe->ingredients = $recipe->ingredients()->get();
+        if ($recipe) {
+            $activity->type = 'crafting';
+            $activity->recipe_id = $recipe->id;
+            $recipe->ingredients = $recipe->ingredients()->get();
+        } else {
+            $activity->type = $type;
+        }
+
         $activity->save();
 
         return $activity;
@@ -35,6 +41,10 @@ class ActivityController extends Controller
     public static function workActivity($character, $activity) {
         $activity->progress = $activity->progress + 1;
         $activity->save();
+
+        if ($activity->type !== 'crafting') {
+            throw Error(response()->json(['status' => 'None-crafting activity must be worked on using its specific method'], 403));
+        }
 
         // recursion baby
         $workOnActivityEvent = new WorkOnActivityEvent($character, $activity);

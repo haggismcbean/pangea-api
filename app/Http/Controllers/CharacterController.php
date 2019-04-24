@@ -15,9 +15,8 @@ use App\Jobs\AttackCharacter;
 use App\Jobs\WorkOnActivity;
 use App\Jobs\Hunt;
 
-// DEV
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\HuntController;
-// END DEV
 
 class CharacterController extends Controller
 {
@@ -133,8 +132,9 @@ class CharacterController extends Controller
         $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
 
         HuntController::hunt($character, $efficiency);
+        $activity = ActivityController::createActivity($zone, $character, null, "hunting");
 
-        return response()->json($efficiency, 200);
+        return response()->json($activity, 200);
     }
 
     private function isInteger($variable) {
