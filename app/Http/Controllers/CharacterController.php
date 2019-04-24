@@ -131,10 +131,10 @@ class CharacterController extends Controller
         
         $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
 
-        HuntController::hunt($character, $efficiency);
-
         $zone = $character->zone()->first();
         $activity = ActivityController::createActivity($zone, $character, null, "hunting");
+
+        HuntController::hunt($character, $efficiency);
 
         return response()->json($activity, 200);
     }
