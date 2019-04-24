@@ -56,25 +56,29 @@ class ActivityController extends Controller
     }
 
     public static function completeActivity($character, $activity) {
-        $itemType = $activity->recipe()->first()->item()->first();
-        $item = ItemController::getItem('made_item', $itemType->id);
+        $recipe = $activity->recipe()->first();
 
-        if ($character->hasInventorySpace()) {
-            $itemOwner = ItemOwnerController::getItemOwner('character', $character, $item);
-        } else {
-            $zone = $character->zone()->first();
-            $itemOwner = ItemOwnerController::getItemOwner('zone', $zone, $item);
+        if ($recipe) {
+            $itemType = $activity->recipe()->first()->item()->first();
+            $item = ItemController::getItem('made_item', $itemType->id);
+
+            if ($character->hasInventorySpace()) {
+                $itemOwner = ItemOwnerController::getItemOwner('character', $character, $item);
+            } else {
+                $zone = $character->zone()->first();
+                $itemOwner = ItemOwnerController::getItemOwner('zone', $zone, $item);
+            }
+
+            $itemOwner->count = $itemOwner->count + 1;
+            $itemOwner->save();
+
+            // send item created message
+            $workOnActivityEvent = new WorkOnActivityEvent();
+            $workOnActivityEvent->handle($character, $activity);
         }
-
-        $itemOwner->count = $itemOwner->count + 1;
-        $itemOwner->save();
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
-
-        // send item created message
-        $workOnActivityEvent = new WorkOnActivityEvent();
-        $workOnActivityEvent->handle($character, $activity);
     }
 
     public function createNewActivity(Request $request) {
