@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('activity/add_item_to_activity', 'ActivityController@addItemToActivity');
 	Route::post('activity/work_on_activity', 'ActivityController@createWorkOnActivityJob');
 	Route::post('activity/stop_working_on_activity', 'ActivityController@stopWorkingOnActivity');
+	Route::post('activity/cancel_activity', 'ActivityController@cancelActivity');
 });
 
 // hunting

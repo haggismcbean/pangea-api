@@ -35,6 +35,9 @@ class ActivityController extends Controller
 
         $activity->save();
 
+        $character->activity_id = $activity->id;
+        $character->save();
+
         return $activity;
     }
 
@@ -177,6 +180,17 @@ class ActivityController extends Controller
         $character->activity_id = null;
         $character->save();
             
-        return response()->json($activity, 200);
+        return response()->json($character, 200);
+    }
+
+    public function cancelActivity(Request $request) {
+        $user = Auth::user();
+
+        $character = $user->characters()->first();
+
+        $activity = $character->activity()->first();
+        $activity->destroy($activity->id);
+
+        return $this->stopWorkingOnActivity($request);
     }
 }

@@ -20,7 +20,7 @@ class HuntController extends Controller
     public static function hunt($character, $itemBoost) {
         $activity = $character->activity()->first();
 
-        if ($activity && $activity->type !== 'hunting') {
+        if (!$activity || $activity->type !== 'hunting') {
             return;
         }
 
