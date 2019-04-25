@@ -1,11 +1,8 @@
 Next stepsicles:
 
  [ ] hunting
-    so how will hunting work?
-        you start off and there's a message
-        also you choose what hunting method (bow, human, dog, etc, etc, fishing rod, etc)
-    then you just wait and if you're lucky something happens
-        there are probabilities based on the location and your equipment
+    we now need to actually catch and kill an animal when we success.
+    also worth checking the success event actually works seeing as it's never happened.
  [ ] farming
  [ ] mines/landmarks
  [ ] zone creation: 'Exploration', ditch, building, earthen wall

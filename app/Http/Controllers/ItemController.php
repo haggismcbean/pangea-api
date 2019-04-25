@@ -20,10 +20,15 @@ class ItemController extends Controller
         }
     }
 
-    public static function createNewItem($typeId, $name, $description) {
+    public static function createNewItem($typeId, $name, $description, $itemType = null) {
         $item = new Item;
 
-        $item->item_type = 'plant';
+        if (!$itemType) {
+            $item->item_type = 'plant';
+        } else {
+            $item->item_type = $itemType;
+        }
+
         $item->type_id = $typeId;
         $item->name = $name;
         $item->description = $description;

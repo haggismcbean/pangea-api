@@ -33,16 +33,16 @@ class HuntMessageGenerator extends Model
             "A deer crept into view, nervously browsing on the grasses nearby. You stayed still until it was very close, then you launched a projectile. You hit your target. The deer ran away, but it left a trail of blood. Following the trail, you find the deer lying gasping for air a short distance away. You finish it off."
         ];
 
-        return HuntMessageGenerator::getRandomMessage($failureMessages);
+        return HuntMessageGenerator::getRandomMessage($successMessages);
     }
 
     // TODO - implement interruption (can only hunt when alone/with other hunters)
     public static function getInterruptionMessage() {
-        $interruptionMessage = [
+        $interruptionMessages = [
             "As you are sat waiting for an animal to fall into your trap, a human brazenly walks into the area, making enough noise to scare away any deer that were nearby"
         ];
 
-        return HuntMessageGenerator::getRandomMessage($failureMessages);
+        return HuntMessageGenerator::getRandomMessage($interruptionMessages);
     }
 
     private static function getRandomMessage($messages) {

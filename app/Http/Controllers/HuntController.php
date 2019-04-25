@@ -8,6 +8,7 @@ use App\Activity;
 use App\ActivityItem;
 
 use App\Http\Controllers\ActivityItemController;
+use App\Http\Controllers\AnimalController;
 
 use App\MadeItem;
 use App\MadeItemRecipe;
@@ -26,14 +27,29 @@ class HuntController extends Controller
 
         // roll for chances of success
         // TODO - skills
-        $skillBoost = 0;
-        $successChance = 0.01 * $skillBoost * $itemBoost;
+        $skillBoost = 1;
+        $successChance = 10000 * $skillBoost * $itemBoost;
 
         $roll = rand(0, 100);
 
         if ($roll < $successChance) {
             $isSuccess = true;
             ActivityController::completeActivity($character, $activity);
+
+            $biome = $character->location()->first()->biome()->first();
+            $animal = AnimalController::getDeadAnimal($biome, "herbivore");
+
+            $meat = HuntController::getDeadAnimal($animal->id);
+
+            if ($character->hasInventorySpace()) {
+                $meatOwner = ItemOwnerController::getItemOwner('character', $character, $meat);
+            } else {
+                $zone = $character->zone()->first();
+                $meatOwner = ItemOwnerController::getItemOwner('zone', $zone, $meat);
+            }
+
+            $meatOwner->count = $meatOwner->count + 1;
+            $meatOwner->save();
         } else {
             $isSuccess = false;
 
@@ -52,5 +68,15 @@ class HuntController extends Controller
             ->delay(now()->addSeconds(10));
 
         return true;
+    }
+
+    private static function getDeadAnimal($animalId) {
+        $animal = ItemController::getItem('animal', $animalId);
+
+        if (!$animal) {
+            return ItemController::createNewItem($animalId, 'meat', 'A lump of meat', 'animal');
+        } else {
+            return $animal;
+        }
     }
 }
