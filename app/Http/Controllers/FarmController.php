@@ -15,8 +15,7 @@ use App\MadeItemRecipe;
 use App\Plant;
 
 use App\Jobs\Farm;
-use App\GameEvents\HuntEvent;
-// use App\GameEvents\FarmEvent;
+use App\GameEvents\FarmEvent;
 
 class FarmController extends Controller
 {
