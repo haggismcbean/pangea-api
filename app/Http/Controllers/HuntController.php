@@ -10,6 +10,7 @@ use App\ActivityItem;
 use App\Http\Controllers\ActivityItemController;
 use App\Http\Controllers\AnimalController;
 
+use App\ItemUse;
 use App\MadeItem;
 use App\MadeItemRecipe;
 
@@ -28,7 +29,7 @@ class HuntController extends Controller
         // roll for chances of success
         // TODO - skills
         $skillBoost = 1;
-        $successChance = 10000 * $skillBoost * $itemBoost;
+        $successChance = 1 * $skillBoost * $itemBoost;
 
         $roll = rand(0, 100);
 
@@ -78,5 +79,25 @@ class HuntController extends Controller
         } else {
             return $animal;
         }
+    }
+
+    public function huntAnimal(Request $request) {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId)->first();
+        
+        if (!$itemUse) {
+            return response()->json("Can't hunt with that item", 400);
+        }
+        
+        $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
+
+        $zone = $character->zone()->first();
+        $activity = ActivityController::createActivity($zone, $character, null, "hunting");
+
+        HuntController::hunt($character, $efficiency);
+
+        return response()->json($activity, 200);
     }
 }

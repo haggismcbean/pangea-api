@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Zone;
+use App\Plant;
 
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ItemController;
@@ -75,7 +76,7 @@ class PlantController extends Controller
                 return;
             }
 
-            return ItemController::createNewItem($plantId, $plantPiece, $description);
+            return ItemController::createNewItem($plantId, $plantPiece, $description, 'plant');
         } else {
             return $plant;
         }

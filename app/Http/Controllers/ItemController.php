@@ -20,19 +20,15 @@ class ItemController extends Controller
         }
     }
 
-    public static function createNewItem($typeId, $name, $description, $itemType = null) {
+    public static function createNewItem($typeId, $name, $description, $itemType) {
         $item = new Item;
 
-        if (!$itemType) {
-            $item->item_type = 'plant';
-        } else {
-            $item->item_type = $itemType;
-        }
-
+        $item->item_type = $itemType;
         $item->type_id = $typeId;
         $item->name = $name;
         $item->description = $description;
 
+        // TODO - fix the below :P
         if ($name === 'wood') {
             $item->unit_weight = rand(31, 57);
             $item->unit_volume = rand(8, 12);

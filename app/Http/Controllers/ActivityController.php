@@ -22,16 +22,14 @@ class ActivityController extends Controller
 
         $activity->zone_id = $zone->id;
         $activity->character_id = $character->id;
-
+        $activity->type = $type;
         $activity->progress = 0;
 
         if ($recipe) {
-            $activity->type = 'crafting';
             $activity->recipe_id = $recipe->id;
-            $recipe->ingredients = $recipe->ingredients()->get();
-        } else {
-            $activity->type = $type;
+            // $recipe->ingredients = $recipe->ingredients()->get();
         }
+
 
         $activity->save();
 
@@ -97,7 +95,7 @@ class ActivityController extends Controller
 
         // TODO - automatically add any ingredients the user is already carrying (which are added to the request)
 
-        $activity = ActivityController::createActivity($zone, $character, $recipe);
+        $activity = ActivityController::createActivity($zone, $character, $recipe, 'crafting');
 
         foreach ($recipe->ingredients as $key => $ingredient) {
             ActivityItemController::createActivityItem($activity, $ingredient);

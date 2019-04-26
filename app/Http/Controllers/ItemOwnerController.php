@@ -11,7 +11,7 @@ class ItemOwnerController extends Controller
         $itemOwner = null;
 
         foreach ($itemOwners as $currentItemOwner) {
-            if ($currentItemOwner->item()->first()->name == $item->name) {
+            if ($currentItemOwner->item()->first() && $currentItemOwner->item()->first()->name == $item->name) {
                 $itemOwner = $currentItemOwner;
             }
         }

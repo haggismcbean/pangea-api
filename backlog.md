@@ -1,8 +1,6 @@
 Next stepsicles:
 
- [ ] hunting
-    we now need to actually catch and kill an animal when we success.
-    also worth checking the success event actually works seeing as it's never happened.
+ [x] hunting
  [ ] farming
  [ ] mines/landmarks
  [ ] zone creation: 'Exploration', ditch, building, earthen wall
@@ -20,3 +18,9 @@ Next stepsicles:
  [ ] (hunt by) trapping
  [ ] slavery
  [ ] death by exposure
+ [ ] weather and seasons (used in farming, hunting)
+
+
+ Okay so that was good! Now how about some farming?!
+
+ 

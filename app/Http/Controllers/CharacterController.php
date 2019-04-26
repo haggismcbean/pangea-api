@@ -119,26 +119,6 @@ class CharacterController extends Controller
         return response()->json($madeItems, 200);
     }
 
-    public function hunt(Request $request) {
-        $user = Auth::user();
-        $character = $user->characters()->first();
-
-        $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId)->first();
-        
-        if (!$itemUse) {
-            return response()->json("Can't hunt with that item", 400);
-        }
-        
-        $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
-
-        $zone = $character->zone()->first();
-        $activity = ActivityController::createActivity($zone, $character, null, "hunting");
-
-        HuntController::hunt($character, $efficiency);
-
-        return response()->json($activity, 200);
-    }
-
     private function isInteger($variable) {
         if ( strval($variable) !== strval(intval($variable)) ) {
             return false;
