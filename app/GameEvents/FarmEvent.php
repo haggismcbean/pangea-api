@@ -7,7 +7,7 @@ use App\Location;
 use App\Message;
 use App\Events\MessageSent;
 
-use App\WorldGenerator\HuntMessageGenerator;
+use App\WorldGenerator\FarmMessageGenerator;
 
 class FarmEvent
 {

@@ -18,7 +18,7 @@ class FarmMessageGenerator extends Model
 
         // TODO - add weather/biome specific messages
 
-        return HuntMessageGenerator::getRandomMessage($failureMessages);
+        return FarmMessageGenerator::getRandomMessage($failureMessages);
     }
 
     public static function getSuccessMessage() {
@@ -26,7 +26,7 @@ class FarmMessageGenerator extends Model
             "You potter about picking up weeds and generally making yourself useful",
         ];
 
-        return HuntMessageGenerator::getRandomMessage($successMessages);
+        return FarmMessageGenerator::getRandomMessage($successMessages);
     }
 
     private static function getRandomMessage($messages) {

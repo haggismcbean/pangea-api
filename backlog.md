@@ -2,6 +2,12 @@ Next stepsicles:
 
  [x] hunting
  [ ] farming
+    - creation of farm
+    - general maintenence
+    - watering
+    - slowly increasing yield
+    - once a day weeding? maybe we can let people weed ad nauseum but it doesn't help? that still requires once a day-ish-ness
+    - harvest time
  [ ] mines/landmarks
  [ ] zone creation: 'Exploration', ditch, building, earthen wall
  [ ] tool uses (speed up gathering, create zones, storage, locks, travelling (?))

@@ -58,8 +58,7 @@ class FarmController extends Controller
             FarmController::loopFarmJob($character, $itemBoost, $plant);
         }
         
-        // TODO - create a fancy custom farm event oooooooeooo
-        $farmEvent = new HuntEvent();
+        $farmEvent = new FarmEvent();
         $farmEvent->handle($character, $isSuccess);
     }
 
