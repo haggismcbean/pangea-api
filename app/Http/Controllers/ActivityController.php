@@ -15,7 +15,7 @@ use App\MadeItemRecipe;
 use App\Jobs\WorkOnActivity;
 use App\GameEvents\WorkOnActivityEvent;
 
-class ActivityController extends Controller
+class CraftingController extends Controller
 {
     public static function createActivity($zone, $character, $recipe, $type) {
         $activity = new Activity;
@@ -95,7 +95,7 @@ class ActivityController extends Controller
 
         // TODO - automatically add any ingredients the user is already carrying (which are added to the request)
 
-        $activity = ActivityController::createActivity($zone, $character, $recipe, 'crafting');
+        $activity = CraftingController::createActivity($zone, $character, $recipe, 'crafting');
 
         foreach ($recipe->ingredients as $key => $ingredient) {
             ActivityItemController::createActivityItem($activity, $ingredient);

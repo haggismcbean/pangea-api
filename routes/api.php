@@ -78,11 +78,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('character/{character}/get_craftables', 'CharacterController@getCraftables');
 	Route::get('zone/{zone}/activities', 'ZoneController@activities');
-	Route::put('activity/create_new_activity', 'ActivityController@createNewActivity');
-	Route::post('activity/add_item_to_activity', 'ActivityController@addItemToActivity');
-	Route::post('activity/work_on_activity', 'ActivityController@createWorkOnActivityJob');
-	Route::post('activity/stop_working_on_activity', 'ActivityController@stopWorkingOnActivity');
-	Route::post('activity/cancel_activity', 'ActivityController@cancelActivity');
+	Route::put('activity/create_new_activity', 'CraftingController@createNewActivity');
+	Route::post('activity/add_item_to_activity', 'CraftingController@addItemToActivity');
+	Route::post('activity/work_on_activity', 'CraftingController@createWorkOnActivityJob');
+	Route::post('activity/stop_working_on_activity', 'CraftingController@stopWorkingOnActivity');
+	Route::post('activity/cancel_activity', 'CraftingController@cancelActivity');
 });
 
 // hunting

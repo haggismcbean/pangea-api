@@ -15,7 +15,7 @@ use App\Jobs\AttackCharacter;
 use App\Jobs\WorkOnActivity;
 use App\Jobs\Hunt;
 
-use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CraftingController;
 use App\Http\Controllers\HuntController;
 
 class CharacterController extends Controller

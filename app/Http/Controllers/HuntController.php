@@ -35,7 +35,7 @@ class HuntController extends Controller
 
         if ($roll < $successChance) {
             $isSuccess = true;
-            ActivityController::completeActivity($character, $activity);
+            CraftingController::completeActivity($character, $activity);
 
             $biome = $character->location()->first()->biome()->first();
             $animal = AnimalController::getDeadAnimal($biome, "herbivore");
@@ -94,7 +94,7 @@ class HuntController extends Controller
         $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
 
         $zone = $character->zone()->first();
-        $activity = ActivityController::createActivity($zone, $character, null, "hunting");
+        $activity = CraftingController::createActivity($zone, $character, null, "hunting");
 
         HuntController::hunt($character, $efficiency);
 

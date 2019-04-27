@@ -1,3 +1,75 @@
+/*
+So Activities:
+
+ - Crafting
+    MadeItemRecipe concept here. 
+ - Cooking
+    MadeFoodRecipe
+ - Building
+    BuildingRecipe
+    - Farm plot
+    - Irrigation ditch
+    - Defensive ditch
+    - Defensive wall
+    - House
+    - Barn
+    - Hall
+ - Fighting
+    CombatRecipe (???)
+    - To train
+    - To subdue
+    - To kill
+ - Farming
+    FarmingRecipe (???)
+    - Plant
+    - Till
+    - Fertilize
+    - Harvest
+ - Hunting
+    HuntingRecipe (???)
+    - Trap
+    - Hunt alone
+    - Hunt in group
+ - Mining
+    MiningRecipe (???)
+    - Mine a stone/material (given list of all discovered)
+    - Reinforce mine
+
+CANCELATION
+You can stop/start working on things whenever you like.
+If you stop a 'chore' thing like tilling, its effects are calculated when you stop and the activity removed
+If you stop a 'creative' thing like crafting, it is paused and you can come back to it later
+
+STORY
+With all things, as you're doing them you get randomized strings telling you how it's going or whatever.
+These can come once every x seconds for everything to start with.
+The strings can sometimes come as a 'story', can have multiple 'endings'
+
+PROGRESS
+Things take a certain length of time which is calculated depending on tools, skills, and base time.
+Your progress goes up each cycle and once it reaches 100... something happens (ie call back to the activity's controller)
+
+FAIL
+Things can fail entirely. When they do you get the inputs back
+
+DEATH
+You can die whilst doing things. The likelihood of this happening depends on the activity in question. 
+We want people to live a fairly long time
+
+So to do:
+
+Activity needs a type and a name.
+ the type will be say farming to send you to the farming controller
+ the name will be say tilling which will send you to the function (to calc the output when the activity is finished)
+
+Messages in a table? Could do. Maybe later ;)
+
+1. Rename ActivityController to CraftingController.
+2. Create an ActivityController that does all the above things. Get it working with the current CraftingController stuffs.
+
+*/
+
+
 Next stepsicles:
 
  [x] hunting

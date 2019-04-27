@@ -14,7 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 // use App\Events\MessageSent;
 use App\GameEvents\WorkOnActivityEvent;
 
-use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CraftingController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemOwnerController;
 
@@ -49,9 +49,9 @@ class WorkOnActivity implements ShouldQueue
         }
 
         if ($this->activity->progress < 99 && $this->activity->isReadyForWork()) {
-            ActivityController::workActivity($this->character, $this->activity);
+            CraftingController::workActivity($this->character, $this->activity);
         } else {
-            ActivityController::completeActivity($this->character, $this->activity);
+            CraftingController::completeActivity($this->character, $this->activity);
         }
 
         return true;

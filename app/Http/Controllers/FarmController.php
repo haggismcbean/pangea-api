@@ -52,7 +52,7 @@ class FarmController extends Controller
         // TODO - below logic needs to be made... about farming :P
         if ($roll < $successChance) {
             $isSuccess = true;
-            ActivityController::completeActivity($character, $activity);
+            CraftingController::completeActivity($character, $activity);
 
             $crop = FarmController::getPlant($plant->id, 'seed', $character->location()->first());
 
@@ -121,7 +121,7 @@ class FarmController extends Controller
         $plant = $character->location->first()->biome()->first()->plants()->where('typeName', 'shrub')->first();
         // END TODO
 
-        $activity = ActivityController::createActivity($zone, $character, $plant, "farming");
+        $activity = CraftingController::createActivity($zone, $character, $plant, "farming");
 
         FarmController::farm($character, 100, $plant);
 
