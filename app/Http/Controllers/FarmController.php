@@ -17,6 +17,20 @@ use App\Plant;
 use App\Jobs\Farm;
 use App\GameEvents\FarmEvent;
 
+/*
+Things one can do to increase a yield
+ - Plough field
+ - Fertilizing
+ - Irrigation
+ - Till fields (ie. kill weeds)
+ - 'Cultural control' Have beneficial animals/complimentary plants nearby??
+
+Things one must do to farm
+ - Sow seeds (unless tree/vine based, although then you do too but you have to wait bloody ages obv)
+ - Wait for plant to mature
+ - Harvest
+*/
+
 class FarmController extends Controller
 {
     public static function farm($character, $itemBoost, $plant) {
