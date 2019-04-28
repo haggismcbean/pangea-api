@@ -33,56 +33,37 @@ Things one must do to farm
 
 class FarmController extends Controller
 {
-    public static function farm($character, $itemBoost, $plant) {
-        $activity = $character->activity()->first();
+    public static function resolveActivity($character, $activity) {
+        $activity->progress = 100;
+        $activity->save();
 
-        // TODO - check if user is logged in as well :P
+        $character->activity_id = null;
+        $character->save();
 
-        if (!$activity || $activity->type !== 'farming') {
-            return;
-        }
+        CraftingController::completeActivity($character, $activity);
 
-        // roll for chances of success
-        // TODO - skills
-        $skillBoost = 1;
-        $successChance = 10000 * $skillBoost * $itemBoost;
+        $crop = FarmController::getPlant($plant->id, 'seed', $character->location()->first());
 
-        $roll = rand(0, 100);
-
-        // TODO - below logic needs to be made... about farming :P
-        if ($roll < $successChance) {
-            $isSuccess = true;
-            CraftingController::completeActivity($character, $activity);
-
-            $crop = FarmController::getPlant($plant->id, 'seed', $character->location()->first());
-
-            if ($character->hasInventorySpace()) {
-                $cropOwner = ItemOwnerController::getItemOwner('character', $character, $crop);
-            } else {
-                $zone = $character->zone()->first();
-                $cropOwner = ItemOwnerController::getItemOwner('zone', $zone, $crop);
-            }
-
-            $cropOwner->count = $cropOwner->count + 1;
-            $cropOwner->save();
+        if ($character->hasInventorySpace()) {
+            $cropOwner = ItemOwnerController::getItemOwner('character', $character, $crop);
         } else {
-            $isSuccess = false;
-
-            // REPEAT (todo - let users stop if they want!);
-            FarmController::loopFarmJob($character, $itemBoost, $plant);
+            $zone = $character->zone()->first();
+            $cropOwner = ItemOwnerController::getItemOwner('zone', $zone, $crop);
         }
-        
-        $farmEvent = new FarmEvent();
-        $farmEvent->handle($character, $isSuccess);
+
+        $cropOwner->count = $cropOwner->count + 1;
+        $cropOwner->save();
     }
 
-    private static function loopFarmJob($character, $itemBoost, $plant) {
-        $job = new Farm($character, $itemBoost, $plant);
+    public static function sendMessage($activity, $result, $worker) {
+        $event = new FarmEvent;
 
-        $job->dispatch($character, $itemBoost, $plant)
-            ->delay(now()->addSeconds(10));
-
-        return true;
+        if ($result === 'SUCCESS') {
+            $event->handle($worker, true);
+        } else {
+            // TODO - handle death
+            $event->handle($worker, false);
+        }
     }
 
     private static function getPlant($plantId, $plantPiece, $location) {
@@ -106,24 +87,14 @@ class FarmController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        // $itemUse = ItemUse::where('activity', 'farming')->where('item_id', $request->itemId)->first();
-        
-        // if (!$itemUse) {
-        //     return response()->json("Can't farm with that item", 400);
-        // }
-        
-        $efficiency = 10;
-
-        $zone = $character->zone()->first();
-
         // TODO - They will have seeds which they will plant! 
         // TODO - Needs to be a grass instead of a shrub?
         $plant = $character->location->first()->biome()->first()->plants()->where('typeName', 'shrub')->first();
         // END TODO
 
-        $activity = CraftingController::createActivity($zone, $character, $plant, "farming");
+        // $activity = ActivityController::createActivity($character, "farming");
 
-        FarmController::farm($character, 100, $plant);
+        // $activityController->workOnActivity();
 
         return response()->json($activity, 200);
     }

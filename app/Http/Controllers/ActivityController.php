@@ -55,11 +55,16 @@ class ActivityController extends Controller
     }
 
     public function stopWorkOnActivity() {
-
+        $this->worker->activity_id = null;
+        $this->worker->save();
+            
+        return response()->json($character, 200);
     }
 
     public function cancelActivity() {
+        $this->activity->destroy($activity->id);
 
+        return $this->stopWorkingOnActivity();
     }
 
     public function addIngredientsToActivity($character, $item, $amount) {
@@ -97,10 +102,6 @@ class ActivityController extends Controller
         $this->validateWorkOnActivity();
 
         $result = $this->calculateResult($this->tools, $this->machines, $this->worker, $this->skill);
-        // okay so for a crafting thing, it's a little different really.
-        // you just invest a set amount of time and then the activity is done.
-        // this is actually much more usual.
-        // okay this is how we handle it. on 'success', progress goes up. if progress is now 100, we stop, otherwise we loop
 
         $this->sendMessage($this->activity, $result);
 
@@ -125,6 +126,8 @@ class ActivityController extends Controller
     }
 
     private function validateWorkOnActivity() {
+        // TODO - check if user is logged in as well :P
+
         if ($this->worker->activity_id !== $this->activity->id) {
             throw new Error("Character is not currently working on this activity");
         }
@@ -188,7 +191,7 @@ class ActivityController extends Controller
             HuntController::sendMessage($this->activity, $result, $this->worker);
         }
 
-        if ($this->activity->type === 'crafting' || !$this->activity->type) {
+        if ($this->activity->type === 'crafting') {
             CraftingController::sendMessage($this->activity, $this->worker);
         }
     }
@@ -198,7 +201,7 @@ class ActivityController extends Controller
             HuntController::resolveActivity($this->activity, $this->worker);
         }
 
-        if ($this->activity->type === 'crafting' || !$this->activity->type) {
+        if ($this->activity->type === 'crafting') {
             CraftingController::resolveActivity($this->activity, $this->worker);
         }
     }
