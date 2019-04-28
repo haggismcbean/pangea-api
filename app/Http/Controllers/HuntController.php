@@ -19,56 +19,21 @@ use App\GameEvents\HuntEvent;
 
 class HuntController extends Controller
 {
-    public static function hunt($character, $itemBoost) {
-        $activity = $character->activity()->first();
+    public static function resolveActivity() {
+        $biome = $character->location()->first()->biome()->first();
+        $animal = AnimalController::getDeadAnimal($biome, "herbivore");
 
-        if (!$activity || $activity->type !== 'hunting') {
-            return;
-        }
+        $meat = HuntController::getDeadAnimal($animal->id);
 
-        // roll for chances of success
-        // TODO - skills
-        $skillBoost = 1;
-        $successChance = 1 * $skillBoost * $itemBoost;
-
-        $roll = rand(0, 100);
-
-        if ($roll < $successChance) {
-            $isSuccess = true;
-            CraftingController::completeActivity($character, $activity);
-
-            $biome = $character->location()->first()->biome()->first();
-            $animal = AnimalController::getDeadAnimal($biome, "herbivore");
-
-            $meat = HuntController::getDeadAnimal($animal->id);
-
-            if ($character->hasInventorySpace()) {
-                $meatOwner = ItemOwnerController::getItemOwner('character', $character, $meat);
-            } else {
-                $zone = $character->zone()->first();
-                $meatOwner = ItemOwnerController::getItemOwner('zone', $zone, $meat);
-            }
-
-            $meatOwner->count = $meatOwner->count + 1;
-            $meatOwner->save();
+        if ($character->hasInventorySpace()) {
+            $meatOwner = ItemOwnerController::getItemOwner('character', $character, $meat);
         } else {
-            $isSuccess = false;
-
-            // REPEAT (todo - let users stop if they want!);
-            HuntController::loopHuntJob($character, $itemBoost);
+            $zone = $character->zone()->first();
+            $meatOwner = ItemOwnerController::getItemOwner('zone', $zone, $meat);
         }
-        
-        $huntEvent = new HuntEvent();
-        $huntEvent->handle($character, $isSuccess);
-    }
 
-    private static function loopHuntJob($character, $itemBoost) {
-        $job = new Hunt($character, $itemBoost);
-
-        $job->dispatch($character, $itemBoost)
-            ->delay(now()->addSeconds(10));
-
-        return true;
+        $meatOwner->count = $meatOwner->count + 1;
+        $meatOwner->save();
     }
 
     private static function getDeadAnimal($animalId) {
@@ -78,6 +43,17 @@ class HuntController extends Controller
             return ItemController::createNewItem($animalId, 'meat', 'A lump of meat', 'animal');
         } else {
             return $animal;
+        }
+    }
+
+    public static function sendMessage($activity, $result, $workers) {
+        $event = new HuntEvent;
+
+        if ($result === 'SUCCESS') {
+            $event->handle($workers, true);
+        } else {
+            // TODO - handle death
+            $event->handle($workers, false);
         }
     }
 
@@ -91,12 +67,16 @@ class HuntController extends Controller
             return response()->json("Can't hunt with that item", 400);
         }
         
-        $efficiency = $itemUse->item()->first()->items()->first()->efficiency;
-
         $zone = $character->zone()->first();
-        $activity = CraftingController::createActivity($zone, $character, null, "hunting");
 
-        HuntController::hunt($character, $efficiency);
+        $activityController = new ActivityController;
+        $activityController->tools = $itemUse->item()->first()->items()->first();
+        $activityController->workers = $character;
+        $activity = $activityController->createActivity($character, "hunting");
+
+        $character->activity_id = $activity->id;
+
+        $activityController->workOnActivity();
 
         return response()->json($activity, 200);
     }
