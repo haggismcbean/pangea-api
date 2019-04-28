@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Activity;
 use App\ActivityItem;
 
-use App\Http\Controllers\ActivityItemController;
-
+use App\Item;
 use App\MadeItem;
 use App\MadeItemRecipe;
 
@@ -17,43 +16,13 @@ use App\GameEvents\WorkOnActivityEvent;
 
 class CraftingController extends Controller
 {
-    public static function createActivity($zone, $character, $recipe, $type) {
-        $activity = new Activity;
-
-        $activity->zone_id = $zone->id;
-        $activity->character_id = $character->id;
-        $activity->type = $type;
-        $activity->progress = 0;
-
-        if ($recipe) {
-            $activity->recipe_id = $recipe->id;
-            // $recipe->ingredients = $recipe->ingredients()->get();
-        }
-
-
-        $activity->save();
-
-        $character->activity_id = $activity->id;
-        $character->save();
-
-        return $activity;
-    }
-
-    public static function workActivity($character, $activity) {
+    public static function resolveActivity($activity, $character) {
         $activity->progress = $activity->progress + 1;
         $activity->save();
 
-        if ($activity->type !== 'crafting') {
-            throw Error(response()->json(['status' => 'None-crafting activity must be worked on using its specific method'], 403));
+        if ($activity->progress === 100) {
+            CraftingController::completeActivity($character, $activity);
         }
-
-        // recursion baby
-        $workOnActivityEvent = new WorkOnActivityEvent($character, $activity);
-        $workOnActivityEvent->handle($character, $activity);
-
-        $job = new WorkOnActivity($character, $activity);
-        $job->dispatch($character, $activity)
-            ->delay(now()->addSeconds(1));
     }
 
     public static function completeActivity($character, $activity) {
@@ -72,14 +41,15 @@ class CraftingController extends Controller
 
             $itemOwner->count = $itemOwner->count + 1;
             $itemOwner->save();
-
-            // send item created message
-            $workOnActivityEvent = new WorkOnActivityEvent();
-            $workOnActivityEvent->handle($character, $activity);
         }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
+    }
+
+    public static function sendMessage($activity, $character) {
+        $workOnActivityEvent = new WorkOnActivityEvent;
+        $workOnActivityEvent->handle($character, $activity);
     }
 
     public function createNewActivity(Request $request) {
@@ -88,18 +58,13 @@ class CraftingController extends Controller
         $recipeId = $request->input('recipeId');
 
         $character = $user->characters->first();
-        $zone = $character->zone()->first();
         $recipe = MadeItemRecipe::find($recipeId);
 
         // TODO - check if recipe requires any machines that are in current zone!
 
         // TODO - automatically add any ingredients the user is already carrying (which are added to the request)
 
-        $activity = CraftingController::createActivity($zone, $character, $recipe, 'crafting');
-
-        foreach ($recipe->ingredients as $key => $ingredient) {
-            ActivityItemController::createActivityItem($activity, $ingredient);
-        }
+        $activity = ActivityController::createActivity($character, 'crafting', $recipe);
 
         return $activity;
     }
@@ -113,40 +78,15 @@ class CraftingController extends Controller
         $itemId = $request->itemId;
         $amount = $request->amount;
 
-        $characterItems = $character->itemOwners()->get();
         $activity = $character->zone()->first()->activities()->find($activityId);
 
         $item = Item::find($itemId);
 
-        foreach ($characterItems as $characterItemKey => $characterItem) {
-
-            if ($characterItem->item_id == $item->id) {
-                // TODO - validation and remove the correct number of items.
-                $characterItem->count = $characterItem->count - $amount;
-
-                $ingredient = $activity->ingredients()->where('item_id', $item->id)->first();
-
-                if (!$ingredient) {
-                    $ingredient = $activity->ingredients()->where('item_type', $item->name)->first();
-                }
-
-                if (!$ingredient) {
-                    return response()->json("Item could not be found in this activity", 400);
-                }
-
-                if ($ingredient->quantity_added == $ingredient->quantity_required) {
-                    return response()->json("Item does not need more of that ingredient", 400);
-                }
-
-                $ingredient->quantity_added = $ingredient->quantity_added + 1;
-                $ingredient->save();
-
-                $characterItem->save();
-            }
-        }
+        $activityController = new ActivityController($activity);
+        $activityController->addIngredientsToActivity($character, $item, $amount);
     }
 
-    public function createWorkOnActivityJob(Request $request) {
+    public function workOnActivity(Request $request) {
         $user = Auth::user();
 
         $character = $user->characters()->first();
@@ -154,21 +94,21 @@ class CraftingController extends Controller
 
         $activity = $character->zone()->first()->activities()->find($activityId);
 
-        if (!$activity->isReadyForWork()) {
-            return response()->json('Activity not ready for work', 400);
+        if (!$activity) {
+            return response()->json("Activity not found", 400);
         }
 
-        if ($activity) {
-            $character->activity_id = $activity->id;
-            $character->save();
-        
-            $job = new WorkOnActivity($character, $activity);
-            $job->dispatch($character, $activity);
+        $character->activity_id = $activity->id;
+        $character->save();
 
-            return response()->json($activity, 200);
-        } else {
-            return response()->json('Activity could not be found', 400);
-        }
+        // DEV (remove for live!)
+        $activity->type = "crafting";
+        $activity->save();
+        // END DEV
+
+        $activityController = new ActivityController($activity);
+        $activityController->worker = $character;
+        $activityController->workOnActivity();
     }
 
     public function stopWorkingOnActivity(Request $request) {

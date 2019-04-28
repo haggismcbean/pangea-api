@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\ActivityItemController;
 use App\Http\Controllers\HuntController;
 
 use App\Activity;
@@ -14,7 +15,7 @@ use App\Jobs\Hunt;
 class ActivityController extends Controller
 {
     public $tools;
-    public $workers;
+    public $worker; //TODO - support more than one worker :P
     public $activity;
     public $machines;
     public $skill;
@@ -23,19 +24,18 @@ class ActivityController extends Controller
     private $FAILURE = 'FAILURE';
     private $DEATH = 'DEATH';
 
+    private $HUNTING_TYPE = 'hunting';
+    private $CRAFTING_TYPE = 'crafting';
+
     public function __construct($activity = null){
         $this->activity = $activity;
     }
 
-    public function createActivity($character, $activityType) {
-        // So this one is called from the necessary controllers.
-        // It creates an activity which holds enough details from which we can link back up with the necessary controller later
-
-
+    public function createActivity($character, $activityType, $recipe=null) {
         $this->activity = new Activity;
         $this->activity->character_id = $character->id;
         $this->activity->zone_id = $character->zone()->first()->id;
-        $this->activity->recipe_id = null; //??
+        $this->activity->recipe_id = $recipe->id;
         // $this->activity->recipe_type = ?? // Use this to work out which function to call (in the controller)
         $this->activity->progress = 0;
         $this->activity->type = $activityType; // Use this to work out which controller to call
@@ -44,6 +44,12 @@ class ActivityController extends Controller
         // $this->activity->last_story_id = nullable, tells the last story told so we can chain them easily
 
         $this->activity->save();
+
+        if ($recipe && $recipe->ingredients) {
+            foreach ($recipe->ingredients as $key => $ingredient) {
+                ActivityItemController::createActivityItem($activity, $ingredient);
+            }
+        }
 
         return $this->activity;
     }
@@ -56,20 +62,56 @@ class ActivityController extends Controller
 
     }
 
-    public function addIngredientsToActivity() {
+    public function addIngredientsToActivity($character, $item, $amount) {
+        $characterItems = $character->itemOwners()->get();
 
+        foreach ($characterItems as $characterItemKey => $characterItem) {
+
+            if ($characterItem->item_id == $item->id) {
+                // TODO - validation and remove the correct number of items.
+                $characterItem->count = $characterItem->count - $amount;
+
+                $ingredient = $this->activity->ingredients()->where('item_id', $item->id)->first();
+
+                if (!$ingredient) {
+                    $ingredient = $this->activity->ingredients()->where('item_type', $item->name)->first();
+                }
+
+                if (!$ingredient) {
+                    return response()->json("Item could not be found in this activity", 400);
+                }
+
+                if ($ingredient->quantity_added == $ingredient->quantity_required) {
+                    return response()->json("Item does not need more of that ingredient", 400);
+                }
+
+                $ingredient->quantity_added = $ingredient->quantity_added + 1;
+                $ingredient->save();
+
+                $characterItem->save();
+            }
+        }
     }
 
     public function workOnActivity() {
         $this->validateWorkOnActivity();
 
-        $result = $this->calculateResult($this->tools, $this->machines, $this->workers, $this->skill);
+        $result = $this->calculateResult($this->tools, $this->machines, $this->worker, $this->skill);
+        // okay so for a crafting thing, it's a little different really.
+        // you just invest a set amount of time and then the activity is done.
+        // this is actually much more usual.
+        // okay this is how we handle it. on 'success', progress goes up. if progress is now 100, we stop, otherwise we loop
 
         $this->sendMessage($this->activity, $result);
 
         if ($result === $this->SUCCESS) {
-            $this->cancelActivity();
-            $this->resolveActivity();
+            $this->resolveActivity($this->worker, $this->activity);
+
+            if ($this->activity->progress === 100) {
+                $this->cancelActivity();
+            } else {
+                $this->loopWorkOnActivity();
+            }
         }
 
         if ($result === $this->FAILURE) {
@@ -83,8 +125,12 @@ class ActivityController extends Controller
     }
 
     private function validateWorkOnActivity() {
-        if ($this->workers->activity_id !== $this->activity->id) {
+        if ($this->worker->activity_id !== $this->activity->id) {
             throw new Error("Character is not currently working on this activity");
+        }
+
+        if (!$this->activity->isReadyForWork()) {
+            throw new Error("Activity is not ready to be worked on");
         }
     }
 
@@ -99,7 +145,7 @@ class ActivityController extends Controller
     }
 
     // TODO
-    private function getWorkers() {
+    private function getworker() {
         return;
     }
 
@@ -108,8 +154,13 @@ class ActivityController extends Controller
         return;
     }
 
-    private function calculateResult($tools, $machines, $workers, $skill) {
-        $itemBoost = $tools->efficiency;
+    private function calculateResult($tools, $machines, $worker, $skill) {
+        if ($tools) {
+            $itemBoost = $tools->efficiency;
+        } else {
+            $itemBoost = 1;
+        }
+
         $skillBoost = 1;
         $successChance = 10000 * $skillBoost * $itemBoost;
 
@@ -134,13 +185,21 @@ class ActivityController extends Controller
 
     private function sendMessage($activity, $result) {
         if ($this->activity->type === 'hunting') {
-            HuntController::sendMessage($this->activity, $result, $this->workers);
+            HuntController::sendMessage($this->activity, $result, $this->worker);
+        }
+
+        if ($this->activity->type === 'crafting' || !$this->activity->type) {
+            CraftingController::sendMessage($this->activity, $this->worker);
         }
     }
 
     private function resolveActivity() {
         if ($this->activity->type === 'hunting') {
-            HuntController::resolveActivity($this->activity, $this->workers);
+            HuntController::resolveActivity($this->activity, $this->worker);
+        }
+
+        if ($this->activity->type === 'crafting' || !$this->activity->type) {
+            CraftingController::resolveActivity($this->activity, $this->worker);
         }
     }
 

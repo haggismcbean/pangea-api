@@ -19,7 +19,13 @@ use App\GameEvents\HuntEvent;
 
 class HuntController extends Controller
 {
-    public static function resolveActivity($activity, $character) {
+    public static function resolveActivity($character, $activity) {
+        $activity->progress = 100;
+        $activity->save();
+
+        $character->activity_id = null;
+        $character->save();
+
         $biome = $character->location()->first()->biome()->first();
         $animal = AnimalController::getDeadAnimal($biome, "herbivore");
 
@@ -72,9 +78,11 @@ class HuntController extends Controller
         $activityController = new ActivityController;
         $activityController->tools = $itemUse->item()->first()->items()->first();
         $activityController->workers = $character;
-        $activity = $activityController->createActivity($character, "hunting");
 
-        $character->activity_id = $activity->id;
+        $character->activity_id = $this->activity->id;
+        $character->save();
+
+        $activity = $activityController->createActivity($character, "hunting");
 
         $activityController->workOnActivity();
 
