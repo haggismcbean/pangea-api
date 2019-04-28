@@ -34,6 +34,12 @@ So Activities:
     MiningRecipe (???)
     - Mine a stone/material (given list of all discovered)
     - Reinforce mine
+ - Travelling
+    TravellingRecipe (???)
+    - Sail
+    - Walk
+    - Ride horse
+    - Ride cart
 
 CANCELATION
 You can stop/start working on things whenever you like.
@@ -64,8 +70,7 @@ Activity needs a type and a name.
 
 Messages in a table? Could do. Maybe later ;)
 
-1. Rename ActivityController to CraftingController.
-2. Create an ActivityController that does all the above things. Get it working with the current CraftingController stuffs.
+1. Create an ActivityController that does all the above things. Get it working with the current CraftingController stuffs.
 
 */
 
