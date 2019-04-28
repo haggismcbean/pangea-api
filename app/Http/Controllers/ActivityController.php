@@ -140,7 +140,7 @@ class ActivityController extends Controller
 
     private function resolveActivity() {
         if ($this->activity->type === 'hunting') {
-            HuntController::resolveActivity($this->activity);
+            HuntController::resolveActivity($this->activity, $this->workers);
         }
     }
 

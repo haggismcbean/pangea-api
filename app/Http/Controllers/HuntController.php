@@ -19,7 +19,7 @@ use App\GameEvents\HuntEvent;
 
 class HuntController extends Controller
 {
-    public static function resolveActivity() {
+    public static function resolveActivity($activity, $character) {
         $biome = $character->location()->first()->biome()->first();
         $animal = AnimalController::getDeadAnimal($biome, "herbivore");
 
