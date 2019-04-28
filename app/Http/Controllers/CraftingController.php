@@ -17,7 +17,7 @@ use App\GameEvents\WorkOnActivityEvent;
 class CraftingController extends Controller
 {
     public static function resolveActivity($activity, $character) {
-        $activity->progress = $activity->progress + 1;
+        $activity->progress = $activity->progress + 10;
         $activity->save();
 
         if ($activity->progress === 100) {
