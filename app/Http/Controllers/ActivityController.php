@@ -58,13 +58,13 @@ class ActivityController extends Controller
         $this->worker->activity_id = null;
         $this->worker->save();
             
-        return response()->json($character, 200);
+        return response()->json($this->worker, 200);
     }
 
     public function cancelActivity() {
-        $this->activity->destroy($activity->id);
+        $this->activity->destroy($this->activity->id);
 
-        return $this->stopWorkingOnActivity();
+        return $this->stopWorkOnActivity();
     }
 
     public function addIngredientsToActivity($character, $item, $amount) {
@@ -103,10 +103,12 @@ class ActivityController extends Controller
 
         $result = $this->calculateResult($this->tools, $this->machines, $this->worker, $this->skill);
 
+        $this->sendMessage($result);
+
         if ($result === $this->SUCCESS) {
             $this->resolveActivity($this->worker, $this->activity);
 
-            if ($this->activity->progress === 100) {
+            if ($this->activity->progress >= 100) {
                 $this->cancelActivity();
             } else {
                 $this->loopWorkOnActivity();
@@ -121,8 +123,6 @@ class ActivityController extends Controller
             $this->cancelActivity();
             // TODO - kill the character :P
         }
-
-        $this->sendMessage($this->activity, $result);
     }
 
     private function validateWorkOnActivity() {
@@ -186,13 +186,17 @@ class ActivityController extends Controller
         return $this->DEATH;
     }
 
-    private function sendMessage($activity, $result) {
+    private function sendMessage($result) {
         if ($this->activity->type === 'hunting') {
             HuntController::sendMessage($this->activity, $result, $this->worker);
         }
 
         if ($this->activity->type === 'crafting') {
-            CraftingController::sendMessage($this->activity, $this->worker);
+            CraftingController::sendMessage($this->activity, $result, $this->worker);
+        }
+
+        if ($this->activity->type === 'farming') {
+            FarmController::sendMessage($this->activity, $result, $this->worker);
         }
     }
 
@@ -203,6 +207,10 @@ class ActivityController extends Controller
 
         if ($this->activity->type === 'crafting') {
             CraftingController::resolveActivity($this->activity, $this->worker);
+        }
+
+        if ($this->activity->type === 'farming') {
+            FarmController::resolveActivity($this->activity, $this->worker);
         }
     }
 

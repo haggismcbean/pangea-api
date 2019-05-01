@@ -17,7 +17,7 @@ class ZoneController extends Controller
 {
     public static function createZone(Zone $parentZone, $zoneName, $zoneDescription) {
         if ($parentZone->size == 1) {
-            throw "Parent zone is too small";
+            return;
         }
 
         $parentZone->size = $parentZone->size - 1;
@@ -25,10 +25,12 @@ class ZoneController extends Controller
 
         $zone = new Zone;
         $zone->size = 1;
-        $zone->location_id = $parent_zone->location_id;
+        $zone->location_id = $parentZone->location_id;
         $zone->parent_zone = $parentZone->id;
         $zone->name = $zoneName;
         $zone->description = $zoneDescription;
+
+        $zone->save();
 
         return $zone;
     }

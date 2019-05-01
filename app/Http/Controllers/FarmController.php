@@ -13,8 +13,8 @@ use App\Http\Controllers\PlantController;
 use App\MadeItem;
 use App\MadeItemRecipe;
 use App\Plant;
+use App\Farm;
 
-use App\Jobs\Farm;
 use App\GameEvents\FarmEvent;
 
 /*
@@ -37,34 +37,49 @@ class FarmController extends Controller
         "createPlot"
     ];
 
-    public static function resolveActivity($character, $activity) {
+    public static function resolveActivity($activity, $character) {
         // plots with more plants take longer to clear
-        $plantsCount = $character->biome()->first()->plants()->count();
+        $plantsCount = $character->location()->first()->biome()->first()->plants()->count();
 
         if ($plantsCount == 0) {
             $plantsCount = 1;
         }
 
-        $activity->progress = $activity->progress + round((100 / $plantsCount), 0);
+        // $activity->progress = $activity->progress + round((100 / $plantsCount), 0);
+        $activity->progress = $activity->progress + 10;
         $activity->save();
 
         if ($activity->progress >= 100) {
-            FarmController::completeActivity($character, $activity);
+            return FarmController::completeActivity($character, $activity);
         }
     }
 
     public static function completeActivity($character, $activity) {
-        $recipe = $activity->recipe()->first();
+        $recipeId = $activity->recipe_id;
 
         // createPlot
-        if ($recipe->id === 0) {
-            ZoneController::newZone($character, "Farm", "The scratched out beginnings of a farm");
-        }
+        if ($recipeId === 0) {
+            $zone = $character->zone()->first();
+            $farmZone = ZoneController::createZone($zone, "Farm", "The scratched out beginnings of a farm");
 
-        $zone = $character->zone()->first();
+            if (!$farmZone) {
+                return;
+            }
+
+            $character->zone_id = $farmZone->id;
+            $character->save();
+
+            $farm = new Farm;
+            $farm->zone_id = $farmZone->id;
+            $farm->current_yield = 0;
+
+            $farm->save();
+        }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
+
+        return $character;
     }
 
     public static function sendMessage($activity, $result, $workers) {
@@ -82,18 +97,19 @@ class FarmController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        $recipe = new stdClass();
+        $recipe = (object)[];
         $recipe->id = 0;
+        $recipe->ingredients = [];
 
         $activityController = new ActivityController;
         // TODO - add helpful tools. Can also be done by hand mind you.
         // $activityController->tools = $itemUse->item()->first()->items()->first();
-        $activityController->workers = $character;
-
-        $character->activity_id = $this->activity->id;
-        $character->save();
+        $activityController->worker = $character;
 
         $activity = $activityController->createActivity($character, "farming", $recipe);
+
+        $character->activity_id = $activity->id;
+        $character->save();
 
         $activityController->workOnActivity();
 

@@ -19,7 +19,7 @@ use App\GameEvents\HuntEvent;
 
 class HuntController extends Controller
 {
-    public static function resolveActivity($character, $activity) {
+    public static function resolveActivity($activity, $character) {
         $activity->progress = 100;
         $activity->save();
 
@@ -76,12 +76,12 @@ class HuntController extends Controller
 
         $activityController = new ActivityController;
         $activityController->tools = $itemUse->item()->first()->items()->first();
-        $activityController->workers = $character;
-
-        $character->activity_id = $this->activity->id;
-        $character->save();
+        $activityController->worker = $character;
 
         $activity = $activityController->createActivity($character, "hunting");
+
+        $character->activity_id = $activity->id;
+        $character->save();
 
         $activityController->workOnActivity();
 

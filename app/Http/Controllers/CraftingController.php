@@ -47,7 +47,7 @@ class CraftingController extends Controller
         $character->activity_id = null;
     }
 
-    public static function sendMessage($activity, $character) {
+    public static function sendMessage($activity, $result, $character) {
         $workOnActivityEvent = new WorkOnActivityEvent;
         $workOnActivityEvent->handle($character, $activity);
     }
