@@ -92,12 +92,13 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 // farming
 Route::group(['middleware' => 'auth:api'], function() {
-	// Route::post('character/farm', 'FarmController@createPlot');
-	// Route::post('character/farm', 'FarmController@plant');
-	// Route::post('character/farm', 'FarmController@fertilize');
-	// Route::post('character/farm', 'FarmController@till');
-	// // Route::post('character/farm', 'FarmController@irrigate');
-	// Route::post('character/farm', 'FarmController@harvest');
+	Route::post('character/farm', 'FarmController@createPlot');
+	// Route::post('character/farm', 'FarmController@ploughPlot');
+	// Route::post('character/farm', 'FarmController@plantCrop');
+	// Route::post('character/farm', 'FarmController@fertilizeCrop');
+	// Route::post('character/farm', 'FarmController@tillCrop');
+	// Route::post('character/farm', 'FarmController@irrigatePlot');
+	// Route::post('character/farm', 'FarmController@harvestCrop');
 });
 
 ////////////

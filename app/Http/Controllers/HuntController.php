@@ -67,13 +67,12 @@ class HuntController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
+        // TODO - get item from user rather than use a bow every time
         $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId)->first();
         
         if (!$itemUse) {
             return response()->json("Can't hunt with that item", 400);
         }
-        
-        $zone = $character->zone()->first();
 
         $activityController = new ActivityController;
         $activityController->tools = $itemUse->item()->first()->items()->first();

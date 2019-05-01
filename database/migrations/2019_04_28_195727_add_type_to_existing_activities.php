@@ -13,9 +13,9 @@ class AddTypeToExistingActivities extends Migration
      */
     public function up()
     {
-        Schema::table('activities', function (Blueprint $table) {
-            $table->integer('activity_id')->nullable()->change();
-        });
+        // Schema::table('activities', function (Blueprint $table) {
+        //     $table->integer('activity_id')->nullable()->change();
+        // });
     }
 
     /**

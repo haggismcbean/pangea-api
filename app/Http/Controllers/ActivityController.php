@@ -103,8 +103,6 @@ class ActivityController extends Controller
 
         $result = $this->calculateResult($this->tools, $this->machines, $this->worker, $this->skill);
 
-        $this->sendMessage($this->activity, $result);
-
         if ($result === $this->SUCCESS) {
             $this->resolveActivity($this->worker, $this->activity);
 
@@ -123,6 +121,8 @@ class ActivityController extends Controller
             $this->cancelActivity();
             // TODO - kill the character :P
         }
+
+        $this->sendMessage($this->activity, $result);
     }
 
     private function validateWorkOnActivity() {

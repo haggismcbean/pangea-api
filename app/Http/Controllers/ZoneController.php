@@ -15,6 +15,24 @@ use App\Factories\BiomeFactory;
 
 class ZoneController extends Controller
 {
+    public static function createZone(Zone $parentZone, $zoneName, $zoneDescription) {
+        if ($parentZone->size == 1) {
+            throw "Parent zone is too small";
+        }
+
+        $parentZone->size = $parentZone->size - 1;
+        $parentZone->save();
+
+        $zone = new Zone;
+        $zone->size = 1;
+        $zone->location_id = $parent_zone->location_id;
+        $zone->parent_zone = $parentZone->id;
+        $zone->name = $zoneName;
+        $zone->description = $zoneDescription;
+
+        return $zone;
+    }
+
     public function plants(Zone $zone) {
         $user = Auth::user();
 

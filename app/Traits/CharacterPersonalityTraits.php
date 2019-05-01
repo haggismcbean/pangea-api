@@ -20,7 +20,7 @@ class CharacterPersonalityTraits extends Model
     private static $aLargeGroup;
     private static $aLargeGroupDefaultLayout = "In a large group {{pronoun}} often {{value}}";
 
-    private static $aSeriousConversationArray = ["tends to deflect in", "tends to accuse in", "tends to raise {{posessivePronoun}} voice in", "tends to ask meaningless questions in", "tends to make jokes in", "would rather avoid", "seeks out people who can engage in", "believes in the value of"];
+    private static $aSeriousConversationArray = ["tends to deflect in", "tends to accuse in", "tends to raise {{posessivePronoun}} voice in", "tends to ask meaningless questions in", "tends to make jokes in", "would rather avoid", "seeks out people who can engage in", "believes in the value of", "{{posessivePronoun}} eye starts twitching"];
     private static $aSeriousConversation;
     private static $aSeriousConversationDefaultLayout = "{{pronoun}} {{value}} a serious conversation";
 

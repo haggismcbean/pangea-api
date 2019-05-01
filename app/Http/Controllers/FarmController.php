@@ -33,68 +33,69 @@ Things one must do to farm
 
 class FarmController extends Controller
 {
+    public $farmRecipes = [
+        "createPlot"
+    ];
+
     public static function resolveActivity($character, $activity) {
-        $activity->progress = 100;
-        $activity->save();
+        // plots with more plants take longer to clear
+        $plantsCount = $character->biome()->first()->plants()->count();
 
-        $character->activity_id = null;
-        $character->save();
-
-        CraftingController::completeActivity($character, $activity);
-
-        $crop = FarmController::getPlant($plant->id, 'seed', $character->location()->first());
-
-        if ($character->hasInventorySpace()) {
-            $cropOwner = ItemOwnerController::getItemOwner('character', $character, $crop);
-        } else {
-            $zone = $character->zone()->first();
-            $cropOwner = ItemOwnerController::getItemOwner('zone', $zone, $crop);
+        if ($plantsCount == 0) {
+            $plantsCount = 1;
         }
 
-        $cropOwner->count = $cropOwner->count + 1;
-        $cropOwner->save();
+        $activity->progress = $activity->progress + round((100 / $plantsCount), 0);
+        $activity->save();
+
+        if ($activity->progress >= 100) {
+            FarmController::completeActivity($character, $activity);
+        }
     }
 
-    public static function sendMessage($activity, $result, $worker) {
+    public static function completeActivity($character, $activity) {
+        $recipe = $activity->recipe()->first();
+
+        // createPlot
+        if ($recipe->id === 0) {
+            ZoneController::newZone($character, "Farm", "The scratched out beginnings of a farm");
+        }
+
+        $zone = $character->zone()->first();
+
+        $activity->destroy($activity->id);
+        $character->activity_id = null;
+    }
+
+    public static function sendMessage($activity, $result, $workers) {
         $event = new FarmEvent;
 
         if ($result === 'SUCCESS') {
-            $event->handle($worker, true);
+            $event->handle($workers, true);
         } else {
             // TODO - handle death
-            $event->handle($worker, false);
+            $event->handle($workers, false);
         }
     }
 
-    private static function getPlant($plantId, $plantPiece, $location) {
-        $plant = ItemController::getItem('plant', $plantId, $plantPiece);
-
-        if (!$plant) {
-            $descriptionKey = $plantPiece . 'Appearance';
-            $description = $location->plants()->find($plantId)->$descriptionKey;
-
-            if (!$description) {
-                return;
-            }
-
-            return ItemController::createNewItem($plantId, $plantPiece, $description, 'plant');
-        } else {
-            return $plant;
-        }
-    }
-
-    public function farmCrop(Request $request) {
+    public function createPlot(Request $request) {
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        // TODO - They will have seeds which they will plant! 
-        // TODO - Needs to be a grass instead of a shrub?
-        $plant = $character->location->first()->biome()->first()->plants()->where('typeName', 'shrub')->first();
-        // END TODO
+        $recipe = new stdClass();
+        $recipe->id = 0;
 
-        // $activity = ActivityController::createActivity($character, "farming");
+        $activityController = new ActivityController;
+        // TODO - add helpful tools. Can also be done by hand mind you.
+        // $activityController->tools = $itemUse->item()->first()->items()->first();
+        $activityController->workers = $character;
 
-        // $activityController->workOnActivity();
+        $character->activity_id = $this->activity->id;
+        $character->save();
+
+        $activity = $activityController->createActivity($character, "farming", $recipe);
+
+        $activityController->workOnActivity();
 
         return response()->json($activity, 200);
     }
