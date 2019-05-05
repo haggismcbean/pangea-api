@@ -2,12 +2,12 @@
 So Activities:
 
  - Crafting
-    MadeItemRecipe concept here. 
+    MadeItemRecipe concept here. DONE
  - Cooking
     MadeFoodRecipe
  - Building
     BuildingRecipe
-    - Farm plot
+    - Farm plot DONE
     - Irrigation ditch
     - Defensive ditch
     - Defensive wall
@@ -28,7 +28,7 @@ So Activities:
  - Hunting
     HuntingRecipe (???)
     - Trap
-    - Hunt alone
+    - Hunt alone DONE
     - Hunt in group
  - Mining
     MiningRecipe (???)
