@@ -55,7 +55,7 @@ class FarmController extends Controller
 
         // $activity->progress = $activity->progress + round((100 / $plantsCount), 0);
         // TODO - progress increases at different rates for different jobs, duh!
-        $activity->progress = $activity->progress + 100;
+        $activity->progress = $activity->progress + 20;
         $activity->save();
 
         if ($activity->progress >= 100) {

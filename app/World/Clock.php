@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Time;
+namespace App\World;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -55,7 +55,7 @@ class Clock
         // on pangea it is always night except from 12noon to 3pm
         $timezone = $this->getLocationTimezone($location);
         $currentHour = date('H'); // a number between 0 and 23
-        if (($currentHour + $timezone == 12 || $currentHour + $timezone == -12) {
+        if ($currentHour + $timezone == 12 || $currentHour + $timezone == -12) {
             return true;
         }
 
@@ -74,11 +74,11 @@ class Clock
     public static function getTemperature($location)
     {
         if (Clock::getSeason() === 'winter') {
-            return $location->biome()->coldestTemperature;
+            return $location->biome()->first()->coldestTemperature;
         }
 
         if (Clock::getSeason() === 'summer') {
-            return $location->biome()->hottestTemperature;
+            return $location->biome()->first()->hottestTemperature;
         }
         
         return $location->biome()->averageTemperature;
