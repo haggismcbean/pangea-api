@@ -103,6 +103,10 @@ Run three servers for the web hooks to be working properly:
 	redis-server
 3. The socket.io server
 	laravel-echo-server start
+4. The cron job
+    crontab -e
+	* * * * * php /www/pangea-api/artisan schedule:run 1>> /dev/null 2>&1
+	
 
 # If you Forget How to Query from Command Line:
 ```

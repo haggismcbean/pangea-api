@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\BreakfastTime',
+        'App\Console\Commands\GrowingTime',
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('character:breakfast-time')->hourly();
+        $schedule->command('farm:growing-time')->daily();
         // $schedule->command('inspire')
         //          ->hourly();
     }

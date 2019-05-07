@@ -70,6 +70,7 @@ class Clock
         // returns a number between 0 and 3 
     }
 
+    // TODO - random fluctuations of the weather.
     public static function getTemperature($location)
     {
         if (Clock::getSeason() === 'winter') {

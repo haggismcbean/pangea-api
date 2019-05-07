@@ -8,7 +8,7 @@ use App\Character;
 use App\Message;
 use App\Events\MessageSent;
 
-use App\Time\Clock;
+use App\World\Clock;
 
 class BreakfastTime extends Command
 {

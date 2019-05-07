@@ -12,6 +12,11 @@ class Farm extends Model
 
     public function zone()
     {
-        return $this->belongsToOne('App\Zone');
+        return $this->belongsTo('App\Zone');
+    }
+
+    public function plant()
+    {
+        return $this->belongsTo('App\Plant');
     }
 }
