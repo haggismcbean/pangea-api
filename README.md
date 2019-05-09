@@ -32,9 +32,9 @@
 - [ ] building/terraforming
 - [ ] talking in groups/cleverly
 - [ ] waking up
-- [ ] manufacturing (this can easily be split into many more parts)
+- [x] manufacturing (this can easily be split into many more parts)
 - [ ] mining
-- [ ] farming
+- [x] farming
 - [ ] hunting
 - [ ] aging
 - [ ] child birth (automatically) (actually do I even want this? I have a pretty plausible excuse now)

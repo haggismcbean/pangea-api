@@ -21,10 +21,10 @@ So Activities:
     - To kill
  - Farming
     FarmingRecipe (???)
-    - Plant
-    - Till
-    - Fertilize
-    - Harvest
+    - Plant DONE
+    - Till DONE
+    - Fertilize DONE
+    - Harvest DONE
  - Hunting
     HuntingRecipe (???)
     - Trap
@@ -79,8 +79,6 @@ Next stepsicles:
 
  [x] hunting
  [ ] farming
-    - creation of farm
-    - general maintenence
     - watering
     - slowly increasing yield
     - once a day weeding? maybe we can let people weed ad nauseum but it doesn't help? that still requires once a day-ish-ness
