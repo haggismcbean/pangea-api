@@ -19,7 +19,7 @@ use Carbon\Carbon;
 
 use App\GameEvents\FarmEvent;
 
-class MineController extends Controller
+class MiningController extends Controller
 {
     public $mineRecipes = [
         "createMine",
@@ -29,11 +29,11 @@ class MineController extends Controller
 
     public static function resolveActivity($activity, $character) {
         // TODO - progress increases at different rates for different jobs, duh!
-        $activity->progress = $activity->progress + 20;
+        $activity->progress = $activity->progress + 100;
         $activity->save();
 
         if ($activity->progress >= 100) {
-            return MineController::completeActivity($character, $activity);
+            return MiningController::completeActivity($character, $activity);
         }
     }
 
@@ -42,17 +42,17 @@ class MineController extends Controller
 
         // createMine
         if ($recipeId === 0) {
-            MineController::completeCreatePlot($character, $activity);
+            MiningController::completeCreateMine($character, $activity);
         }
 
         // mineMine
         if ($recipeId === 1) {
-            MineController::completeClearPlot($character, $activity);
+            MiningController::completeMineMine($character, $activity);
         }
 
         // reinforceMine
         if ($recipeId === 2) {
-            MineController::completePlantPlot($character, $activity);
+            MiningController::completeReinforceMine($character, $activity);
         }
 
         $activity->destroy($activity->id);
@@ -75,6 +75,7 @@ class MineController extends Controller
         $mine = new Mine;
         $mine->zone_id = $mineZone->id;
         $mine->layer = 'sedimentary';
+        $mine->integrity = 100;
 
         // TODO - populate MineItems table 
         

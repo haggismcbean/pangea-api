@@ -198,6 +198,10 @@ class ActivityController extends Controller
         if ($this->activity->type === 'farming') {
             FarmController::sendMessage($this->activity, $result, $this->worker);
         }
+
+        if ($this->activity->type === 'mining') {
+            MiningController::sendMessage($this->activity, $result, $this->worker);
+        }
     }
 
     private function resolveActivity() {
@@ -211,6 +215,10 @@ class ActivityController extends Controller
 
         if ($this->activity->type === 'farming') {
             FarmController::resolveActivity($this->activity, $this->worker);
+        }
+
+        if ($this->activity->type === 'mining') {
+            MiningController::resolveActivity($this->activity, $this->worker);
         }
     }
 

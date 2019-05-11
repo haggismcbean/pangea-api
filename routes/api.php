@@ -101,6 +101,13 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('farm/harvest', 'FarmController@harvest');
 });
 
+// mining
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('mine/create', 'MiningController@create');
+	Route::post('mine/mine', 'MiningController@mine');
+	Route::post('mine/reinforce', 'MiningController@reinforce');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');
