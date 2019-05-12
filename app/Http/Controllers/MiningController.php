@@ -79,7 +79,6 @@ class MiningController extends Controller
         $mine->integrity = 100;
         $mine->save();
 
-        // TODO - populate MineItems table 
         $location = $character->location()->first();
         $locationItems = $location->locationItems()->get();
 
