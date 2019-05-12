@@ -31,7 +31,7 @@ class ActivityController extends Controller
         $this->activity = $activity;
     }
 
-    public function createActivity($character, $activityType, $recipe=null) {
+    public function createActivity($character, $activityType, $recipe=null, $outputId=null, $outputType=null) {
         $this->activity = new Activity;
         $this->activity->character_id = $character->id;
         $this->activity->zone_id = $character->zone()->first()->id;
@@ -39,6 +39,9 @@ class ActivityController extends Controller
         // $this->activity->recipe_type = ?? // Use this to work out which function to call (in the controller)
         $this->activity->progress = 0;
         $this->activity->type = $activityType; // Use this to work out which controller to call
+
+        $this->activity->output_id = $outputId;
+        $this->activity->output_type = $outputType;
 
         // $this->activity->delay = 10 (standard of 10, but we could change this when necessary...)
         // $this->activity->last_story_id = nullable, tells the last story told so we can chain them easily

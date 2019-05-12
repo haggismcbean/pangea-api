@@ -99,8 +99,10 @@ class MiningController extends Controller
     public static function completeMineMine($character, $activity) {
         $mine = Mine::where('zone_id', $character->zone_id)->first();
 
-        // TODO - get correct mine item :S
-        $mineItem = $mine->items()->first();
+        $mineItem = $mine->items()
+            ->where('item_type', $activity->output_type)
+            ->where('item_id', $activity->output_id)
+            ->first();
         $mineItem->quantity = $mineItem->quantity - 1;
         $mineItem->save();
 
@@ -150,7 +152,11 @@ class MiningController extends Controller
         $recipe->id = 1;
         $recipe->ingredients = [];
 
-        return $this->doActivity($recipe);
+        // TODO - validate
+        $outputId = $request->input('outputId');
+        $outputType = $request->input('outputType');
+
+        return $this->doActivity($recipe, $outputId, $outputType);
     }
 
     public function reinforce(Request $request) {
@@ -162,7 +168,7 @@ class MiningController extends Controller
         return $this->doActivity($recipe);
     }
 
-    public function doActivity($activityRecipe) {
+    public function doActivity($activityRecipe, $outputId=null, $outputType=null) {
         $user = Auth::user();
         $character = $user->characters()->first();
 
@@ -171,7 +177,7 @@ class MiningController extends Controller
         // $activityController->tools = $itemUse->item()->first()->items()->first();
         $activityController->worker = $character;
 
-        $activity = $activityController->createActivity($character, "mining", $activityRecipe);
+        $activity = $activityController->createActivity($character, "mining", $activityRecipe, $outputId, $outputType);
 
         $character->activity_id = $activity->id;
         $character->save();
