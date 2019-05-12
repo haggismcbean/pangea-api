@@ -14,4 +14,9 @@ class Mine extends Model
     {
         return $this->belongsTo('App\Zone');
     }
+
+    public function items()
+    {
+        return $this->hasMany('App\MineItem');
+    }
 }

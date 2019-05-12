@@ -99,7 +99,18 @@ class MiningController extends Controller
     public static function completeMineMine($character, $activity) {
         $mine = Mine::where('zone_id', $character->zone_id)->first();
 
-        // TODO - actually gather the material the user wants!
+        // TODO - get correct mine item :S
+        $mineItem = $mine->items()->first();
+        $mineItem->quantity = $mineItem->quantity - 1;
+        $mineItem->save();
+
+        $zone = $character->zone()->first();
+        $itemOwner = ItemOwnerController::getItemOwner('zone', $zone, $mineItem);
+        $itemOwner->count = $itemOwner->count + 1;
+        $itemOwner->save();
+
+        $mine->integrity = $mine->integrity - 1;
+        $mine->save();
     }
 
     public static function completeReinforceMine($character, $activity) {
