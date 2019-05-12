@@ -14,6 +14,7 @@ use App\MadeItem;
 use App\MadeItemRecipe;
 use App\Plant;
 use App\Mine;
+use App\MineItem;
 
 use Carbon\Carbon;
 
@@ -76,10 +77,24 @@ class MiningController extends Controller
         $mine->zone_id = $mineZone->id;
         $mine->layer = 'sedimentary';
         $mine->integrity = 100;
+        $mine->save();
 
         // TODO - populate MineItems table 
-        
-        $mine->save();
+        $location = $character->location()->first();
+        $locationItems = $location->locationItems()->get();
+
+        foreach ($locationItems as $locationItem) {
+            $mineItem = new MineItem;
+            $mineItem->mine_id = $mine->id;
+            $mineItem->item_id = $locationItem->item_id;
+            $mineItem->item_type = $locationItem->item_type;
+            $mineItem->quantity = rand(0, $locationItem->quantity);
+
+            $locationItem->quantity = $locationItem->quantity - $mineItem->quantity;
+
+            $mineItem->save();
+            $locationItem->save();
+        }
     }
 
     public static function completeMineMine($character, $activity) {

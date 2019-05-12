@@ -33,7 +33,9 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(AnimalProductsTableSeeder::class);
 
-        $this->call(ItemUsesTableSeeder::class);
+        // $this->call(ItemUsesTableSeeder::class);
+
+        $this->call(LocationItemsTableSeeder::class);
 
     }
 }

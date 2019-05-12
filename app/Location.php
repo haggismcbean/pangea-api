@@ -47,6 +47,11 @@ class Location extends Model
         return $this->hasMany('App\LocationPlant');
     }
 
+    public function locationItems()
+    {
+        return $this->hasMany('App\LocationItem');
+    }
+
     public function zones() {
         return $this->hasMany('App\Zone');
     }
