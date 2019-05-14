@@ -33,7 +33,7 @@
 - [ ] talking in groups/cleverly
 - [ ] waking up
 - [x] manufacturing (this can easily be split into many more parts)
-- [ ] mining
+- [x] mining
 - [x] farming
 - [ ] hunting
 - [ ] aging
