@@ -28,6 +28,13 @@ class MiningController extends Controller
         "reinforceMine",
     ];
 
+    private $stoneLayers = [
+        "sedimentary",
+        "igneous extrusive",
+        "metamorphic",
+        "igneous intrusive"
+    ];
+
     public static function resolveActivity($activity, $character) {
         // TODO - progress increases at different rates for different jobs, duh!
         $activity->progress = $activity->progress + 100;
@@ -147,14 +154,24 @@ class MiningController extends Controller
     }
 
     public function mine(Request $request) {
+        $user = Auth::user();
+
         // TODO = requires a pick of some sort
         $recipe = (object)[];
         $recipe->id = 1;
         $recipe->ingredients = [];
 
-        // TODO - validate
-        $outputId = $request->input('outputId');
-        $outputType = $request->input('outputType');
+        $outputId = $request->input('stoneId');
+        $outputType = 'stone';
+
+        $stoneCount = $user->characters()->first()->zone()->first()->mine()->first()->items()
+            ->where('item_id', $outputId)
+            ->where('item_type', 'stone')
+            ->count();
+
+        if ($stoneCount < 1) {
+            return response()->json('Stone not found', 400);
+        }
 
         return $this->doActivity($recipe, $outputId, $outputType);
     }
@@ -166,6 +183,62 @@ class MiningController extends Controller
         $recipe->ingredients = [];
 
         return $this->doActivity($recipe);
+    }
+
+    public function listStones(Request $request) {
+        $user = Auth::user();
+
+        $mine = $user->characters()->first()->zone()->first()->mine()->first();
+
+        $stones = $mine->items()->get();
+
+        $sedimentaryStones = [];
+        $igneousExtrusiveStones = [];
+        $metamorphicStones = [];
+        $igneousIntrusiveStones = [];
+
+        foreach ($stones as $stone) {
+            $stone->name = $stone->item()->description;
+
+            if ($stone->item()->layer === 'sedimentary') {
+                array_push($sedimentaryStones, $stone);
+            }
+
+            if ($stone->item()->layer === 'igneous extrusive') {
+                array_push($igneousExtrusiveStones, $stone);
+            }
+
+            if ($stone->item()->layer === 'metamorphic') {
+                array_push($metamorphicStones, $stone);
+            }
+
+            if ($stone->item()->layer === 'igneous intrusive') {
+                array_push($igneousIntrusiveStones, $stone);
+            }
+        }
+
+        $accessibleStones = $sedimentaryStones;
+
+        if ($mine->layer === 'sedimentary') {
+            return response()->json($accessibleStones, 200);
+        }
+
+        if ($mine->layer === 'igneous extrusive') {
+            $accessibleStones = array_merge($accessibleStones, $igneousExtrusiveStones);
+            return response()->json($accessibleStones, 200);
+        }
+
+        if ($mine->layer === 'metamorphic') {
+            $accessibleStones = array_merge($accessibleStones, $metamorphicStones);
+            return response()->json($accessibleStones, 200);
+        }
+
+        if ($mine->layer === 'igneous intrusive') {
+            $accessibleStones = array_merge($accessibleStones, $igneousIntrusiveStones);
+            return response()->json($accessibleStones, 200);
+        }
+
+        return response()->json("Unknown error", 400);
     }
 
     public function doActivity($activityRecipe, $outputId=null, $outputType=null) {

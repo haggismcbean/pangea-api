@@ -37,4 +37,8 @@ class Zone extends Model
     public function activities() {
       return $this->hasMany(Activity::class);
     }
+
+    public function mine() {
+      return $this->hasOne(Mine::class);
+    }
 }

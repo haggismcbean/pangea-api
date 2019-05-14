@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('mine/create', 'MiningController@create');
 	Route::post('mine/mine', 'MiningController@mine');
 	Route::post('mine/reinforce', 'MiningController@reinforce');
+	Route::get('mine/stones', 'MiningController@listStones');
 });
 
 ////////////

@@ -14,4 +14,11 @@ class MineItem extends Model
     {
         return $this->belongsTo('App\Mine');
     }
+
+    public function item()
+    {
+        if ($this->item_type === 'stone') {
+            return $this->belongsTo('App\Stone', 'item_id')->first();
+        }
+    }
 }

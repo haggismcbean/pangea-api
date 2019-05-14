@@ -32,10 +32,11 @@ So Activities:
     - Hunt in group
  - Mining
     MiningRecipe (???)
-    - Assign minerals to locations
-    - Assign minerals to mines
+    - Assign minerals to locations DONE
+    - Assign minerals to mines DONE
     - List available stones so user can elect to mine them
     - Move down the layers
+ - Gathering things like salt, peat, clay, etc...
  - Travelling
     TravellingRecipe (???)
     - Sail
