@@ -113,6 +113,8 @@ class MiningController extends Controller
         $mineItem->quantity = $mineItem->quantity - 1;
         $mineItem->save();
 
+        // TODO - go deeper
+
         $zone = $character->zone()->first();
         $itemOwner = ItemOwnerController::getItemOwner('zone', $zone, $mineItem);
         $itemOwner->count = $itemOwner->count + 1;
