@@ -35,9 +35,10 @@
 - [x] manufacturing (this can easily be split into many more parts)
 - [x] mining
 - [x] farming
-- [ ] hunting
+- [x] hunting
 - [ ] aging
 - [ ] child birth (automatically) (actually do I even want this? I have a pretty plausible excuse now)
+- [ ] tools (need concept for all activities)
 - [ ] skills
 
 ### States
@@ -81,9 +82,9 @@
 
 - [x] Inventory management
 
-- [ ] Increasing user's available actions
-	- [ ] things characters can do to each other
-	- [ ] things characters can do to their surroundings
+- [x] Increasing user's available actions
+	- [x] things characters can do to each other
+	- [x] things characters can do to their surroundings
 	- [x] there being more than one town! (travel)
 
 - [ ] Voice colours settable and saveable
