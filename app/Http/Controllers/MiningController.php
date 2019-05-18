@@ -113,15 +113,35 @@ class MiningController extends Controller
         $mineItem->quantity = $mineItem->quantity - 1;
         $mineItem->save();
 
-        // TODO - go deeper
-
         $zone = $character->zone()->first();
         $itemOwner = ItemOwnerController::getItemOwner('zone', $zone, $mineItem);
         $itemOwner->count = $itemOwner->count + 1;
         $itemOwner->save();
 
+        if ($mineItem->quantity < 100 && $mineItem->item()->first()->rarity === 2000) {
+            $mine->layer = MiningController::getNextLayer($mine->layer);
+        }
+
         $mine->integrity = $mine->integrity - 1;
         $mine->save();
+    }
+
+    public static function getNextLayer($layer) {
+        if ($layer === 'sedimentary') {
+            return 'igneous extrusive';
+        }
+
+        if ($layer === 'igneous extrusive') {
+            return 'metamorphic';
+        }
+
+        if ($layer === 'metamorphic') {
+            return 'igneous intrusive';
+        }
+
+        if ($layer === 'igneous intrusive') {
+            return 'igneous intrusive';
+        }
     }
 
     public static function completeReinforceMine($character, $activity) {
