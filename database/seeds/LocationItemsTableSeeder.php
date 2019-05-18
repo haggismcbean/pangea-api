@@ -69,6 +69,107 @@ class LocationItemsTableSeeder extends Seeder
 			        ]);
 	        	}
 	        }
+
+            // okay cool. now for the minerals!!
+            if ($location->rainfall > 2 && $location->temperature > 2) {
+                // fresh water
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 9,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+                
+                // peat
+                if (rand(0, 20) < 2) {
+                    DB::table('location_items')->insert([
+                        'location_id' => $location->id,
+                        'item_id' => 5,
+                        'item_type' => 'mineral',
+                        'quantity' => 3000
+                    ]);
+                }
+
+                // clay
+                if (rand(0, 10) < 2) {
+                    DB::table('location_items')->insert([
+                        'location_id' => $location->id,
+                        'item_id' => 1,
+                        'item_type' => 'mineral',
+                        'quantity' => 3000
+                    ]);
+                }
+                
+                // soil
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 7,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // okay cool. now for the minerals!!
+            if ($location->rainfall < 2 && $location->temperature > 5) {
+                // sand
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 3,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // random but rare
+            // salt
+            if (rand(0, 400) < 2) {
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 8,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // salt water
+            if (rand(0, 200) < 2) {
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 10,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // obsidian
+            if (rand(0, 2000) < 2) {
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 2,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // oil
+            if (rand(0, 2000) < 2) {
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 4,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
+
+            // coal
+            if (rand(0, 300) < 2) {
+                DB::table('location_items')->insert([
+                    'location_id' => $location->id,
+                    'item_id' => 6,
+                    'item_type' => 'mineral',
+                    'quantity' => 3000
+                ]);
+            }
     	}
     }
 

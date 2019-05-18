@@ -90,16 +90,18 @@ class MiningController extends Controller
         $locationItems = $location->locationItems()->get();
 
         foreach ($locationItems as $locationItem) {
-            $mineItem = new MineItem;
-            $mineItem->mine_id = $mine->id;
-            $mineItem->item_id = $locationItem->item_id;
-            $mineItem->item_type = $locationItem->item_type;
-            $mineItem->quantity = rand(0, $locationItem->quantity);
+            if ($locationItem->item_type === 'stone') {
+                $mineItem = new MineItem;
+                $mineItem->mine_id = $mine->id;
+                $mineItem->item_id = $locationItem->item_id;
+                $mineItem->item_type = $locationItem->item_type;
+                $mineItem->quantity = rand(0, $locationItem->quantity);
 
-            $locationItem->quantity = $locationItem->quantity - $mineItem->quantity;
+                $locationItem->quantity = $locationItem->quantity - $mineItem->quantity;
 
-            $mineItem->save();
-            $locationItem->save();
+                $mineItem->save();
+                $locationItem->save();
+            }
         }
     }
 
