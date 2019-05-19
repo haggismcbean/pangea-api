@@ -207,7 +207,7 @@ class ActivityController extends Controller
         }
 
         if ($this->activity->type === 'exploring') {
-            ExplorationController::sendMessage($this->activity, $this->worker);
+            ExplorationController::sendMessage($this->activity, $result, $this->worker);
         }
     }
 

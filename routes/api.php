@@ -109,6 +109,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('mine/stones', 'MiningController@listStones');
 });
 
+// exploring
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('zone/explore', 'ExplorationController@explore');
+});
+
 ////////////
 // World generation (note to self: remove these endpoints or make them private :P)
 Route::get('world', 'WorldController@show');

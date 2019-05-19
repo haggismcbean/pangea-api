@@ -58,7 +58,7 @@ class ExplorationController extends Controller
 
         $locationItem = $locationItems[$locationItemIndex];
 
-        $mineZone = ZoneController::createZone($zone, $itemType . " Mine", "A natural deposit of " . $locationItem);
+        $mineZone = ZoneController::createZone($zone, $locationItem . " Mine", "A natural deposit of " . $locationItem);
 
         if (!$mineZone) {
             return;
@@ -98,7 +98,7 @@ class ExplorationController extends Controller
         }
     }
 
-    public function create(Request $request) {
+    public function explore(Request $request) {
         // TODO = requires a pick of some sort
         $recipe = (object)[];
         $recipe->id = 0;
