@@ -185,12 +185,12 @@ class MiningController extends Controller
         $recipe->id = 1;
         $recipe->ingredients = [];
 
-        $outputId = $request->input('stoneId');
-        $outputType = 'stone';
+        $outputId = $request->input('itemId');
+        $outputType = $request->input('itemType');
 
         $stoneCount = $user->characters()->first()->zone()->first()->mine()->first()->items()
             ->where('item_id', $outputId)
-            ->where('item_type', 'stone')
+            ->where('item_type', $outputType)
             ->count();
 
         if ($stoneCount < 1) {
@@ -209,7 +209,7 @@ class MiningController extends Controller
         return $this->doActivity($recipe);
     }
 
-    public function listStones(Request $request) {
+    public function listResources(Request $request) {
         $user = Auth::user();
 
         $mine = $user->characters()->first()->zone()->first()->mine()->first();
@@ -223,6 +223,10 @@ class MiningController extends Controller
 
         foreach ($stones as $stone) {
             $stone->name = $stone->item()->description;
+
+            if (!$stone->item()->layer) {
+                array_push($sedimentaryStones, $stone);
+            }
 
             if ($stone->item()->layer === 'sedimentary') {
                 array_push($sedimentaryStones, $stone);

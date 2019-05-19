@@ -54,7 +54,7 @@ class ExplorationController extends Controller
         $locationItems = $character->location()->first()->locationItems()->where('item_type', 'mineral')->get();
         $locationItemsCount = $character->location()->first()->locationItems()->where('item_type', 'mineral')->count();
 
-        $locationItemIndex = rand(0, $locationItemsCount);
+        $locationItemIndex = rand(0, $locationItemsCount) - 1;
 
         $locationItem = $locationItems[$locationItemIndex];
 

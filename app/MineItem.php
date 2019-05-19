@@ -20,5 +20,9 @@ class MineItem extends Model
         if ($this->item_type === 'stone') {
             return $this->belongsTo('App\Stone', 'item_id')->first();
         }
+
+        if ($this->item_type === 'mineral') {
+            return $this->belongsTo('App\Mineral', 'item_id')->first();
+        }
     }
 }
