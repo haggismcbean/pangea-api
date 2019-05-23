@@ -1,3 +1,59 @@
+Okay so in some kind of 'logical' order:
+
+1. Finish all the basic labours
+
+    - smelting
+    - pottery
+    - clothing
+BECAUSE THESE ARE ALL JUST BASICALLY CRAFTING, 
+ALL I NEED TO DO IS ADD THE MACHINES CONCEPT TO RECIPES
+ADD THE SKILLS CONCEPT TO RECIPES
+AND THEN CREATE THE RECIPES FOR THEM!
+
+BOOM!
+
+ALSO IN GAME WE NEED TO GUIDE PLAYERS TOWARDS THINGS LIKE SMELTING... BUT FIRST JUST IMPLEMENT IT I GUESS!
+
+New MadeItem recipes required
+Cast --- this is a special one in that you make it and it has properties or sthing.
+Tongs
+
+Machines...
+
+MadeItem needs a type
+MadeItemRecipe needs a machines
+
+Machine can have a nullable activity_id (to ensure it isn't double used)
+Although lots of machines can be double used! Or muchos used!
+Maybe machine can have max_activities
+And then activities can use multiple machines? Nahhhh
+
+    - food
+    - building and terraforming
+2. Implement some reasons for the things
+    - death from exposure and animals
+    - death from hunger
+    - day/night cycle in action
+    - seasons cycle in action (? - maybe already done)
+3. Tidy some of the early concepts 
+    - Travel
+    - Fighting
+4. Write the stories for everything :)
+5. Clever talking (maybe this can come in later?)
+6. Skills
+7. Do something about just gathering one thing at a time?! I guess just increase everything by an arbitrary number to start with, and I can think further on it later. 
+
+That's kind of it, other than pastoral animals and beasts of burden and some other minor details and fancy shit. I doubt anyone will even notice they can't smelt for a while, right??
+ - glass making
+ - jewellery
+ - hiding shit
+ - locking shit
+ - embarkation 
+ - settings
+ - deletion
+ - mod tools
+
+
 /*
 So Activities:
 
@@ -30,9 +86,10 @@ So Activities:
     - Trap
     - Hunt alone DONE
     - Hunt in group
- - Mining
-    - Move down the layers
- - Gathering things like salt, peat, clay, etc...
+ - Mining DONE
+ - Gathering things like salt, peat, clay, etc... DONE
+ - Things like smelting, pottery, food, and cloth making
+ - Pastoral nomad life
  - Travelling
     TravellingRecipe (???)
     - Sail
@@ -76,13 +133,13 @@ Messages in a table? Could do. Maybe later ;)
 
 Next stepsicles:
 
- [x] hunting
- [ ] farming
+ [x] hunting - BROKEN
+ [x] farming
     - watering
     - slowly increasing yield
     - once a day weeding? maybe we can let people weed ad nauseum but it doesn't help? that still requires once a day-ish-ness
     - harvest time
- [ ] mines/landmarks
+ [x] mines/landmarks
  [ ] zone creation: 'Exploration', ditch, building, earthen wall
  [ ] tool uses (speed up gathering, create zones, storage, locks, travelling (?))
  [ ] chat group logic

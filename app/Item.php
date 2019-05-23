@@ -51,7 +51,7 @@ class Item extends Model
         }
 
         if ($this->item_type === 'made_item') {
-            return $this->belongsTo('App\Made', 'type_id')->first();
+            return $this->belongsTo('App\MadeItem', 'type_id')->first();
         }
 
         // TODO - seed the made table (partially by hand - things like bread and such)

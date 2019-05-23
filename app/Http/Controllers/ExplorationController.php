@@ -38,7 +38,12 @@ class ExplorationController extends Controller
 
     public static function completeActivity($character, $activity) {
         // discover a thing, and create a 'mine' for it.
-        ExplorationController::completeCreateMine($character, $activity);
+
+        if (rand(0, 10) < 2) {
+            ExplorationController::completeCreateMine($character, $activity);
+        } else {
+            ExplorationController::completeGoToWilderness($character, $activity);
+        }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
@@ -58,11 +63,16 @@ class ExplorationController extends Controller
 
         $locationItem = $locationItems[$locationItemIndex];
 
-        $mineZone = ZoneController::createZone($zone, $locationItem . " Mine", "A natural deposit of " . $locationItem);
+        $item = $locationItem->item();
+
+        $mineZone = ZoneController::createZone($zone, $item->name . " Mine", "A natural deposit of " . $item->description);
 
         if (!$mineZone) {
             return;
         }
+
+        $zone->size = $zone->size - 1;
+        $zone->save();
 
         $character->zone_id = $mineZone->id;
         $character->save();
@@ -121,8 +131,18 @@ class ExplorationController extends Controller
         $character->activity_id = $activity->id;
         $character->save();
 
+        $this->goToWilderness($character, $activity);
+
         $activityController->workOnActivity();
 
         return response()->json($activity, 200);
+    }
+
+    public function goToWilderness($character, $activity) {
+        // TODO - there should also be a chance to discover previously discovered zones!
+        $zone = $character->zone()->first();
+        $location = $character->location()->first();
+        $character->zone_id = LocationController::getBaseZone($location)->id;
+        $character->save();
     }
 }
