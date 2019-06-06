@@ -9,6 +9,10 @@ use Auth;
 
 class RecipeIngredient extends Model
 {
+	protected $fillable = [
+        'quantity_min', 'quantity_max', 'recipe_id', 'item_id', 'item_type', 'skill_name', 'is_consumed'
+    ];
+
     public function recipe()
     {
         return $this->belongsTo('App\MadeItemRecipe', 'recipe_id');

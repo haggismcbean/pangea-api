@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Item;
 use App\MadeItem;
 use App\MadeItemRecipe;
+use App\RecipeIngredient;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -126,18 +127,25 @@ class MadeItemRecipeController extends Controller
     {
         $form = new Form(new MadeItemRecipe);
 
-        $form->number('base_volume', 'Base volume');
-        $form->number('base_rot_rate', 'Base rot rate');
-        $form->number('base_efficiency', 'Base efficiency');
-        $form->number('skill_cost', 'Skill cost');
+        $form->number('base_volume', 'Base volume')->rules('required');;
+        $form->number('base_rot_rate', 'Base rot rate')->rules('required');;
+        $form->number('base_efficiency', 'Base efficiency')->rules('required');;
+        $form->number('skill_cost', 'Skill cost')->rules('required');;
 
         $form->select('made_item_id', 'Made Item')->options($this->getAsOptions(MadeItem::get()));
 
         $form->hasMany('ingredients', function(Form\NestedForm $form) {
-            $form->number('quantity_min', 'Minimum Quantity');
-            $form->number('quantity_max', 'Maximum Quantity');
-            $form->text('skill_name', 'Skill Name');
-            $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1);
+            $form->number('quantity_min', 'Minimum Quantity')->rules('required');;
+            $form->number('quantity_max', 'Maximum Quantity')->rules('required');;
+            $form->select('skill_name', 'Skill Name')->options([
+                'woodwork' => 'woodwork',
+                'pottery' => 'pottery',
+                'construction' => 'construction',
+                'weaving' => 'weaving',
+                'textiles' => 'textiles',
+                'masonry' => 'masonry'
+            ])->rules('required');;
+            $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1)->rules('required');;
 
             // TODO - user can only choose one of the below two (?)
             $form->select('item_id', 'Specific Item')->options($this->getAsOptions(Item::get()));
@@ -149,6 +157,7 @@ class MadeItemRecipeController extends Controller
                 'seed' => 'seed',
                 'flower' => 'flower',
                 'leaf' => 'leaf',
+                'bone' => 'bone',
                 'wood' => 'wood',
                 'stone' => 'stone'
             ]);
