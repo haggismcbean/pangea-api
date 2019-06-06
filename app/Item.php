@@ -63,6 +63,7 @@ class Item extends Model
         // TODO - 'plant_product' table with food items etc.
     }
 
+    // TODO - remove this?!
     public function itemUses() {
         return $this->hasMany(ItemUse::class, 'item_id');
     }
