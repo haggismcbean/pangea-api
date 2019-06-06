@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Item;
 use App\MadeItem;
 use App\MadeItemRecipe;
 use App\Http\Controllers\Controller;
@@ -130,17 +131,40 @@ class MadeItemRecipeController extends Controller
         $form->number('base_efficiency', 'Base efficiency');
         $form->number('skill_cost', 'Skill cost');
 
-        // Step one - turn this into a search thing.
-        $madeItems = MadeItem::get();
-        $selectOptions = [];
+        $form->select('made_item_id', 'Made Item')->options($this->getAsOptions(MadeItem::get()));
 
-        foreach ($madeItems as $item) {
-            $itemId = $item->id;
-            $selectOptions[$item->id] = $item->name;
-        }
+        $form->hasMany('ingredients', function(Form\NestedForm $form) {
+            $form->number('quantity_min', 'Minimum Quantity');
+            $form->number('quantity_max', 'Maximum Quantity');
+            $form->text('skill_name', 'Skill Name');
+            $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1);
 
-        $form->select('made_item_id', 'Made Item')->options($selectOptions);
+            // TODO - user can only choose one of the below two (?)
+            $form->select('item_id', 'Specific Item')->options($this->getAsOptions(Item::get()));
+
+            $form->select('item_type', 'Generic Item Type')->options([
+                // would be useful to have secondary items in here?
+                // grass
+                // wicker
+                'seed' => 'seed',
+                'flower' => 'flower',
+                'leaf' => 'leaf',
+                'wood' => 'wood',
+                'stone' => 'stone'
+            ]);
+        });
 
         return $form;
+    }
+
+    private function getAsOptions($options) {
+        $madeItemOptions = [];
+
+        foreach ($options as $item) {
+            $itemId = $item->id;
+            $madeItemOptions[$item->id] = $item->name;
+        }
+
+        return $madeItemOptions;
     }
 }
