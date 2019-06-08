@@ -16,6 +16,8 @@ class MetalsTableSeeder extends Seeder
     {
         Metal::truncate();
 
+        Item::truncate();
+
         Metal::create([
             'id' => 1,
             'name' => 'gold',

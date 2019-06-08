@@ -147,8 +147,8 @@ class MadeItemRecipeController extends Controller
             ])->rules('required');;
             $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1)->rules('required');;
 
-            // TODO - user can only choose one of the below two (?)
-            $form->select('item_id', 'Specific Item')->options($this->getAsOptions(Item::get()));
+            $items = Item::where('item_type', '!=', 'plant')->where('item_type', '!=', 'animal')->get();
+            $form->select('item_id', 'Specific Item')->options($this->getAsOptions($items, 'item_type'));
 
             $form->select('item_type', 'Generic Item Type')->options([
                 // would be useful to have secondary items in here?
@@ -166,12 +166,12 @@ class MadeItemRecipeController extends Controller
         return $form;
     }
 
-    private function getAsOptions($options) {
+    private function getAsOptions($options, $additionalInfo="") {
         $madeItemOptions = [];
 
         foreach ($options as $item) {
             $itemId = $item->id;
-            $madeItemOptions[$item->id] = $item->name;
+            $madeItemOptions[$item->id] = $item->name . " " . $item->$additionalInfo;
         }
 
         return $madeItemOptions;
