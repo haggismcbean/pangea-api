@@ -160,6 +160,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Backup Service Providers
+
+        BackupManager\Laravel\Laravel55ServiceProvider::class
+
     ],
 
     /*
