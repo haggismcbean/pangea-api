@@ -146,7 +146,8 @@ class MadeItemRecipeController extends Controller
                 'construction' => 'construction',
                 'weaving' => 'weaving',
                 'textiles' => 'textiles',
-                'masonry' => 'masonry'
+                'masonry' => 'masonry',
+                'metalwork' => 'metalwork'
             ])->rules('required');
             $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1)->rules('required');
 
@@ -162,7 +163,10 @@ class MadeItemRecipeController extends Controller
                 'leaf' => 'leaf',
                 'bone' => 'bone',
                 'wood' => 'wood',
-                'stone' => 'stone'
+                'stone' => 'stone',
+                'meat' => 'meat',
+                'hide' => 'hide',
+                'metal' => 'metal',
             ]);
 
             $form->select('item_trait_id', 'Item Trait')->options($this->getAsOptions(ItemTrait::get(), 'trait'));
