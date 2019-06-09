@@ -10,33 +10,6 @@ Terraforming
  - ditches and walls.
 
 1. Finish all the basic labours
-
-    - smelting
-    - pottery
-    - clothing
-BECAUSE THESE ARE ALL JUST BASICALLY CRAFTING, 
-ALL I NEED TO DO IS ADD THE MACHINES CONCEPT TO RECIPES
-ADD THE SKILLS CONCEPT TO RECIPES
-AND THEN CREATE THE RECIPES FOR THEM!
-
-BOOM!
-
-ALSO IN GAME WE NEED TO GUIDE PLAYERS TOWARDS THINGS LIKE SMELTING... BUT FIRST JUST IMPLEMENT IT I GUESS!
-
-New MadeItem recipes required
-Cast --- this is a special one in that you make it and it has properties or sthing.
-Tongs
-
-Machines...
-
-MadeItem needs a type
-MadeItemRecipe needs a machines
-
-Machine can have a nullable activity_id (to ensure it isn't double used)
-Although lots of machines can be double used! Or muchos used!
-Maybe machine can have max_activities
-And then activities can use multiple machines? Nahhhh
-
     - food
     - building and terraforming
 2. Implement some reasons for the things

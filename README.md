@@ -38,7 +38,7 @@
 - [x] hunting
 - [ ] aging
 - [ ] child birth (automatically) (actually do I even want this? I have a pretty plausible excuse now)
-- [ ] tools (need concept for all activities)
+- [x] tools (need concept for all activities)
 - [ ] skills
 
 ### States
