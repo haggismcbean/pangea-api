@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Item;
+use App\ItemTrait;
 use App\MadeItem;
 use App\MadeItemRecipe;
 use App\RecipeIngredient;
@@ -127,16 +128,18 @@ class MadeItemRecipeController extends Controller
     {
         $form = new Form(new MadeItemRecipe);
 
-        $form->number('base_volume', 'Base volume')->rules('required');;
-        $form->number('base_rot_rate', 'Base rot rate')->rules('required');;
-        $form->number('base_efficiency', 'Base efficiency')->rules('required');;
-        $form->number('skill_cost', 'Skill cost')->rules('required');;
+        $form->number('base_volume', 'Base volume')->rules('required');
+        $form->number('base_rot_rate', 'Base rot rate')->rules('required');
+        $form->number('base_efficiency', 'Base efficiency')->rules('required');
+        $form->number('skill_cost', 'Skill cost')->rules('required');
 
         $form->select('made_item_id', 'Made Item')->options($this->getAsOptions(MadeItem::get()));
 
         $form->hasMany('ingredients', function(Form\NestedForm $form) {
-            $form->number('quantity_min', 'Minimum Quantity')->rules('required');;
-            $form->number('quantity_max', 'Maximum Quantity')->rules('required');;
+            // $form->number('item_trait_id', 'item_trait_id');
+
+            $form->number('quantity_min', 'Minimum Quantity')->rules('required');
+            $form->number('quantity_max', 'Maximum Quantity')->rules('required');
             $form->select('skill_name', 'Skill Name')->options([
                 'woodwork' => 'woodwork',
                 'pottery' => 'pottery',
@@ -144,8 +147,8 @@ class MadeItemRecipeController extends Controller
                 'weaving' => 'weaving',
                 'textiles' => 'textiles',
                 'masonry' => 'masonry'
-            ])->rules('required');;
-            $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1)->rules('required');;
+            ])->rules('required');
+            $form->radio('is_consumed', 'Is Consumed')->options([0 => 'False', 1 => 'True'])->default(1)->rules('required');
 
             $items = Item::where('item_type', '!=', 'plant')->where('item_type', '!=', 'animal')->get();
             $form->select('item_id', 'Specific Item')->options($this->getAsOptions($items, 'item_type'));
@@ -161,6 +164,9 @@ class MadeItemRecipeController extends Controller
                 'wood' => 'wood',
                 'stone' => 'stone'
             ]);
+
+            $form->select('item_trait_id', 'Item Trait')->options($this->getAsOptions(ItemTrait::get(), 'trait'));
+
         });
 
         return $form;
@@ -170,7 +176,6 @@ class MadeItemRecipeController extends Controller
         $madeItemOptions = [];
 
         foreach ($options as $item) {
-            $itemId = $item->id;
             $madeItemOptions[$item->id] = $item->name . " " . $item->$additionalInfo;
         }
 

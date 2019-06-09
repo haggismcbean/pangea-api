@@ -10,7 +10,7 @@ use Auth;
 class RecipeIngredient extends Model
 {
 	protected $fillable = [
-        'quantity_min', 'quantity_max', 'recipe_id', 'item_id', 'item_type', 'skill_name', 'is_consumed'
+        'quantity_min', 'quantity_max', 'recipe_id', 'item_id', 'item_type', 'skill_name', 'is_consumed', 'item_trait_id'
     ];
 
     public function recipe()

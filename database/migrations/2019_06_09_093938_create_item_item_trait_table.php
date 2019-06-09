@@ -13,12 +13,12 @@ class CreateItemItemTraitTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_item_traits', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->integer('item_id');
-            $table->integer('trait_id');
-        });
+        // Schema::create('item_item_traits', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->timestamps();
+        //     $table->integer('item_id');
+        //     $table->integer('trait_id');
+        // });
     }
 
     /**
@@ -28,6 +28,6 @@ class CreateItemItemTraitTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_item_trait');
+        // Schema::dropIfExists('item_item_trait');
     }
 }
