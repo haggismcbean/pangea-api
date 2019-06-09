@@ -16,7 +16,7 @@ Terraforming
     - death from exposure and animals
     - death from hunger
     - day/night cycle in action
-    - seasons cycle in action (? - maybe already done)
+    - seasons cycle in action (? - maybe already done, just need some kind of weather description/report)
 3. Tidy some of the early concepts 
     - Travel
     - Fighting
