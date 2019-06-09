@@ -25,6 +25,11 @@ class Item extends Model
         return ItemOwner::where('item_id', $this->id);
     }
 
+    public function traits()
+    {
+        return $this->belongsToMany('App\ItemTrait', 'item_item_traits', 'item_id', 'trait_id');
+    }
+
     public function itemDetails() {
         if ($this->item_type === 'plant') {
             return $this->belongsTo('App\Plant', 'type_id')->first();

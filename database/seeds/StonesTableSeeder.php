@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\Stone;
 use App\Item;
+use App\ItemItemTrait;
 
 class StonesTableSeeder extends Seeder
 {
@@ -26,7 +27,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => true,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 1,
             'unit_weight' => 150,
@@ -35,6 +36,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'chalk',
             'description' => 'white chalky stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -47,7 +58,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 2,
             'unit_weight' => 150,
@@ -56,6 +67,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'chert',
             'description' => 'brown stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 9 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -68,7 +89,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 3,
             'unit_weight' => 150,
@@ -77,6 +98,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'conglomerate',
             'description' => 'grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -89,7 +115,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => true,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 4,
             'unit_weight' => 150,
@@ -98,6 +124,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'dolomite',
             'description' => 'white stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 9 //brittle
         ]);
 
         Stone::create([
@@ -110,7 +146,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => true,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 5,
             'unit_weight' => 150,
@@ -119,6 +155,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'limestone',
             'description' => 'pale yellow stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 7 //pourous
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -131,7 +177,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 6,
             'unit_weight' => 150,
@@ -140,6 +186,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'mudstone',
             'description' => 'pale brown stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 7 //pourous
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -152,7 +208,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 7,
             'unit_weight' => 150,
@@ -161,6 +217,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'rock salt',
             'description' => 'white stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -173,7 +239,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 8,
             'unit_weight' => 150,
@@ -182,6 +248,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'sandstone',
             'description' => 'pale yellow stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 7 //pourous
         ]);
 
         Stone::create([
@@ -194,7 +270,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 9,
             'unit_weight' => 150,
@@ -203,6 +279,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'claystone',
             'description' => 'white stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -215,7 +301,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 10,
             'unit_weight' => 150,
@@ -224,6 +310,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'shale',
             'description' => 'dark grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 9 //brittle
         ]);
 
         Stone::create([
@@ -236,7 +332,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 11,
             'unit_weight' => 150,
@@ -245,6 +341,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'siltstone',
             'description' => 'pale yellow stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 9 //brittle
         ]);
 
         Stone::create([
@@ -257,7 +363,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 12,
             'unit_weight' => 150,
@@ -266,6 +372,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'andesite',
             'description' => 'black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -278,7 +394,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 13,
             'unit_weight' => 150,
@@ -287,6 +403,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'basalt',
             'description' => 'black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -299,7 +420,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 14,
             'unit_weight' => 150,
@@ -308,6 +429,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'dacite',
             'description' => 'black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -320,7 +446,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 15,
             'unit_weight' => 150,
@@ -329,6 +455,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'obsidian',
             'description' => 'shiny black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -341,7 +477,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 16,
             'unit_weight' => 150,
@@ -350,6 +486,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'rhyolite',
             'description' => 'dark grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 11 //crumbly
         ]);
 
         Stone::create([
@@ -362,7 +508,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 17,
             'unit_weight' => 150,
@@ -371,6 +517,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'gneiss',
             'description' => 'pale grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -383,7 +534,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => true,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 18,
             'unit_weight' => 150,
@@ -392,6 +543,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'marble',
             'description' => 'white marbled stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -404,7 +560,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 19,
             'unit_weight' => 150,
@@ -413,6 +569,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'phylite',
             'description' => 'black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -425,7 +586,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 20,
             'unit_weight' => 150,
@@ -434,6 +595,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'quartzite',
             'description' => 'green marbled stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -446,7 +612,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 21,
             'unit_weight' => 150,
@@ -455,6 +621,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'schist',
             'description' => 'brown stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -467,7 +638,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 22,
             'unit_weight' => 150,
@@ -476,6 +647,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'slate',
             'description' => 'grey layered stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 9 //brittle
         ]);
 
         Stone::create([
@@ -488,7 +669,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 23,
             'unit_weight' => 150,
@@ -497,6 +678,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'diorite',
             'description' => 'grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -509,7 +695,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 24,
             'unit_weight' => 150,
@@ -518,6 +704,16 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'gabbro',
             'description' => 'dark grey stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 7 //pourous
         ]);
 
         Stone::create([
@@ -530,7 +726,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 25,
             'unit_weight' => 150,
@@ -539,6 +735,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'granite',
             'description' => 'pale brown stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -551,7 +752,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 26,
             'unit_weight' => 150,
@@ -560,6 +761,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'cassiterite',
             'description' => 'pale brown stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -572,7 +778,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 27,
             'unit_weight' => 150,
@@ -581,6 +787,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'copper',
             'description' => 'burnished red metal',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -593,7 +804,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 28,
             'unit_weight' => 150,
@@ -602,6 +813,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'galena',
             'description' => 'dark grey stone with metalic sheen',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8 //hard
         ]);
 
         Stone::create([
@@ -614,7 +830,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 29,
             'unit_weight' => 150,
@@ -623,6 +839,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'gold',
             'description' => 'bright yellow metal',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -635,7 +856,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 30,
             'unit_weight' => 150,
@@ -644,6 +865,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'hematite',
             'description' => 'red stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -656,7 +882,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 31,
             'unit_weight' => 150,
@@ -665,6 +891,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'horn silver',
             'description' => 'grey stone with shiny veins',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -677,7 +908,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 32,
             'unit_weight' => 150,
@@ -686,6 +917,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'limonite',
             'description' => 'yellow stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -698,7 +934,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 33,
             'unit_weight' => 150,
@@ -707,6 +943,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'magnetite',
             'description' => 'black shiny stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -719,7 +960,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 34,
             'unit_weight' => 150,
@@ -728,6 +969,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'malachite',
             'description' => 'green stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -740,7 +986,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 35,
             'unit_weight' => 150,
@@ -749,6 +995,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'silver',
             'description' => 'bright silver metal',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 10 //soft
         ]);
 
         Stone::create([
@@ -761,7 +1012,7 @@ class StonesTableSeeder extends Seeder
             'is_flux' => false,
         ]);
 
-        Item::create([
+        $item = Item::create([
             'item_type' => 'stone',
             'type_id' => 36,
             'unit_weight' => 150,
@@ -770,6 +1021,11 @@ class StonesTableSeeder extends Seeder
             'efficiency' => 10,
             'name' => 'tetrahedrite',
             'description' => 'shiny black stone',
+        ]);
+
+        ItemItemTrait::create([
+            'item_id' => $item->id,
+            'trait_id' => 8  //hard
         ]);
     }
 }
