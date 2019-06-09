@@ -85,6 +85,12 @@ class ActivityController extends Controller
                     $ingredient = $this->activity->ingredients()->where('item_type', $item->name)->first();
                 }
 
+                $traitName = $ingredient->trait()->first()->trait;
+
+                if ($item->traits()->where('trait', $traitName)->count() == 0) {
+                    return response()->json("Item needs to have trait " . $traitName, 400);
+                }
+
                 if (!$ingredient) {
                     return response()->json("Item could not be found in this activity", 400);
                 }

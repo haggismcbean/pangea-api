@@ -14,7 +14,7 @@ class ItemTraitsTableSeeder extends Seeder
     public function run()
     {
         App\ItemTrait::truncate();
-        App\Item::truncate();
+        // App\Item::truncate();
 
         ItemTrait::create([
         	'id' => 1,
@@ -69,6 +69,11 @@ class ItemTraitsTableSeeder extends Seeder
         ItemTrait::create([
         	'id' => 11,
         	'trait' => 'crumbly'
+        ]);
+
+        ItemTrait::create([
+            'id' => 12,
+            'trait' => 'fibrous'
         ]);
     }
 }

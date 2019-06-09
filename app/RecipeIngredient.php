@@ -21,4 +21,8 @@ class RecipeIngredient extends Model
     public function item() {
     	return $this->belongsTo('App\Item', 'item_id');
     }
+
+    public function trait() {
+        return $this->hasOne('App\ItemTrait', 'id', 'item_trait_id');
+    }
 }
