@@ -2,15 +2,7 @@ Okay so in some kind of 'logical' order:
 
 So I guess I really just need
 
-Buildings
- - which are just fancy zones that take recipes
- - and then locks would be cool? but later, once metal is cool
-
-Terraforming
- - ditches and walls.
-
 1. Finish all the basic labours
-    - food
     - building and terraforming
 2. Implement some reasons for the things
     - death from exposure and animals
