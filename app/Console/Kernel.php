@@ -13,8 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\BreakfastTime',
+        'App\Console\Commands\EatingTime',
         'App\Console\Commands\GrowingTime',
+        'App\Console\Commands\TimeChange',
+        'App\Console\Commands\WeatherChange',
+        'App\Console\Commands\ConditionsChange',
     ];
 
     /**
@@ -25,10 +28,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('character:breakfast-time')->daily();
-        $schedule->command('farm:growing-time')->daily();
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('character:eating-time')
+                 ->hourly();
+
+        $schedule->command('farm:growing-time')
+                 ->daily();
+
+        $schedule->command('zone:time-change')
+                 ->everyFifteenMinutes();
+
+        // every fifteen minutes 5 past the hour
+        // $schedule->command('zone:weather-change')
+        //          ->cron(5-59/15 * * * *);
+
+        // every fifteen minutes 10 past the hour
+        // $schedule->command('character:conditions-change')
+        //          ->cron(10-59/15 * * * *);
     }
 
     /**

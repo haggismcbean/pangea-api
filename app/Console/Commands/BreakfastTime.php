@@ -10,14 +10,14 @@ use App\Events\MessageSent;
 
 use App\World\Clock;
 
-class BreakfastTime extends Command
+class EatingTime extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'character:breakfast-time';
+    protected $signature = 'character:eating-time';
 
     /**
      * The console command description.
@@ -48,7 +48,7 @@ class BreakfastTime extends Command
         foreach( $characters as $character ) {
             // if it is not morning for this character, then he shouldnt eat breakfast
             $location = $character->location()->first();
-            if (!Clock::isBreakfastHour($location)) {
+            if (!Clock::isBreakfastHour($location) || Clock::isLunchHour($location) || Clock::isDinnerHour($location)) {
                 return;
             }
 

@@ -2,6 +2,8 @@
 
 namespace App\World;
 
+use App\Location;
+
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
@@ -44,7 +46,7 @@ class Clock
 
     public static function getLocationTimezone($location)
     {
-        $totalXCords = $location->orderBy('id', 'DESC')->first()->x_coord;
+        $totalXCords = Location::orderBy('id', 'DESC')->first()->x_coord;
         $xCordsPerTimezone = $totalXCords / 24;
 
         return ($location->x_coord / $xCordsPerTimezone) - 12;
@@ -53,9 +55,31 @@ class Clock
 
     public static function isBreakfastHour($location) {
         // on pangea it is always night except from 12noon to 3pm
-        $timezone = $this->getLocationTimezone($location);
+        $timezone = Clock::getLocationTimezone($location);
         $currentHour = date('H'); // a number between 0 and 23
         if ($currentHour + $timezone == 12 || $currentHour + $timezone == -12) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function isLunchHour($location) {
+        // on pangea it is always night except from 12noon to 3pm
+        $timezone = Clock::getLocationTimezone($location);
+        $currentHour = date('H'); // a number between 0 and 23
+        if ($currentHour + $timezone == 13) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function isDinnerHour($location) {
+        // on pangea it is always night except from 12noon to 3pm
+        $timezone = Clock::getLocationTimezone($location);
+        $currentHour = date('H'); // a number between 0 and 23
+        if ($currentHour + $timezone == 14) {
             return true;
         }
 
