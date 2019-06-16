@@ -57,11 +57,11 @@ class EatingTime extends Command
                 ->first();
 
             if (!$food) {
-                $character->hunger = $character->hunger - 20;
+                $character->hunger = $character->hunger - 1;
                 $character->save();
 
                 $message = $character->messages()->create([
-                    'message' => 'After another restless night you realise you wake up ravenous. Then you remember you have no food. You want to go back to sleep but you\'re too hungry, so you get up and begin the day.',
+                    'message' => 'You are hungry',
                     'source_type' => 'system',
                     'source_name' => '',
                     'source_id' => 0,
@@ -77,8 +77,13 @@ class EatingTime extends Command
                 $foodStock->count = $foodStock->count - 1;
                 $foodStock->save();
 
+                if ($character->hunger < 100) {
+                    $character->hunger = $character->hunger + 1;
+                    $character->save();
+                }
+
                 $message = $character->messages()->create([
-                    'message' => 'You wake up cold. Dread fills your stomach as the prospect of another day greets you. But at least today you won\'t go hungry. You eat ' . $food->name . 'and set about your day.',
+                    'message' => 'You take a moment to eat ' . $food->name . ', and continue on your day',
                     'source_type' => 'system',
                     'source_name' => '',
                     'source_id' => 0,
