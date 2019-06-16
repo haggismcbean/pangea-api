@@ -99,6 +99,7 @@ class Biome
             default:
 
             case 6: //Tropical
+            case 7: //Tropical
                 if ($averageRainfall < 2) {
                     return 3;
                 }

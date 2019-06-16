@@ -38,8 +38,8 @@ class Kernel extends ConsoleKernel
                  ->everyFifteenMinutes();
 
         // every fifteen minutes 5 past the hour
-        // $schedule->command('zone:weather-change')
-        //          ->cron(5-59/15 * * * *);
+        $schedule->command('zone:weather-change')
+                 ->cron('5-59/15 * * * *');
 
         // every fifteen minutes 10 past the hour
         // $schedule->command('character:conditions-change')

@@ -55,10 +55,10 @@ class TimeChange extends Command
 
             $time = Clock::getLocationTimezone($location);
 
-            $timeMessagge = TimeFactory::getDaylightMessage($time);
+            $timeMessage = TimeFactory::getDaylightMessage($time);
 
             $message = $character->messages()->create([
-                'message' => $timeMessagge,
+                'message' => $timeMessage,
                 'source_type' => 'system',
                 'source_name' => '',
                 'source_id' => 0,
