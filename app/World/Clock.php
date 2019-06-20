@@ -105,7 +105,7 @@ class Clock
             return $location->biome()->first()->hottestTemperature;
         }
         
-        return $location->biome()->averageTemperature;
+        return $location->biome()->first()->averageTemperature;
     }
 
     public static function getRainfall($location)

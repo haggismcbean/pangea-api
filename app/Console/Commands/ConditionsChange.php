@@ -4,6 +4,13 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Character;
+use App\Message;
+use App\Events\MessageSent;
+
+use App\Names\ExposureFactory;
+use App\World\Clock;
+
 class ConditionsChange extends Command
 {
     /**
@@ -37,6 +44,49 @@ class ConditionsChange extends Command
      */
     public function handle()
     {
-        //
+        $characters = Character::get();
+
+        foreach( $characters as $character ) {
+
+            $location = $character->location()->first();
+
+            if (!$location) {
+                return;
+            }
+
+            $exposure = $character->exposure;
+            $temperature = Clock::getTemperature($location);
+
+            if ($temperature < 3) {
+                // TODO - clothing and being inside
+                $character->exposure = $character->exposure - $this->getExposureChange($temperature);
+                $character->save();
+
+                $exposureMessage = ExposureFactory::getMessage($exposure);
+
+                $message = $character->messages()->create([
+                    'message' => $exposureMessage,
+                    'source_type' => 'system',
+                    'source_name' => '',
+                    'source_id' => 0,
+                ]);
+
+                broadcast(new MessageSent($character, $message));
+            }
+        }
+    }
+
+    private function getExposureChange($temperature) {
+        if ($temperature === 0) {
+            return 30;
+        }
+
+        if ($temperature === 1) {
+            return 20;
+        }
+
+        if ($temperature === 2) {
+            return 10;
+        }
     }
 }

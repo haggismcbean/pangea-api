@@ -10,7 +10,7 @@ class BiomeAppearanceTraits extends Model
 {
     private static $defaultLayout = "It has {{value}} {{key}}";
 
-    private static $introArray = ["You awaken to the sounds of an alien planet", "As you awaken, you remember where you are"];
+    private static $introArray = ["You awaken"];
     private static $intro;
     private static $introDefaultLayout = "{{value}}";
 
