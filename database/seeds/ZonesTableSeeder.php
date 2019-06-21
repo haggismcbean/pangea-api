@@ -15,20 +15,30 @@ class ZonesTableSeeder extends Seeder
     public function run()
     {
         //Let's clear the location table first
-        Zone::truncate();
+        // Zone::truncate();
 
-        $locations = Location::get();
+        // $locations = Location::get();
 
-        foreach ($locations as $location) {
-            if ($location->biome !== 'Ocean') {
+        // foreach ($locations as $location) {
+        //     if ($location->biome !== 'Ocean') {
 
-                DB::table('zones')->insert([
-                    'location_id' => $location->id,
-                    'name' => 'Wilderness',
-                    'size' => 100,
-                    'description' => BiomeDescriptionGenerator::getDescription($location->biome)
-                ]);
-            }
+        //         DB::table('zones')->insert([
+        //             'location_id' => $location->id,
+        //             'name' => 'Wilderness',
+        //             'size' => 100,
+        //             'description' => BiomeDescriptionGenerator::getDescription($location->biome)
+        //         ]);
+        //     }
+        // }
+
+
+        // TO JUST UPDATE DESCRIPTIONS: 
+
+        $zones = Zone::where('name', 'Wilderness')->get();
+
+        foreach($zones as $zone) {
+            $zone->description = BiomeDescriptionGenerator::getDescription($zone->location()->first()->biome);
+            $zone->save();
         }
     }
 }
