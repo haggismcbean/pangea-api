@@ -47,18 +47,33 @@ class ZoneController extends Controller
         return response()->json($zone->location()->first()->plants()->get(), 200);
     }
 
-    public function description(Zone $zone) {
+    public function wakeUpText(Zone $zone) {
         $user = Auth::user();
 
-        $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
+        $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
 
-        if (!$currentZone) {
+        if (!$currentCharacter) {
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 
         $biomeDescription = new BiomeFactory();
 
+        $biomeDescription->zone = $currentCharacter->zone()->first();
+
         return response()->json($biomeDescription, 200);
+    }
+
+    public function description(Zone $zone) {
+        $user = Auth::user();
+
+        $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
+
+        if (!$currentCharacter) {
+            return response()->json(['status' => 'Zone could not be found'], 403);
+        }
+
+        return response()->json($zone, 200);
+
     }
 
     public function characters(Zone $zone) {
@@ -127,35 +142,31 @@ class ZoneController extends Controller
     }
 
     private function getBorderingZonesById($zoneId, $user) {
-        $currentZone = $user->characters()->where('zone_id', $zoneId)->first();
+        $currentZone = $user->characters()->where('zone_id', $zoneId)->first()->zone()->first();
 
         if (!$currentZone) {
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 
-        if ($currentZone->parent_id > 0) {
-            $newZones = Zone::where('location_id', $currentZone->location_id)
-                ->where('parent_zone', $currentZone->parent_zone)
-                ->orWhere('id', $currentZone->parent_zone)
-                ->orWhere('parent_zone', $currentZone->id)
-                ->get();
+        if ($currentZone->parent_zone > 0) {
+            $parentZone = Zone::find($currentZone->parent_zone);
+            $siblingZones = Zone::where('parent_zone', $currentZone->parent_zone)->get();
+            $childZones = Zone::where('parent_zone', $currentZone->id)->get();
 
             $newZones = (object) [
-                'zones' => $newZones,
-                'borderZones' => null
+                'parentZone' => $parentZone,
+                'siblingZones' => $siblingZones,
+                'childZones' => $childZones
             ];
 
             return $newZones;
         } else {
-            $newZones = Zone::where('location_id', $currentZone->location_id)
-                ->where('parent_zone', $currentZone->id)
-                ->get();
-
-            $borderZones = LocationController::getBorderingZones($currentZone->location_id);
+            $siblingZones = LocationController::getBorderingZones($currentZone->location_id);
+            $childZones = Zone::where('parent_zone', $currentZone->id)->get();
 
             $newZones = (object) [
-                'zones' => $newZones,
-                'borderZones' => $borderZones
+                'siblingZones' => $siblingZones,
+                'childZones' => $childZones
             ];
 
             return $newZones;
