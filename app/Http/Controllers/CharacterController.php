@@ -26,19 +26,29 @@ class CharacterController extends Controller
         $user = Auth::user();
 
         $character = $user->characters()
-            ->withTrashed()
             ->find($characterId);
 
         if ($character) {
-            if ($character->is_dead) {
-                $message = DeathFactory::getExposureMessage();
-                broadcast(new MessageSent($character, $message));
-                $character->delete();
-            } else {
-                return $character;
-            }
+            return $character;
         } else {
-            return null;
+            $character = $user->characters()
+                ->withTrashed()
+                ->find($characterId);
+
+            if ($character->is_dead) {
+                $message = DeathFactory::getOfflineMessage($character);
+                broadcast(new MessageSent($character, $message));
+
+                // okay so if a character dies, we want that to be handled on the front end
+                // we first off just show the 'died offline' message
+                //
+                $character->delete();
+
+                // then we need to handle on the front end a way to create a new character if the user so pleases it
+                return $character;
+            } else {
+                return null;
+            }
         }
     }
 
