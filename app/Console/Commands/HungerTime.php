@@ -62,7 +62,14 @@ class HungerTime extends Command
                 'source_id' => 0,
             ]);
 
-            // TODO - death
+            if ($character->hunger < 1) {
+                $character->is_dead = true;
+                $character->save();
+                $message = DeathFactory::getHungerMessage();
+                broadcast(new MessageSent($character, $message));
+                $character->delete();
+                return;
+            }
 
             broadcast(new MessageSent($character, $message));
         }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Factories\CharacterFactory;
@@ -12,6 +13,8 @@ use Auth;
 
 class Character extends Model
 {
+    use SoftDeletes;
+
     private $age;
 
     protected $notableParent;

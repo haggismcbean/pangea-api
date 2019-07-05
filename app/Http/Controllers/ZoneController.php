@@ -233,12 +233,6 @@ class ZoneController extends Controller
     }
 
     private function getTargetZoneFromCurrentLocation($borderingZones, $newZoneId) {
-        if ($borderingZones->parentZone) {
-            if ($newZoneId == $borderingZones->parentZone->id) {
-                return $borderingZones->parentZone;
-            }
-        }
-
         if ($borderingZones->siblingZones) {
             foreach($borderingZones->siblingZones as $borderingZone) {
                 if ($newZoneId == $borderingZone->id) {
@@ -252,6 +246,12 @@ class ZoneController extends Controller
                 if ($newZoneId == $borderingZone->id) {
                     return $borderingZone;
                 }
+            }
+        }
+
+        if ($borderingZones->parentZone) {
+            if ($newZoneId == $borderingZones->parentZone->id) {
+                return $borderingZones->parentZone;
             }
         }
     }

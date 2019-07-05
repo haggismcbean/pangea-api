@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Character;
 use App\Item;
+use App\Message;
+use App\Events\MessageSent;
 
 use App\MadeItem;
 use App\MadeItemRecipe;
@@ -24,10 +26,17 @@ class CharacterController extends Controller
         $user = Auth::user();
 
         $character = $user->characters()
+            ->withTrashed()
             ->find($characterId);
 
         if ($character) {
-            return $character;
+            if ($character->is_dead) {
+                $message = DeathFactory::getExposureMessage();
+                broadcast(new MessageSent($character, $message));
+                $character->delete();
+            } else {
+                return $character;
+            }
         } else {
             return null;
         }

@@ -65,7 +65,12 @@ class ConditionsChange extends Command
                 $exposureMessage = ExposureFactory::getMessage($exposure);
 
                 if ($character->exposure < 1) {
-                    // TODO - death
+                    $character->is_dead = true;
+                    $character->save();
+                    $message = DeathFactory::getExposureMessage();
+                    broadcast(new MessageSent($character, $message));
+                    $character->delete();
+                    return;
                 }
 
                 $message = $character->messages()->create([
