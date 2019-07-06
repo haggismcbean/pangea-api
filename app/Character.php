@@ -19,13 +19,18 @@ class Character extends Model
 
     protected $notableParent;
 
+    protected $dates = ['deleted_at'];
+    protected $softDelete = true;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
     public function __construct($age = null)
-    {}
+    {
+        parent::__construct();
+    }
 
     public function generate()
     {

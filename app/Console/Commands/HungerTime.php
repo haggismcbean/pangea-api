@@ -9,6 +9,7 @@ use App\Message;
 use App\Events\MessageSent;
 
 use App\World\Clock;
+use App\Names\DeathFactory;
 
 class HungerTime extends Command
 {
@@ -65,7 +66,14 @@ class HungerTime extends Command
             if ($character->hunger < 1) {
                 $character->is_dead = true;
                 $character->save();
-                $message = DeathFactory::getHungerMessage();
+
+                $message = $character->messages()->create([
+                    'message' => DeathFactory::getHungerMessage(),
+                    'source_type' => 'system',
+                    'source_name' => '',
+                    'source_id' => 0
+                ]);
+
                 broadcast(new MessageSent($character, $message));
                 $character->delete();
                 return;

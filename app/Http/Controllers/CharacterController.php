@@ -85,7 +85,7 @@ class CharacterController extends Controller
         // fetch all characters for this user
         $user = Auth::user();
 
-        return $user->characters()->get();
+        return Character::where('user_id', $user->id)->get();
     }
 
     public function attack(Character $character) {
@@ -136,6 +136,14 @@ class CharacterController extends Controller
         }
 
         return response()->json($madeItems, 200);
+    }
+
+    public function eat(Request $request) {
+        $character->items()
+            ->where('item_id', $request->itemId)
+            ->first();
+
+        // TODO - if it's edible, gain hunger, otherwise get ill
     }
 
     private function isInteger($variable) {

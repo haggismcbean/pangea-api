@@ -9,6 +9,7 @@ use App\Message;
 use App\Events\MessageSent;
 
 use App\Names\ExposureFactory;
+use App\Names\DeathFactory;
 use App\World\Clock;
 
 class ConditionsChange extends Command
@@ -67,7 +68,14 @@ class ConditionsChange extends Command
                 if ($character->exposure < 1) {
                     $character->is_dead = true;
                     $character->save();
-                    $message = DeathFactory::getExposureMessage();
+
+                    $message = $character->messages()->create([
+                        'message' => DeathFactory::getExposureMessage(),
+                        'source_type' => 'system',
+                        'source_name' => '',
+                        'source_id' => 0
+                    ]);
+
                     broadcast(new MessageSent($character, $message));
                     $character->delete();
                     return;

@@ -5,7 +5,7 @@ namespace App\Names;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class ExposureFactory extends Model
+class DeathFactory extends Model
 {
 
     public static function getHungerMessage()
