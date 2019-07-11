@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('character', 'CharacterController@create');
 	Route::get('characters', 'CharacterController@show');
+	Route::get('character/{request}/death_message', 'CharacterController@getDeathMessage');
 });
 
 // resouce gathering

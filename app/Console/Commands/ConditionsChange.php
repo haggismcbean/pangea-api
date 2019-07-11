@@ -69,12 +69,7 @@ class ConditionsChange extends Command
                     $character->is_dead = true;
                     $character->save();
 
-                    $message = $character->messages()->create([
-                        'message' => DeathFactory::getExposureMessage(),
-                        'source_type' => 'system',
-                        'source_name' => '',
-                        'source_id' => 0
-                    ]);
+                    $message = DeathFactory::getExposureMessage($character);
 
                     broadcast(new MessageSent($character, $message));
                     $character->delete();

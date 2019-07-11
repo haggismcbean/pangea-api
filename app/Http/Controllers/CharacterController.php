@@ -20,6 +20,8 @@ use App\Jobs\Hunt;
 use App\Http\Controllers\CraftingController;
 use App\Http\Controllers\HuntController;
 
+use App\Names\DeathFactory;
+
 class CharacterController extends Controller
 {
     public static function getCharacter($characterId) {
@@ -85,7 +87,7 @@ class CharacterController extends Controller
         // fetch all characters for this user
         $user = Auth::user();
 
-        return Character::where('user_id', $user->id)->get();
+        return Character::where('user_id', $user->id)->withTrashed()->get();
     }
 
     public function attack(Character $character) {
@@ -139,11 +141,49 @@ class CharacterController extends Controller
     }
 
     public function eat(Request $request) {
-        $character->items()
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $item = $character->items()
             ->where('item_id', $request->itemId)
             ->first();
 
-        // TODO - if it's edible, gain hunger, otherwise get ill
+        // is it food?
+        // TODO - eat meat?!
+        if (!$item->item_type != 'plant') {
+            $message = EatingFactory::getInedibleMessage($item);
+            return;
+        }
+
+        // TODO - poisons of varying strengths!
+        if ($item->itemDetails()->isPoisonous) {
+            $damage = rand(0, 100);
+            $character->health = $character->health - $damage;
+
+            if ($character->health > 0) {
+                $message = EatingFactory::getPoisonousMessage($item);
+                broadcast(new MessageSent($character, $message));
+            } else {
+                $character->is_dead = true;
+                $character->save();
+
+                $message = DeathFactory::getPoisonMessage($character);
+
+                broadcast(new MessageSent($character, $message));
+                $character->delete();
+            }
+
+            return;
+        }
+
+        $character->hunger = $character->hunger + 20;
+        if ($character->hunger > 100) {
+            $character->hunger = 100;
+        }
+
+        $character->save();
+        $message = EatingFactory::getEdibleMessage($item);
+        broadcast(new MessageSent($character, $message));
     }
 
     private function isInteger($variable) {
@@ -152,5 +192,22 @@ class CharacterController extends Controller
         }
 
         return true;
+    }
+
+    public function getDeathMessage($request) {
+
+        $character = Character::withTrashed()->where('id', $request)->first();
+
+        if ($character->is_dead == 0) {
+            return response()->json("Cannot get death message of living character", 401);
+        }
+
+        $messages = $character->messages()->where('source_name', 'death')->get();
+
+        if ($messages->count() == 0) {
+            return [DeathFactory::getOfflineMessage($character)];
+        }
+
+        return $messages;
     }
 }

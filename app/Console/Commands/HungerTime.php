@@ -67,12 +67,7 @@ class HungerTime extends Command
                 $character->is_dead = true;
                 $character->save();
 
-                $message = $character->messages()->create([
-                    'message' => DeathFactory::getHungerMessage(),
-                    'source_type' => 'system',
-                    'source_name' => '',
-                    'source_id' => 0
-                ]);
+                $message = DeathFactory::getHungerMessage($character);
 
                 broadcast(new MessageSent($character, $message));
                 $character->delete();
