@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Zone;
 use App\Plant;
+use App\PlantName;
 
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ItemController;
@@ -17,6 +18,24 @@ class PlantController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function name(Request $request) {
+        $user = Auth::user();
+
+        $character = $user->characters()->first();
+
+        $plantId = $request->input('plantId');
+        $plantName = $request->input('plantName');
+
+        $plantName = new PlantName;
+
+        $plantName->name = $plantName;
+        $plantName->plant_id = $plantId;
+        $plantName->character_id = $characterId;
+
+        $plantName->save();
+        return $plantName;
     }
 
     public function gather(Request $request) {
