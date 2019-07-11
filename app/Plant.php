@@ -22,4 +22,14 @@ class Plant extends Model
     public function items() {
     	return $this->hasMany(Item::class, 'type_id')->where('item_type', 'plant');
     }
+
+    public function names() {
+        return $this->hasMany('App\PlantNames');
+    }
+
+    public function getName($character) {
+        return $this->names()
+            ->where('character_id', $character->id)
+            ->first();
+    }
 }

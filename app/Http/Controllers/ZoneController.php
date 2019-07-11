@@ -44,7 +44,13 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 
-        return response()->json($zone->location()->first()->plants()->get(), 200);
+        $plants = $zone->location()->first()->plants()->get();
+
+        foreach ($plants as $plant) {
+            $plant->customName = $plant->getName($character);
+        }
+
+        return response()->json($plants, 200);
     }
 
     public function wakeUpText(Zone $zone) {
