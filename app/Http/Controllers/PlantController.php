@@ -26,13 +26,13 @@ class PlantController extends Controller
         $character = $user->characters()->first();
 
         $plantId = $request->input('plantId');
-        $plantName = $request->input('plantName');
+        $newName = $request->input('name');
 
         $plantName = new PlantName;
 
-        $plantName->name = $plantName;
+        $plantName->plant_name = $newName;
         $plantName->plant_id = $plantId;
-        $plantName->character_id = $characterId;
+        $plantName->character_id = $character->id;
 
         $plantName->save();
         return $plantName;

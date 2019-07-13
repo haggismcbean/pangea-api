@@ -38,9 +38,9 @@ class ZoneController extends Controller
     public function plants(Zone $zone) {
         $user = Auth::user();
 
-        $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
+        $character = $user->characters()->where('zone_id', $zone->id)->first();
 
-        if (!$currentCharacter) {
+        if (!$character) {
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 

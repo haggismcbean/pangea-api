@@ -24,12 +24,16 @@ class Plant extends Model
     }
 
     public function names() {
-        return $this->hasMany('App\PlantNames');
+        return $this->hasMany('App\PlantName');
     }
 
     public function getName($character) {
-        return $this->names()
+        $plantName = $this->names()
             ->where('character_id', $character->id)
             ->first();
+
+        if ($plantName) {
+            return $plantName->plant_name;
+        }
     }
 }
