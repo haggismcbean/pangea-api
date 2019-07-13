@@ -20,13 +20,13 @@ class PlantAppearanceTraits extends Model
     private static $flower;
     private static $flowerDefaultLayout = "It has {{value}} flowers";
 
-    private static $outerStalkArray = [];
-    private static $outerStalk;
-    private static $outerStalkDefaultLayout = "{{pronoun}} has {{value}} skin";
+    private static $fruitArray = ["{{flowerColorModifier}} {{flowerColor}}", "{{flowerShape}} {{flowerColor}}", "{{flowerShape}} {{flowerColorModifier}} {{flowerColor}}", "{{flowerSize}} {{flowerColor}}"];
+    private static $fruit;
+    private static $fruitDefaultLayout = "It has {{value}} fruit";
 
-    private static $innerStalkArray = [];
-    private static $innerStalk;
-    private static $innerStalkDefaultLayout = "{{pronoun}} has {{value}} skin";
+    private static $rootsArray = ["{{flowerColorModifier}} {{flowerColor}}", "{{flowerShape}} {{flowerColor}}", "{{flowerShape}} {{flowerColorModifier}} {{flowerColor}}", "{{flowerSize}} {{flowerColor}}"];
+    private static $roots;
+    private static $rootsDefaultLayout = "It has {{value}} roots";
 
     private static $leafArray = ["{{leafColourModifier}} {{leafColor}} {{leafShape}} leaves with heavy veins", "{{leafColourModifier}} {{leafColor}} {{leafShape}} leaves with heavy veins", "{{leafShape}} {{leafColor}} leaves"];
     private static $leaf;
@@ -36,7 +36,7 @@ class PlantAppearanceTraits extends Model
     {
         // So each location will have a log of how many of each plant it has, the average maturity of the stock. The average age will increase/reduce based on whether people plant, harvest, or time elapses. In that way we kind of keep track of the ages without individually recording each plant's age. It's a bit of a hack which means in theory people will be able to harvest a plant that doesn't exist. We'll limit people to only be able to harvest really old plants if the stock is really big somehow.
         $traits = [
-            'flower', 'leaf'//, 'outerStalk', 'innerStalk', 'leaf'
+            'flower', 'leaf', 'roots', 'fruit'
         ];
 
         foreach( $traits as $trait) {

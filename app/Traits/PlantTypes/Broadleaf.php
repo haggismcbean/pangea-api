@@ -12,7 +12,6 @@ class Broadleaf
     public $growthRate;
     public $isSeasonal;
     public $hasFruit;
-    public $isPoisonous;
     public $hasFlower;
     public $leafAppearance;
     public $hasWood;
@@ -23,6 +22,11 @@ class Broadleaf
     public $temperatureMin;
     public $temperatureMax;
 
+    public $poisonStrength;
+    public $foodStrength;
+    public $isEatenRaw;
+    public $isEatenCooked;
+
     public function __construct()
     {
         $this->name = "broadleaf";
@@ -30,7 +34,6 @@ class Broadleaf
         $this->growthRate = rand(0, 10);
         $this->isSeasonal = true;
         $this->hasFruit = rand(0, 50) === 1 ? true : false;
-        $this->isPoisonous = rand(0, 30) === 1 ? true : false;
         $this->hasFlower = true;
         $this->hasWood = true;
 
@@ -39,5 +42,11 @@ class Broadleaf
         $this->rainfallMax = $this->rainfallMin + rand(0, 3);
         $this->temperatureMin = rand(3, 5);
         $this->temperatureMax = $this->rainfallMin + rand(0, 3);
+        
+        // second wave properties
+        $this->poisonStrength = rand(0, 10);
+        $this->foodStrength = rand(0, 10);
+        $this->isEatenRaw = rand(0,30) === 1 ? true : false;
+        $this->isEatenCooked = rand(0,30) === 1 ? true : false;
     }
 }

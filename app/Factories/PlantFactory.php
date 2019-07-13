@@ -26,18 +26,28 @@ class PlantFactory extends Model
 
         $this->type = $type;
 
-        // $this->seedsStartDate = Carbon::now();
-        // $this->seedsEndDate = Carbon::now();
-        // $this->flowerStartDate = Carbon::now();
-        // $this->flowerEndDate = Carbon::now();
-        // $this->leafStartDate = Carbon::now();
-        // $this->leafEndDate = Carbon::now();
+        $this->peakFlowerDay = $this->getRandomDay();
+        $this->troughFlowerDay = $this->getRandomDay("opposite", $this->peakFlowerDay);
+        $this->peakFruitDay = $this->getRandomDay("later", $this->peakFlowerDay);
+        $this->troughFruitDay = $this->getRandomDay("opposite", $this->peakFlowerDay);
+        $this->peakLeavesDay = $this->getRandomDay("earlier", $this->peakFlowerDay);
+        $this->troughLeavesDay = $this->getRandomDay("opposite", $this->peakLeavesDay);
+        $this->peakSeedDay = $this->getRandomDay("later", $this->peakFlowerDay);
+        $this->troughSeedDay = $this->getRandomDay("opposite", $this->peakLeavesDay);
 
-        // $this->flowerUse = $this->getRandomFlowerUse();
-        // $this->seedUse = $this->getRandomSeedUse();
-        // $this->outerStalkUse = $this->getRandomOuterStalkUse();
-        // $this->innerStalkUse = $this->getRandomInnerStalkUse();
-        // $this->leafUse = $this->getRandomLeafUse();
+        $this->flowerUse = $this->getRandomFlowerUse();
+        $this->seedUse = $this->getRandomSeedUse();
+        $this->stalkUse = $this->getRandomStalkUse();
+        $this->fruitUse = $this->getRandomFruitUse();
+        $this->leafUse = $this->getRandomLeafUse();
+        $this->rootUse = $this->getRandomRootUse();
+
+        $this->flowerProcessTime = $this->getRandomProcessTime();
+        $this->seedProcessTime = $this->getRandomProcessTime();
+        $this->stalkProcessTime = $this->getRandomProcessTime();
+        $this->fruitProcessTime = $this->getRandomProcessTime();
+        $this->leafProcessTime = $this->getRandomProcessTime();
+        $this->rootProcessTime = $this->getRandomProcessTime();
 
         // We'll have standard weights for things so we don't have to generate and store them for each plant!!
         $this->rotRate = rand(0, 10);
@@ -64,11 +74,23 @@ class PlantFactory extends Model
 
         // fruit
         if ($this->type->hasFruit) {
+            $this->fruitAppearance = PlantAppearanceTraits::getRandomTrait("fruit", $this);
             $this->fruitSize = SizeFactory::getRandomSize();
             $this->fruitColor = ColorFactory::getRandomColor();
             $this->fruitShape = SizeFactory::getRandomShape();
-            $this->fruitPattern = ColorFactory::getRandomPattern();
+            $message = new MessageFormer();
+            $message->formSentence($this->fruitAppearance, $this);
+            $this->fruitAppearance = $message->message;
         }
+
+        // roots
+        $this->rootsAppearance = PlantAppearanceTraits::getRandomTrait("roots", $this);
+        $this->rootsSize = SizeFactory::getRandomSize();
+        $this->rootsColor = ColorFactory::getRandomColor();
+        $this->rootsShape = SizeFactory::getRandomShape();
+        $message = new MessageFormer();
+        $message->formSentence($this->rootsAppearance, $this);
+        $this->rootsAppearance = $message->message;
 
         // flower
         if ($this->type->hasFlower) {
@@ -116,5 +138,75 @@ class PlantFactory extends Model
         // $this->deathAppearance = PlantAppearanceTraits::getRandomTrait("death", $this);
         // $this->outerStalkAppearance = PlantAppearanceTraits::getRandomTrait("outerStalk", $this);
         // $this->innerStalkAppearance = PlantAppearanceTraits::getRandomTrait("innerStalk", $this);
+    }
+
+    private function getRandomDay($typeOfDependence=null, $dependentDate=null)
+    {
+        if (!$typeOfDependence) {
+            return rand(15, 35);
+        }
+
+        if ($typeOfDependence === "later") {
+            return ($dependentDate + rand(1, 10)) % 40;
+        }
+
+        if ($typeOfDependence === "earlier") {
+            return ($dependentDate - rand(1, 10)) % 40;
+        }
+
+        if ($typeOfDependence === "opposite") {
+            return ($dependentDate + rand(15, 25)) % 40;
+        }
+    }
+
+    private function getRandomFlowerUse() {
+        $uses = ["food", "poison", "dye"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomSeedUse() {
+        $uses = ["food", "poison"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomStalkUse() {
+        $uses = ["food", "fuel", "paper", "fabric", "poison"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomFruitUse() {
+        $uses = ["food", "storage", "poison"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomLeafUse() {
+        $uses = ["food", "paper", "poison"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomRootUse() {
+        $uses = ["food", "poison", "dye"];
+
+        return $this->getRandomUse($uses);
+    }
+
+    private function getRandomUse($uses) {
+        $length = count($uses) - 1;
+        $result = rand(0, $length + 30);
+
+        if ($result < $length) {
+            return $uses[$result];
+        } else {
+            return "";
+        }
+    }
+
+    private function getRandomProcessTime() {
+        return rand(0, 20);
     }
 }

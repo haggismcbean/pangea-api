@@ -118,7 +118,6 @@ class PlantsTableSeeder extends Seeder
 				'growthRate' => $plant->type->growthRate,
 				'isSeasonal' => $plant->type->isSeasonal,
 				'hasFruit' => $plant->type->hasFruit,
-				'isPoisonous' => $plant->type->isPoisonous,
 				'hasFlower' =>  $plant->type->hasFlower,
 				'rainfallMin' =>  $plant->type->rainfallMin,
 				'rainfallMax' =>  $plant->type->rainfallMax,
@@ -140,6 +139,44 @@ class PlantsTableSeeder extends Seeder
 				'leafShape' => $plant->leafShape,
                 'hasWood' => $plant->type->hasWood,
                 'woodAppearance' => $plant->woodAppearance,
+
+                // second wave on the type
+                'poisonStrength' => $plant->type->poisonStrength,
+                'foodStrength' => $plant->type->foodStrength,
+                'isEatenRaw' => $plant->type->isEatenRaw,
+                'isEatenCooked' => $plant->type->isEatenCooked,
+
+                // second wave not on the type
+                'peakFlowerDay' => $plant->peakFlowerDay,
+                'troughFlowerDay' => $plant->troughFlowerDay,
+                'peakFruitDay' => $plant->peakFruitDay,
+                'troughFruitDay' => $plant->troughFruitDay,
+                'peakLeavesDay' => $plant->peakLeavesDay,
+                'troughLeavesDay' => $plant->troughLeavesDay,
+                'peakSeedDay' => $plant->peakSeedDay,
+                'troughSeedDay' => $plant->troughSeedDay,
+
+                'flowerUse' => $plant->flowerUse,
+                'seedUse' => $plant->seedUse,
+                'stalkUse' => $plant->stalkUse,
+                'fruitUse' => $plant->fruitUse,
+                'leafUse' => $plant->leafUse,
+                'rootUse' => $plant->rootUse,
+
+                'flowerProcessTime' => $plant->flowerProcessTime,
+                'seedProcessTime' => $plant->seedProcessTime,
+                'stalkProcessTime' => $plant->stalkProcessTime,
+                'fruitProcessTime' => $plant->fruitProcessTime,
+                'leafProcessTime' => $plant->leafProcessTime,
+                'rootProcessTime' => $plant->rootProcessTime,
+                'fruitAppearance' => $plant->fruitAppearance,
+                'fruitSize' => $plant->fruitSize,
+                'fruitColor' => $plant->fruitColor,
+                'fruitShape' => $plant->fruitShape,
+                'rootsAppearance' => $plant->rootsAppearance,
+                'rootsSize' => $plant->rootsSize,
+                'rootsColor' => $plant->rootsColor,
+                'rootsShape' => $plant->rootsShape
             ]);
         }
     }

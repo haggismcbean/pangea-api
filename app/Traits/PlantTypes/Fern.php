@@ -23,6 +23,11 @@ class Fern
     public $temperatureMin;
     public $temperatureMax;
 
+    public $poisonStrength;
+    public $foodStrength;
+    public $isEatenRaw;
+    public $isEatenCooked;
+
     public function __construct()
     {
         $this->name = "fern";
@@ -39,5 +44,11 @@ class Fern
         $this->rainfallMax = $this->rainfallMin + rand(0, 2);
         $this->temperatureMin = rand(1, 4);
         $this->temperatureMax = $this->temperatureMin + rand(0, 2);
+        
+        // second wave properties
+        $this->poisonStrength = rand(0, 10);
+        $this->foodStrength = rand(0, 10);
+        $this->isEatenRaw = rand(0,30) === 1 ? true : false;
+        $this->isEatenCooked = rand(0,30) === 1 ? true : false;
     }
 }
