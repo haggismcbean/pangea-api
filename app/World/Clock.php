@@ -44,6 +44,21 @@ class Clock
         }
     }
 
+    public static function isWithinDays($currentDay, $comparisonDay, $maxDifference) {
+        if ($comparisonDay < 0) {
+            $comparisonDay = $comparisonDay + 40;
+        }
+
+        if ($comparisionDay > 39) {
+            $comparisonDay = $comparisonDay % 40;
+        }
+
+        $minDay = Clock::getSubtractedDay($currentDay, ($maxDifference / 2));
+        $maxDay = ($comparisonDay + ($maxDifference / 2)) % 40;
+
+        return Clock::isBetween($currentDay, $minDay, $maxDay);
+    }
+
     public static function getLocationTimezone($location)
     {
         $totalXCords = Location::orderBy('id', 'DESC')->first()->x_coord;
@@ -138,5 +153,15 @@ class Clock
 
     private static function isBetween($number, $min, $max) {
         return $number >= $min && $number <= $max;
+    }
+
+    private static function getSubtractedDay($currentDay, $numberOfDaysToSubtract) {
+        $newDay = $currentDay - $numberOfDaysToSubtract;
+
+        if ($newDay < 0) {
+            return $newDay + 40;
+        }
+
+        return $newDay;
     }
 }

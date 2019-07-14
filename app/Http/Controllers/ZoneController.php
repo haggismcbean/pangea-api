@@ -44,10 +44,15 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 
-        $plants = $zone->location()->first()->plants()->get();
+        $location = $zone->location()->first();
+
+        $plants = $location->plants()->get();
+
+        // So we only want to show the bits of plants that are in season.
 
         foreach ($plants as $plant) {
             $plant->customName = $plant->getName($character);
+            $plant->setOutOfSeasonProperties();
         }
 
         return response()->json($plants, 200);
