@@ -57,41 +57,38 @@ class Plant extends Model
 
         // fruit
         if (!Clock::isWithinDays($day, $this->peakFruitDay, 8)) {
-            $this->fruitAppearance = null;
             
             if (Clock::isWithinDays($day, $this->peakFruitDay - 4, 4)) {
                 $this->fruitAppearance = $this->fruitAppearance . "They look under ripe";
-            }
-
-            if (Clock::isWithinDays($day, $this->peakFruitDay + 4, 4)) {
+            } else if (Clock::isWithinDays($day, $this->peakFruitDay + 4, 4)) {
                 $this->fruitAppearance = $this->fruitAppearance . "They look over ripe";
+            } else {
+                $this->fruitAppearance = null;
             }
         }
 
 
         // flowers
         if (!Clock::isWithinDays($day, $this->peakFlowerDay, 8)) {
-            $this->flowerAppearance = null;
             
             if (Clock::isWithinDays($day, $this->peakFlowerDay - 4, 4)) {
                 $this->flowerAppearance = $this->flowerAppearance . "They look under developed";
-            }
-
-            if (Clock::isWithinDays($day, $this->peakFlowerDay + 4, 4)) {
+            } else if (Clock::isWithinDays($day, $this->peakFlowerDay + 4, 4)) {
                 $this->flowerAppearance = $this->flowerAppearance . "They are withering slightly";
+            } else {
+                $this->flowerAppearance = null;
             }
         }
 
         // seeds
         if (!Clock::isWithinDays($day, $this->peakSeedDay, 8)) {
-            $this->seedAppearance = null;
             
             if (Clock::isWithinDays($day, $this->peakSeedDay - 4, 4)) {
                 $this->seedAppearance = $this->seedAppearance . "They look under developed";
-            }
-
-            if (Clock::isWithinDays($day, $this->peakSeedDay + 4, 4)) {
+            } else if (Clock::isWithinDays($day, $this->peakSeedDay + 4, 4)) {
                 $this->seedAppearance = $this->seedAppearance . "They are withering slightly";
+            } else {
+                $this->seedAppearance = null;
             }
         }
 

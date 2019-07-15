@@ -49,7 +49,7 @@ class Clock
             $comparisonDay = $comparisonDay + 40;
         }
 
-        if ($comparisionDay > 39) {
+        if ($comparisonDay > 39) {
             $comparisonDay = $comparisonDay % 40;
         }
 
