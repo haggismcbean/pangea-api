@@ -50,6 +50,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::post('plant/name', 'PlantController@name');
 });
 
+// eating
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('character/eat', 'CharacterController@eat');
+});
+
 // travelling and location
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::get('zone/{zone}/borders', 'ZoneController@getBorderingZones');

@@ -21,6 +21,7 @@ use App\Http\Controllers\CraftingController;
 use App\Http\Controllers\HuntController;
 
 use App\Names\DeathFactory;
+use App\Names\EatingFactory;
 
 class CharacterController extends Controller
 {
@@ -150,8 +151,9 @@ class CharacterController extends Controller
 
         // is it food?
         // TODO - eat meat?!
-        if (!$item->item_type != 'plant') {
-            $message = EatingFactory::getInedibleMessage($item);
+        if ($item->item_type != 'plant') {
+            $message = EatingFactory::getInedibleMessage($item->name, $character);
+            broadcast(new MessageSent($character, $message));
             return;
         }
 
@@ -161,7 +163,7 @@ class CharacterController extends Controller
             $character->health = $character->health - $damage;
 
             if ($character->health > 0) {
-                $message = EatingFactory::getPoisonousMessage($item);
+                $message = EatingFactory::getPoisonousMessage($item->name, $character);
                 broadcast(new MessageSent($character, $message));
             } else {
                 $character->is_dead = true;
@@ -181,8 +183,10 @@ class CharacterController extends Controller
             $character->hunger = 100;
         }
 
+        // TODO - reduce inventory count
+
         $character->save();
-        $message = EatingFactory::getEdibleMessage($item);
+        $message = EatingFactory::getEdibleMessage($item->name, $character);
         broadcast(new MessageSent($character, $message));
     }
 

@@ -8,9 +8,9 @@ use Carbon\Carbon;
 class EatingFactory extends Model
 {
 
-    public static function getInedibleMessage($itemName)
+    public static function getInedibleMessage($itemName, $character)
     {
-        $message = "You hold the " . $itmeName . " up to your mouth and will yourself to chew it down, but you cannot bring yourself to do it";
+        $message = "You hold the " . $itemName . " up to your mouth and will yourself to chew it down, but you cannot bring yourself to do it";
 
         return $character->messages()->create([
             'message' => $message,
@@ -20,9 +20,9 @@ class EatingFactory extends Model
         ]);
     }
 
-    public static function getPoisonousMessage($itemName)
+    public static function getPoisonousMessage($itemName, $character)
     {
-        $message = "You tentatively take a nibble from a corner of the " . $itmeName . ". Almost immediately you start throwing up. After a few minutes you begin to feel better again.";
+        $message = "You tentatively take a nibble from a corner of the " . $itemName . ". Almost immediately you start throwing up. After a few minutes you begin to feel better again.";
 
         return $character->messages()->create([
             'message' => $message,
@@ -32,7 +32,7 @@ class EatingFactory extends Model
         ]);
     }
 
-    public static function getEdibleMessage($itemName)
+    public static function getEdibleMessage($itemName, $character)
     {
         $message = "You eat " . $itemName . ".";
 

@@ -85,6 +85,7 @@ class PlantController extends Controller
     }
 
     private function getPlant($plantId, $plantPiece, $location) {
+        // TODO - make this an activity
         $plant = ItemController::getItem('plant', $plantId, $plantPiece);
 
         if (!$plant) {
