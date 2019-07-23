@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\LocationPlant;
 use App\Location;
 use App\Plant;
 
@@ -13,6 +14,8 @@ class LocationPlantTableSeeder extends Seeder
      */
     public function run()
     {
+        LocationPlant::truncate();
+
     	$locations = Location::where('biome', '!=', 'Ocean')->get();
     	$count = 0;
 
