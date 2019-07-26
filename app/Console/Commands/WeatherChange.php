@@ -53,8 +53,13 @@ class WeatherChange extends Command
                 return;
             }
 
+            // TODO - randomize 
             $temperature = Clock::getTemperature($location);
             $rainfall = Clock::getRainfall($location);
+
+            $location->current_temperature = $temperature;
+            $location->current_rainfall = $rainfall;
+            $location->save();
 
             $weatherMessage = WeatherFactory::getMessage($temperature, $rainfall);
 

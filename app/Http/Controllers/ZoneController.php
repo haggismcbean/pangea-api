@@ -11,6 +11,7 @@ use App\Zone;
 
 use App\Http\Controllers\LocationController;
 
+use App\Names\WeatherFactory;
 use App\Factories\BiomeFactory;
 
 class ZoneController extends Controller
@@ -82,6 +83,12 @@ class ZoneController extends Controller
         if (!$currentCharacter) {
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
+
+        $location = $zone->location()->first();
+
+        $zone->weather = WeatherFactory::getMessage($location->current_temperature, $location->current_temperature);
+        $zone->current_temperature = $location->current_temperature;
+        $zone->current_rainfall = $location->current_temperature;
 
         return response()->json($zone, 200);
 
