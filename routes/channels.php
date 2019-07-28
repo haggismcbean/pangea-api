@@ -11,10 +11,18 @@
 |
 */
 
+// TODO - remove this one!
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
 Broadcast::channel('chat.{id}', function ($character, $message) {
-    return true;
+	// return $character->id == (int) $id;
+	return true;
+});
+
+Broadcast::channel('zone.{id}', function ($character, $message) {
+	// if ($character->zone_id == (int) $id) {
+    		return ['id' => $character->id, 'name' => $character->name];
+	// }
 });
