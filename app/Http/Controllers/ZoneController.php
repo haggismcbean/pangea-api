@@ -89,6 +89,7 @@ class ZoneController extends Controller
         $zone->weather = WeatherFactory::getMessage($location->current_temperature, $location->current_temperature);
         $zone->current_temperature = $location->current_temperature;
         $zone->current_rainfall = $location->current_temperature;
+        $zone->characters = $zone->characters()->get();
 
         return response()->json($zone, 200);
 

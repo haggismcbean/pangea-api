@@ -16,13 +16,16 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('chat.{id}', function ($character, $message) {
-	// return $character->id == (int) $id;
-	return true;
+Broadcast::channel('chat.{id}', function ($user, $id) {
+	$character = $user->characters()->first();
+
+	return $character->id == (int) $id;
 });
 
-Broadcast::channel('zone.{id}', function ($character, $message) {
-	// if ($character->zone_id == (int) $id) {
-    		return ['id' => $character->id, 'name' => $character->name];
-	// }
+Broadcast::channel('zone.{id}', function ($user, $id) {
+	$character = $user->characters()->first();
+
+	if ($character->zone_id == (int) $id) {
+		return ['id' => $character->id, 'name' => $character->name];
+	}
 });
