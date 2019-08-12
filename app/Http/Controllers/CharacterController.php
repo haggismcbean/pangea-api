@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Character;
+use App\Zone;
 use App\Item;
 use App\Message;
 use App\Events\MessageSent;
@@ -79,6 +80,7 @@ class CharacterController extends Controller
 
         // TODO - spawn stuff/embark stuff
         $character->zone_id = 1;
+        $character->location_id = Zone::find(1)->location_id;
 
         $character->save();
         return response()->json($character, 201);

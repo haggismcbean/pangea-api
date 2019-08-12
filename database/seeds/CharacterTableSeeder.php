@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Character;
+use App\Zone;
 use App\Factories\CharacterFactory;
 
 class CharacterTableSeeder extends Seeder

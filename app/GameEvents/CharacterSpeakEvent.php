@@ -12,13 +12,13 @@ class CharacterSpeakEvent
         // okay so first, we find all the characters in the same location as this one!
         $locationId = $sourceCharacter->location_id;
 
-        $character = Location::find($locationId)->characters()->where('id', $targetCharacter->id)->get();
+        $character = Location::find($locationId)->characters()->where('id', $targetCharacter->id)->first();
 
         $message = $character->messages()->create([
             'message' => $message,
             'source_type' => 'character',
-            'source_name' => $activeCharacter->name,
-            'source_id' => $activeCharacter->id,
+            'source_name' => $sourceCharacter->name,
+            'source_id' => $sourceCharacter->id,
         ]);
 
         if ($character->id !== $sourceCharacter->id) {
