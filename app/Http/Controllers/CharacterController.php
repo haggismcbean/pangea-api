@@ -120,6 +120,27 @@ class CharacterController extends Controller
         return ItemOwnerController::moveItemFromTo($character, $zone, 'zone', $itemId, $itemQuantity);
     }
 
+    public function give(Request $request) {
+        $user = Auth::user();
+
+        $itemId = $request->input('itemId');
+        $itemQuantity = $request->input('itemQuantity');
+        $characterId = $request->input('characterId');
+
+        if ($itemQuantity < 0 || !$this->isInteger($itemQuantity)) {
+            return response()->json("Must be a positive whole number", 400);
+        }
+
+        $character = $user->characters()->first();
+        $targetCharacter = Character::find($characterId);
+
+        if ($character->zone_id != $targetCharacter->zone_id) {
+            return response()->json("You cannot give things to someone in a different zone", 400);
+        }
+
+        return ItemOwnerController::moveItemFromTo($character, $targetCharacter, 'character', $itemId, $itemQuantity);
+    }
+
     public function getCraftables() {
         $user = Auth::user();
         $character = $user->characters()->first();

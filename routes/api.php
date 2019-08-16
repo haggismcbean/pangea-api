@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 	Route::put('character/put_down', 'CharacterController@putDown');
 	Route::get('zone/{zone}/inventory', 'ZoneController@inventory');
 	Route::put('zone/pick_up', 'ZoneController@pickUp');
+	Route::put('character/give', 'CharacterController@give');
 });
 
 // crafting
