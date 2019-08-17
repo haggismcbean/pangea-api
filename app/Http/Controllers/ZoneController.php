@@ -142,6 +142,7 @@ class ZoneController extends Controller
 
             if ($recipe) {
                 $activity->item = $recipe->item()->first();
+                $activity->requiredIngredients = $recipe->ingredients()->get();
             }
 
             foreach ($activity->ingredients as $key => $ingredient) {

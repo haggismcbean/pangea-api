@@ -63,8 +63,8 @@ class CraftingController extends Controller
         // TODO - check if recipe requires any machines that are in current zone!
 
         // TODO - automatically add any ingredients the user is already carrying (which are added to the request)
-
-        $activity = ActivityController::createActivity($character, 'crafting', $recipe);
+        $activityController = new ActivityController;
+        $activity = $activityController->createActivity($character, 'crafting', $recipe);
 
         return $activity;
     }

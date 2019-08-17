@@ -50,7 +50,7 @@ class ActivityController extends Controller
 
         if ($recipe && $recipe->ingredients) {
             foreach ($recipe->ingredients as $key => $ingredient) {
-                ActivityItemController::createActivityItem($activity, $ingredient);
+                ActivityItemController::createActivityItem($this->activity, $ingredient);
             }
         }
 
