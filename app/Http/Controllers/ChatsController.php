@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\MessageSent;
 use App\GameEvents\SpeakEvent;
 use App\GameEvents\CharacterSpeakEvent;
+use App\GameEvents\PointEvent;
 
 class ChatsController extends Controller
 {
@@ -77,9 +78,32 @@ class ChatsController extends Controller
 
 		$message = $request->input('message');
 
+		if ($sourceCharacter->zone_id !== $targetCharacter->zone_id) {
+			return;
+		}
+
 		if ($targetCharacter && $sourceCharacter && $message) {
 			$speakEvent = new CharacterSpeakEvent();
 			$speakEvent->handle($sourceCharacter, $targetCharacter, $message);
+			
+			return ['status' => 'Message Sent!'];
+		} else {
+			return response()->json(['status' => 'Unauthorised'], 401);
+		}
+	}
+
+	public function pointAt(Request $request)
+	{
+		$sourceCharacter = $this->getCharacter($request->input('sourceId'));
+		$targetCharacter = $this->getCharacter($request->input('targetId'));
+
+		if ($sourceCharacter->zone_id !== $targetCharacter->zone_id) {
+			return;
+		}
+
+		if ($targetCharacter && $sourceCharacter) {
+			$pointEvent = new PointEvent();
+			$pointEvent->handle($sourceCharacter, $targetCharacter);
 			
 			return ['status' => 'Message Sent!'];
 		} else {
