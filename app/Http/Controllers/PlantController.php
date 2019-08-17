@@ -43,6 +43,7 @@ class PlantController extends Controller
 
         $plantId = $request->input('plantId');
         $plantPiece = $request->input('plantPiece');
+        $amount = $request->input('amount');
 
         $character = $user->characters()->first();
 
@@ -50,21 +51,21 @@ class PlantController extends Controller
 
         $locationPlant = $location->getLocationPlant($plantId);
 
-        if ($locationPlant && $locationPlant->count > 0) {
-            $this->removePlantFromLocation($locationPlant);
+        if ($locationPlant && $locationPlant->count > $amount) {
+            $this->removePlantFromLocation($locationPlant, $amount);
 
-            return $this->addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece);
+            return $this->addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece, $amount);
         } else {
-            return response()->json(['status' => 'No plants left'], 403);
+            return response()->json(['status' => 'Not enough plants left'], 403);
         }
     }
 
-    private function removePlantFromLocation($locationPlant) {
-        $locationPlant->count = $locationPlant->count - 1;
+    private function removePlantFromLocation($locationPlant, $amount) {
+        $locationPlant->count = $locationPlant->count - $amount;
         $locationPlant->save();
     }
 
-    private function addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece) {
+    private function addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece, $amount) {
         $plant = $this->getPlant($plantId, $plantPiece, $location);
 
         if (!$plant) {
@@ -78,7 +79,7 @@ class PlantController extends Controller
             $plantOwner = ItemOwnerController::getItemOwner('zone', $zone, $plant);
         }
 
-        $plantOwner->count = $plantOwner->count + 1;
+        $plantOwner->count = $plantOwner->count + $amount;
         $plantOwner->save();
 
         return response()->json($plantOwner, 200);
