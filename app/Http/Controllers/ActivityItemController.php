@@ -22,7 +22,7 @@ class ActivityItemController extends Controller
         $activityItem->quantity_added = 0;
 
         // TODO - be intelligent about this!
-        $activityItem->quantity_required = 1;
+        $activityItem->quantity_required = $ingredient->quantity_min;
 
         $activityItem->save();
 
