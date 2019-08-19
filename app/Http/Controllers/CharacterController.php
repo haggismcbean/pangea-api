@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Character;
 use App\Zone;
 use App\Item;
+use App\ItemOwner;
 use App\Message;
 use App\Events\MessageSent;
 
@@ -172,6 +173,15 @@ class CharacterController extends Controller
             ->where('item_id', $request->itemId)
             ->first();
 
+        $itemOwner = ItemOwner::where('owner_id', $character->id)
+            ->where('owner_type', 'character')
+            ->where('item_id', $item->id)
+            ->first();
+
+        if ($itemOwner->count == 0) {
+            return response()->json("You cannot eat something you do not have in your inventory", 400);
+        }
+
         // is it food?
         // TODO - eat meat?!
         if ($item->item_type != 'plant') {
@@ -179,6 +189,9 @@ class CharacterController extends Controller
             broadcast(new MessageSent($character, $message));
             return;
         }
+
+        $itemOwner->count = $itemOwner->count - 1;
+        $itemOwner->save();
 
         // TODO - poisons of varying strengths!
         if ($item->itemDetails()->isPoisonous) {
@@ -205,10 +218,8 @@ class CharacterController extends Controller
         if ($character->hunger > 100) {
             $character->hunger = 100;
         }
-
-        // TODO - reduce inventory count
-
         $character->save();
+
         $message = EatingFactory::getEdibleMessage($item->name, $character);
         broadcast(new MessageSent($character, $message));
     }

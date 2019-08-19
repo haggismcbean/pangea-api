@@ -14,5 +14,6 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('items', ItemController::class);
     $router->resource('recipe', MadeItemRecipeController::class);
+    $router->resource('made_items', MadeItemController::class);
 
 });

@@ -12,6 +12,11 @@ class MadeItemsTableSeeder extends Seeder
      *
      * @return void
      */
+
+
+    // categories:
+    // agriculture, wood, hunting, pottery, storage, transport, armour, mining, structures, textiles, writing
+
     public function run()
     {
         MadeItem::truncate();
@@ -19,6 +24,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 1,
             'name' => 'Shovel',
+            'category' => 'agriculture'
         ]);
 
         Item::create([
@@ -35,6 +41,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 2,
             'name' => 'Sickle',
+            'category' => 'agriculture'
         ]);
 
         Item::create([
@@ -51,6 +58,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 3,
             'name' => 'Hoe',
+            'category' => 'agriculture'
         ]);
 
         Item::create([
@@ -67,6 +75,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 4,
             'name' => 'Hand plough',
+            'category' => 'agriculture'
         ]);
 
         Item::create([
@@ -83,6 +92,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 5,
             'name' => 'Axe',
+            'category' => 'wood'
         ]);
 
         Item::create([
@@ -99,6 +109,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 6,
             'name' => 'Harpoon',
+            'category' => 'hunting'
         ]);
 
         Item::create([
@@ -115,6 +126,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 7,
             'name' => 'Spear',
+            'category' => 'hunting'
         ]);
 
         Item::create([
@@ -131,6 +143,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 8,
             'name' => 'Fishing net',
+            'category' => 'hunting'
         ]);
 
         Item::create([
@@ -147,6 +160,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 9,
             'name' => 'Bow',
+            'category' => 'hunting'
         ]);
 
         Item::create([
@@ -163,6 +177,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 10,
             'name' => 'Potter\'s wheel',
+            'category' => 'pottery'
         ]);
 
         Item::create([
@@ -179,6 +194,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 11,
             'name' => 'Clay Pot',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -195,6 +211,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 12,
             'name' => 'Box',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -211,6 +228,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 13,
             'name' => 'Bag',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -227,6 +245,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 14,
             'name' => 'Barrel',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -243,6 +262,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 15,
             'name' => 'Clay vase',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -259,6 +279,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 16,
             'name' => 'Basket',
+            'category' => 'storage'
         ]);
 
         Item::create([
@@ -275,6 +296,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 17,
             'name' => 'Wheelbarrow',
+            'category' => 'transport'
         ]);
 
         Item::create([
@@ -291,6 +313,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 18,
             'name' => 'Cart',
+            'category' => 'transport'
         ]);
 
         Item::create([
@@ -307,6 +330,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 19,
             'name' => 'Shield',
+            'category' => 'armour'
         ]);
 
         Item::create([
@@ -323,6 +347,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 20,
             'name' => 'Pick axe',
+            'category' => 'mining'
         ]);
 
         Item::create([
@@ -339,6 +364,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 21,
             'name' => 'Building',
+            'category' => 'structures'
         ]);
 
         Item::create([
@@ -355,6 +381,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 22,
             'name' => 'Lock',
+            'category' => 'structures'
         ]);
 
         Item::create([
@@ -371,6 +398,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 23,
             'name' => 'Ditch',
+            'category' => 'structures'
         ]);
 
         Item::create([
@@ -387,6 +415,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 24,
             'name' => 'Earthen Wall',
+            'category' => 'structures'
         ]);
 
         Item::create([
@@ -403,6 +432,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 25,
             'name' => 'Spindle',
+            'category' => 'textiles'
         ]);
 
         Item::create([
@@ -419,6 +449,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 26,
             'name' => 'Clay tablet',
+            'category' => 'writing'
         ]);
 
         Item::create([
@@ -435,6 +466,7 @@ class MadeItemsTableSeeder extends Seeder
         MadeItem::create([
             'id' => 27,
             'name' => 'String',
+            'category' => 'textiles'
         ]);
 
         Item::create([
