@@ -26,21 +26,13 @@ class ExplorationEvent
             return;
         }
 
-        if (!$isSuccess) {
-            $message = $character->messages()->create([
-                'message' => ExplorationMessageGenerator::getFailureMessage(),
-                'source_type' => 'character',
-                'source_name' => $character->name,
-                'source_id' => $character->id,
-            ]);
-        } else {
-            $message = $character->messages()->create([
-                'message' => ExplorationMessageGenerator::getSuccessMessage(),
-                'source_type' => 'character',
-                'source_name' => $character->name,
-                'source_id' => $character->id,
-            ]);
-        }
+        // If it's not a special case, the user didn't find anything so we give a failure message
+        $message = $character->messages()->create([
+            'message' => ExplorationMessageGenerator::getFailureMessage(),
+            'source_type' => 'character',
+            'source_name' => $character->name,
+            'source_id' => $character->id,
+        ]);
 
         broadcast(new MessageSent($character, $message));
     }

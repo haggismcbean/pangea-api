@@ -38,7 +38,7 @@ class ExplorationController extends Controller
 
     public static function completeActivity($character, $activity) {
         // discover a thing, and create a 'mine' for it.
-        $locationItemsCount = $character->location()->first()->locationItems()->count();
+        $locationItemsCount = $character->location()->first()->locationItems()->where('item_type', '!=', 'stone')->count();
 
         if (rand(0, 10) < 2 && $locationItemsCount > 0) {
             ExplorationController::completeCreateMine($character, $activity);
@@ -111,7 +111,7 @@ class ExplorationController extends Controller
 
     private static function getRandomLocationItem($locationItems) {
         // So we only get items that are minerals.
-        $locationItemsCount = $locationItems()->count();
+        $locationItemsCount = $locationItems->count();
         $locationItemIndex = rand(0, $locationItemsCount - 1);
 
         return $locationItems[$locationItemIndex];
@@ -120,16 +120,18 @@ class ExplorationController extends Controller
     public static function sendMessage($activity, $result, $character) {
         $event = new ExplorationEvent;
 
-        if ($activity->progress === 100) {
-            $event->handle($character, $character->zone()->first()->description);
+        if ($result === 'SUCCESS') {
+            $event->handle($character, $result);
+            return;
+        } if ($result === 'FAILURE') {
+            // TODO - handle death
+            $event->handle($character, $result);
             return;
         }
 
-        if ($result === 'SUCCESS') {
-            $event->handle($character, true);
-        } else {
-            // TODO - handle death
-            $event->handle($character, false);
+        if ($activity->progress === 100) {
+            $event->handle($character, $character->zone()->first()->description);
+            return;
         }
     }
 
