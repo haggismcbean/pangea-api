@@ -65,6 +65,12 @@ class CharacterController extends Controller
                 ->leftJoin('items', 'item_id', '=', 'items.id')
                 ->get();
 
+            foreach ($result as $item) {
+                if ($item->item_type == 'plant') {
+                    $item->customName = $item->item()->first()->itemDetails()->getName($character);
+                }
+            }
+
             return response()->json($result, 200);
         } else {
             return response()->json("Cannot get inventory of another character", 401);

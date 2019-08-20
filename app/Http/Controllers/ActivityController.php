@@ -112,7 +112,6 @@ class ActivityController extends Controller
 
         $result = $this->calculateResult($this->tools, $this->machines, $this->worker, $this->skill);
 
-        $this->sendMessage($result);
 
         if ($result === $this->SUCCESS) {
             $this->resolveActivity($this->worker, $this->activity);
@@ -122,15 +121,22 @@ class ActivityController extends Controller
             } else {
                 $this->loopWorkOnActivity();
             }
+
+            $this->sendMessage($result);
+            return;
         }
 
         if ($result === $this->FAILURE) {
             $this->loopWorkOnActivity();
+            $this->sendMessage($result);
+            return;
         }
 
         if ($result === $this->DEATH) {
             $this->cancelActivity();
+            $this->sendMessage($result);
             // TODO - kill the character :P
+            return;
         }
     }
 

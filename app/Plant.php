@@ -46,7 +46,7 @@ class Plant extends Model
             // so basically one quarter of the year we want to hide the leaves
             if (Clock::isWithinDays($day, $this->troughLeavesDay, 10)) {
                 // return winter leaves
-                $this->leafAppearance = "It has no leaves";
+                $this->leafAppearance = null;
             } else {
                 if (Clock::isWithinDays($day, $this->troughLeavesDay - 10, 10)) {
                     // return autumn leaves

@@ -18,7 +18,7 @@ use App\MineItem;
 
 use Carbon\Carbon;
 
-use App\GameEvents\FarmEvent;
+use App\GameEvents\ExplorationEvent;
 
 class ExplorationController extends Controller
 {
@@ -38,12 +38,14 @@ class ExplorationController extends Controller
 
     public static function completeActivity($character, $activity) {
         // discover a thing, and create a 'mine' for it.
+        $locationItemsCount = $character->location()->first()->locationItems()->count();
 
-        if (rand(0, 10) < 2) {
+        // if (rand(0, 10) < 2 && $locationItemsCount > 0) {
             ExplorationController::completeCreateMine($character, $activity);
-        } else {
-            ExplorationController::completeGoToWilderness($character, $activity);
-        }
+        // } else {
+            // User just goes to wilderness and doesn't find anything useful.
+            // ExplorationController::completeGoToWilderness($character, $activity);
+        // }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
@@ -56,10 +58,10 @@ class ExplorationController extends Controller
 
         // TODO - seed items per biome/location!
         // TODO - randomly choose one of the minerals
-        $locationItems = $character->location()->first()->locationItems()->where('item_type', 'mineral')->get();
-        $locationItemsCount = $character->location()->first()->locationItems()->where('item_type', 'mineral')->count();
+        $locationItems = $character->location()->first()->locationItems()->get();
+        $locationItemsCount = $character->location()->first()->locationItems()->count();
 
-        $locationItemIndex = rand(0, $locationItemsCount) - 1;
+        $locationItemIndex = rand(0, $locationItemsCount - 1);
 
         $locationItem = $locationItems[$locationItemIndex];
 
@@ -97,14 +99,19 @@ class ExplorationController extends Controller
         $locationItem->save();
     }
 
-    public static function sendMessage($activity, $result, $workers) {
-        $event = new FarmEvent;
+    public static function sendMessage($activity, $result, $character) {
+        $event = new ExplorationEvent;
+
+        if ($activity->progress === 100) {
+            $event->handle($character, $character->zone()->first()->description);
+            return;
+        }
 
         if ($result === 'SUCCESS') {
-            $event->handle($workers, true);
+            $event->handle($character, true);
         } else {
             // TODO - handle death
-            $event->handle($workers, false);
+            $event->handle($character, false);
         }
     }
 
