@@ -40,12 +40,12 @@ class ExplorationController extends Controller
         // discover a thing, and create a 'mine' for it.
         $locationItemsCount = $character->location()->first()->locationItems()->count();
 
-        // if (rand(0, 10) < 2 && $locationItemsCount > 0) {
+        if (rand(0, 10) < 2 && $locationItemsCount > 0) {
             ExplorationController::completeCreateMine($character, $activity);
-        // } else {
+        } else {
             // User just goes to wilderness and doesn't find anything useful.
             // ExplorationController::completeGoToWilderness($character, $activity);
-        // }
+        }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
@@ -58,12 +58,13 @@ class ExplorationController extends Controller
 
         // TODO - seed items per biome/location!
         // TODO - randomly choose one of the minerals
-        $locationItems = $character->location()->first()->locationItems()->get();
-        $locationItemsCount = $character->location()->first()->locationItems()->count();
+        $locationItems = $character->location()->first()->locationItems()->where('item_type', '!=', 'stone')->get();
 
-        $locationItemIndex = rand(0, $locationItemsCount - 1);
+        if (!$locationItems) {
+            return response()->json("No remaining resources in this location", 400);
+        }
 
-        $locationItem = $locationItems[$locationItemIndex];
+        $locationItem = ExplorationController::getRandomLocationItem($locationItems);
 
         $item = $locationItem->item();
 
@@ -91,12 +92,29 @@ class ExplorationController extends Controller
         $mineItem->mine_id = $mine->id;
         $mineItem->item_id = $locationItem->item_id;
         $mineItem->item_type = $locationItem->item_type;
-        $mineItem->quantity = rand(0, $locationItem->quantity);
+
+        if ($locationItem->quantity > 100) {
+            $mineItem->quantity = rand(100, $locationItem->quantity);
+        } else {
+            $mineItem->quantity = $locationItem->quantity;
+        }
 
         $locationItem->quantity = $locationItem->quantity - $mineItem->quantity;
 
+        if ($locationItem->quantitiy < 1) {
+            $locationItem->delete();
+        }
+
         $mineItem->save();
         $locationItem->save();
+    }
+
+    private static function getRandomLocationItem($locationItems) {
+        // So we only get items that are minerals.
+        $locationItemsCount = $locationItems()->count();
+        $locationItemIndex = rand(0, $locationItemsCount - 1);
+
+        return $locationItems[$locationItemIndex];
     }
 
     public static function sendMessage($activity, $result, $character) {
@@ -118,9 +136,14 @@ class ExplorationController extends Controller
     public function explore(Request $request) {
         $user = Auth::user();
         $character = $user->characters()->first();
+        $zone = $character->zone()->first();
 
-        if ($character->zone()->first()->parent_zone) {
+        if ($zone->parent_zone) {
             return response()->json("Can only explore in wilderness", 400);
+        }
+
+        if ($zone->size < 2) {
+            return response()->json("This location is fully explored", 400);
         }
 
         $recipe = (object)[];

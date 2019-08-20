@@ -96,7 +96,12 @@ class MiningController extends Controller
                 $mineItem->mine_id = $mine->id;
                 $mineItem->item_id = $locationItem->item_id;
                 $mineItem->item_type = $locationItem->item_type;
-                $mineItem->quantity = rand(0, $locationItem->quantity);
+
+                if ($locationItem->quantity > 100) {
+                    $mineItem->quantity = rand(100, $locationItem->quantity);
+                } else {
+                    $mineItem->quantity = $locationItem->quantity;
+                }
 
                 $locationItem->quantity = $locationItem->quantity - $mineItem->quantity;
 
