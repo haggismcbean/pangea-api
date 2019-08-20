@@ -116,7 +116,13 @@ class ExplorationController extends Controller
     }
 
     public function explore(Request $request) {
-        // TODO = requires a pick of some sort
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        if ($character->zone()->first()->parent_zone) {
+            return response()->json("Can only explore in wilderness", 400);
+        }
+
         $recipe = (object)[];
         $recipe->id = 0;
         $recipe->ingredients = [];
