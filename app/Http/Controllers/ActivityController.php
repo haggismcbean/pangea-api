@@ -26,6 +26,7 @@ class ActivityController extends Controller
 
     private $HUNTING_TYPE = 'hunting';
     private $CRAFTING_TYPE = 'crafting';
+    private $TRAVELLING_TYPE = 'travelling';
 
     public function __construct($activity = null){
         $this->activity = $activity;
@@ -35,7 +36,11 @@ class ActivityController extends Controller
         $this->activity = new Activity;
         $this->activity->character_id = $character->id;
         $this->activity->zone_id = $character->zone()->first()->id;
-        $this->activity->recipe_id = $recipe->id;
+
+        if ($recipe) {
+            $this->activity->recipe_id = $recipe->id;
+        }
+
         // $this->activity->recipe_type = ?? // Use this to work out which function to call (in the controller)
         $this->activity->progress = 0;
         $this->activity->type = $activityType; // Use this to work out which controller to call
@@ -221,6 +226,10 @@ class ActivityController extends Controller
         if ($this->activity->type === 'exploring') {
             ExplorationController::sendMessage($this->activity, $result, $this->worker);
         }
+
+        if ($this->activity->type === 'travelling') {
+            TravelController::sendMessage($this->activity, $result, $this->worker);
+        }
     }
 
     private function resolveActivity() {
@@ -242,6 +251,10 @@ class ActivityController extends Controller
 
         if ($this->activity->type === 'exploring') {
             ExplorationController::resolveActivity($this->activity, $this->worker);
+        }
+
+        if ($this->activity->type === 'travelling') {
+            TravelController::resolveActivity($this->activity, $this->worker);
         }
     }
 

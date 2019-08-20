@@ -12,7 +12,7 @@ class Message extends Model
      *
      * @var array
      */
-    protected $fillable = ['message', 'source_name', 'source_id', 'source_type'];
+    protected $fillable = ['message', 'source_name', 'source_id', 'source_type', 'change', 'change_id'];
 
     /**
      * A message belong to a user

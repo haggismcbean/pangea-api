@@ -205,15 +205,11 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Current zone could not be found'], 403);
         }
 
-        if (LabourCalculator::isTimeLockActive($character)) {
-            return response()->json(['status' => 'Time lock active'], 403);
-        }
-
         $borderingZones = $this->getBorderingZonesById($currentZone->id, $user);
 
         $targetZone = $this->getTargetZoneFromCurrentLocation($borderingZones, $newZoneId);
 
-        if (!$targetZone) {
+        if (!$targetZone && isset($borderingZones)) {
             $targetZone = $this->getTargetZoneFromNeighbouringLocation($borderingZones, $newZoneId);
         }
 
@@ -221,17 +217,9 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Target zone could not be found'], 403);
         }
 
-        $timeLock = LabourCalculator::calculateTimeLock('travel.land', $character);
-
-        $character->zone_id = $targetZone->id;
-        $character->location_id = $targetZone->location_id;
-        $character->time_lock = $timeLock;
-        $character->save();
-
-        $response = (object) [
-            'timeLock' => $timeLock,
-            'targetZone' => $targetZone
-        ];
+        //todo: make travelling an activity.
+        $travelController = new TravelController;
+        $response = $travelController->changeZones($targetZone);
 
         return response()->json($response, 200);
     }
@@ -255,7 +243,7 @@ class ZoneController extends Controller
     private function getTargetZoneFromCurrentLocation($borderingZones, $newZoneId) {
         if ($borderingZones->siblingZones) {
             foreach($borderingZones->siblingZones as $borderingZone) {
-                if ($newZoneId == $borderingZone->id) {
+                if ($borderingZone && $newZoneId == $borderingZone->id) {
                     return $borderingZone;
                 }
             }
@@ -269,7 +257,7 @@ class ZoneController extends Controller
             }
         }
 
-        if ($borderingZones->parentZone) {
+        if (isset($borderingZones->parentZone)) {
             if ($newZoneId == $borderingZones->parentZone->id) {
                 return $borderingZones->parentZone;
             }
@@ -279,7 +267,7 @@ class ZoneController extends Controller
     private function getTargetZoneFromNeighbouringLocation($borderingZones, $newZoneId) {
         $borderZoneCardinals = array("north", "east", "south", "west");
         foreach($borderZoneCardinals as $cardinal) {
-            if ($borderingZones->borderZones->$cardinal && $newZoneId == $borderingZones->borderZones->$cardinal->id) {
+            if (isset($borderingZones->borderZones) && $borderingZones->borderZones->$cardinal && $newZoneId == $borderingZones->borderZones->$cardinal->id) {
                 return $borderingZones->borderZones->$cardinal;
             }
         }
