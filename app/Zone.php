@@ -41,4 +41,18 @@ class Zone extends Model
     public function mine() {
       return $this->hasOne(Mine::class);
     }
+
+    public function names() {
+        return $this->hasMany('App\ZoneName');
+    }
+
+    public function getName($character) {
+        $zoneName = $this->names()
+            ->where('character_id', $character->id)
+            ->first();
+
+        if ($zoneName) {
+            return $zoneName->zone_name;
+        }
+    }
 }

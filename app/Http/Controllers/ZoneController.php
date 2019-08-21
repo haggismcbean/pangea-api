@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\LabourCalculator\LabourCalculator;
 
 use App\Zone;
+use App\ZoneName;
+
+use App\World\Clock;
 
 use App\Http\Controllers\LocationController;
 
@@ -87,9 +90,11 @@ class ZoneController extends Controller
         $location = $zone->location()->first();
 
         $zone->weather = WeatherFactory::getMessage($location->current_temperature, $location->current_temperature);
+        $zone->season = Clock::getSeason();
         $zone->current_temperature = $location->current_temperature;
         $zone->current_rainfall = $location->current_temperature;
         $zone->characters = $zone->characters()->get();
+        $zone->customName = $zone->getName($currentCharacter);
 
         return response()->json($zone, 200);
 
@@ -164,14 +169,28 @@ class ZoneController extends Controller
     private function getBorderingZonesById($zoneId, $user) {
         $currentZone = $user->characters()->where('zone_id', $zoneId)->first()->zone()->first();
 
+        $character = $user->characters()->first();
+
         if (!$currentZone) {
             return response()->json(['status' => 'Zone could not be found'], 403);
         }
 
         if ($currentZone->parent_zone > 0) {
             $parentZone = Zone::find($currentZone->parent_zone);
+            $parentZone->customName = $parentZone->getName($character);
+
             $siblingZones = Zone::where('parent_zone', $currentZone->parent_zone)->get();
             $childZones = Zone::where('parent_zone', $currentZone->id)->get();
+
+            foreach ($siblingZones as $zone) {
+                if (isset($zone)) {
+                    $zone->customName = $zone->getName($character);
+                }
+            }
+
+            foreach ($childZones as $zone) {
+                $zone->customName = $zone->getName($character);
+            }
 
             $newZones = (object) [
                 'parentZone' => $parentZone,
@@ -183,6 +202,16 @@ class ZoneController extends Controller
         } else {
             $siblingZones = LocationController::getBorderingZones($currentZone->location_id);
             $childZones = Zone::where('parent_zone', $currentZone->id)->get();
+
+            foreach ($siblingZones as $zone) {
+                if (isset($zone)) {
+                    $zone->customName = $zone->getName($character);
+                }
+            }
+
+            foreach ($childZones as $zone) {
+                $zone->customName = $zone->getName($character);
+            }
 
             $newZones = (object) [
                 'siblingZones' => $siblingZones,
@@ -279,5 +308,22 @@ class ZoneController extends Controller
         }
 
         return true;
+    }
+
+    public function name(Request $request) {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $zoneId = $request->input('zoneId');
+        $newName = $request->input('name');
+
+        $zoneName = new ZoneName;
+
+        $zoneName->zone_name = $newName;
+        $zoneName->zone_id = $zoneId;
+        $zoneName->character_id = $character->id;
+
+        $zoneName->save();
+        return $zoneName;
     }
 }
