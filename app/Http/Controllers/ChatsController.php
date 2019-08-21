@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\MessageSent;
 use App\GameEvents\SpeakEvent;
 use App\GameEvents\CharacterSpeakEvent;
+use App\GameEvents\GroupSpeakEvent;
 use App\GameEvents\PointEvent;
 
 class ChatsController extends Controller
@@ -85,6 +86,28 @@ class ChatsController extends Controller
 		if ($targetCharacter && $sourceCharacter && $message) {
 			$speakEvent = new CharacterSpeakEvent();
 			$speakEvent->handle($sourceCharacter, $targetCharacter, $message);
+			
+			return ['status' => 'Message Sent!'];
+		} else {
+			return response()->json(['status' => 'Unauthorised'], 401);
+		}
+	}
+
+	/**
+	 * Persist message to database
+	 *
+	 * @param  Request $request
+	 * @return Response
+	 */
+	public function sendGroupMessage(Request $request)
+	{
+		$character = $this->getCharacter($request->input('sourceId'));
+
+		$message = $request->input('message');
+
+		if ($character && $message) {
+			$speakEvent = new GroupSpeakEvent();
+			$speakEvent->handle($character, $message);
 			
 			return ['status' => 'Message Sent!'];
 		} else {

@@ -65,6 +65,11 @@ class Character extends Model
         return $this->belongsTo('App\Location');
     }
 
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
+
     public function items() {
         return $this->belongsToMany('App\Item', 'item_owner', 'owner_id', 'item_id')
             ->where('owner_type', 'character');

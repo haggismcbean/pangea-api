@@ -11,14 +11,16 @@ use App\WorldGenerator\ExplorationMessageGenerator;
 
 class ExplorationEvent
 {
-    public function handle($character, $isSuccess) {
+    public function handle($character, $description, $changeType, $changeId) {
         // Special case where we need to send description of mine to the event
-        if ($isSuccess !== 'SUCCESS' && $isSuccess !== 'FAILURE' && $isSuccess !== 'DEATH') {
+        if ($description !== 'SUCCESS' && $description !== 'FAILURE' && $description !== 'DEATH') {
             $message = $character->messages()->create([
-                'message' => "You wander through the wilderness. Before long you stumble across something. " . $isSuccess,
+                'message' => "You wander through the wilderness. Before long you stumble across something. " . $description,
                 'source_type' => 'character',
                 'source_name' => $character->name,
                 'source_id' => $character->id,
+                'change' => $changeType,
+                'change_id' => $changeId
             ]);
 
             broadcast(new MessageSent($character, $message));

@@ -49,6 +49,7 @@ class TravelController extends Controller
         $activity = $activityController->createActivity($character, "travelling", null, $zone->id, 'zone');
 
         $character->activity_id = $activity->id;
+        $character->group_id = null;
         $character->save();
 
         $activityController->workOnActivity();

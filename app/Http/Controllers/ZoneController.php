@@ -93,7 +93,11 @@ class ZoneController extends Controller
         $zone->season = Clock::getSeason();
         $zone->current_temperature = $location->current_temperature;
         $zone->current_rainfall = $location->current_temperature;
-        $zone->characters = $zone->characters()->get();
+
+        if ($zone->parent_id) {
+            $zone->characters = $zone->characters()->get();
+        }
+
         $zone->customName = $zone->getName($currentCharacter);
 
         return response()->json($zone, 200);

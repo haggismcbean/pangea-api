@@ -29,3 +29,11 @@ Broadcast::channel('zone.{id}', function ($user, $id) {
 		return ['id' => $character->id, 'name' => $character->name];
 	}
 });
+
+Broadcast::channel('group.{id}', function ($user, $id) {
+	$character = $user->characters()->first();
+
+	if ($character->group_id == (int) $id) {
+		return ['id' => $character->id, 'name' => $character->name];
+	}
+});

@@ -14,6 +14,7 @@ use App\MadeItem;
 use App\MadeItemRecipe;
 use App\Plant;
 use App\Mine;
+use App\Group;
 use App\MineItem;
 
 use Carbon\Carbon;
@@ -40,12 +41,13 @@ class ExplorationController extends Controller
         // discover a thing, and create a 'mine' for it.
         $locationItemsCount = $character->location()->first()->locationItems()->where('item_type', '!=', 'stone')->count();
 
-        if (rand(0, 10) < 2 && $locationItemsCount > 0) {
-            ExplorationController::completeCreateMine($character, $activity);
-        } else {
-            // User just goes to wilderness and doesn't find anything useful.
-            // ExplorationController::completeGoToWilderness($character, $activity);
-        }
+        $randomNumber = rand(0, 10);
+
+        // if ($randomNumber < 2 && $locationItemsCount > 0) {
+            // ExplorationController::completeCreateMine($character, $activity);
+        // } else if ($randomNumber < 4) {
+            ExplorationController::completeFindPerson($character, $activity);
+        // }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
@@ -54,6 +56,9 @@ class ExplorationController extends Controller
     }
 
     public static function completeCreateMine($character, $activity) {
+        $activity->output_type = 'zone';
+        $activity->save();
+
         $zone = $character->zone()->first();
 
         // TODO - seed items per biome/location!
@@ -109,6 +114,31 @@ class ExplorationController extends Controller
         $locationItem->save();
     }
 
+    public static function completeFindPerson($character, $activity) {
+        $activity->output_type = 'group';
+        $activity->save();
+
+        $personCount = $character->zone()->first()->characters()->where('id', '!=', $character->id)->count();
+        $people = $character->zone()->first()->characters()->where('id', '!=', $character->id)->get();
+
+        $randomPerson = $people[rand(0, $personCount - 1)];
+
+        if (!$randomPerson->group_id) {
+            $group = new Group;
+            $group->save();
+
+            $randomPerson->group_id = $group->id;
+            $randomPerson->save();
+        } else {
+            $group = $randomPerson->group()->first();
+        }
+
+        $character->group_id = $group->id;
+        $character->save();
+
+        // TODO - we need to broadcast to the front end (to both users) to join the group!
+    }
+
     private static function getRandomLocationItem($locationItems) {
         // So we only get items that are minerals.
         $locationItemsCount = $locationItems->count();
@@ -120,17 +150,24 @@ class ExplorationController extends Controller
     public static function sendMessage($activity, $result, $character) {
         $event = new ExplorationEvent;
 
-        if ($result === 'SUCCESS') {
-            $event->handle($character, $result);
-            return;
-        } if ($result === 'FAILURE') {
-            // TODO - handle death
-            $event->handle($character, $result);
+        // New zone discovered
+        if ($activity->progress === 100 && $activity->output_type === 'zone') {
+            $zone = $character->zone()->first();
+            $event->handle($character, $zone->description, 'zone', $zone->id);
             return;
         }
 
-        if ($activity->progress === 100) {
-            $event->handle($character, $character->zone()->first()->description);
+        // New group joined
+        if ($activity->progress === 100 && $activity->output_type === 'group') {
+            $group = $character->group()->first();
+            $groupCount = $group->characters()->count() - 1;
+            $event->handle($character, 'A group of size ' . $groupCount, 'group', $group->id);
+            return;
+        }
+
+        // Activity not finished message
+        if ($result === 'SUCCESS' || $result === 'FAILURE') {
+            $event->handle($character, $result, null, null);
             return;
         }
     }
