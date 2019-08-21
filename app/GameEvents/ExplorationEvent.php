@@ -21,9 +21,27 @@ class ExplorationEvent
                 'source_id' => $character->id,
                 'change' => $changeType,
                 'change_id' => $changeId
-            ]);
+            ]); 
 
             broadcast(new MessageSent($character, $message));
+
+            if ($changeType === 'group') {
+                // we have to sign everyone else up for the group too.
+                $groupCharacters = $character->group()->first()->characters()->where('id', '!=', $character->id)->get();
+
+                foreach ($groupCharacters as $groupCharacter) {
+                    $message = $character->messages()->create([
+                        'message' => "A new person suddenly appears.",
+                        'source_type' => 'group',
+                        'source_name' => $character->name,
+                        'source_id' => $character->id,
+                        'change' => $changeType,
+                        'change_id' => $changeId
+                    ]);
+
+                    broadcast(new MessageSent($groupCharacter, $message));
+                }
+            }
 
             return;
         }
