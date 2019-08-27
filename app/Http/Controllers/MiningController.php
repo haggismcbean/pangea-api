@@ -175,6 +175,15 @@ class MiningController extends Controller
     }
 
     public function create(Request $request) {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+        $currentZone = $character()->zone()->first();
+
+        // Check we are not in a mine or a farm:
+        if ($currentZone->mine()->first() || $currentZone->farm()->first()) {
+            return response()->json("Cannot create a mine or farm in a mine or farm", 400);
+        }
+
         // TODO = requires a pick of some sort
         $recipe = (object)[];
         $recipe->id = 0;

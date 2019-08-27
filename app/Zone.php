@@ -17,12 +17,12 @@ class Zone extends Model
      */
     public function location()
     {
-      return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class);
     }
 
     public function characters()
     {
-      return $this->hasMany(Character::class);
+        return $this->hasMany(Character::class);
     }
 
     public function items() {
@@ -35,11 +35,15 @@ class Zone extends Model
     }
 
     public function activities() {
-      return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class);
     }
 
     public function mine() {
-      return $this->hasOne(Mine::class);
+        return $this->hasOne(Mine::class);
+    }
+
+    public function farm() {
+        return $this->hasOne(Farm::class);
     }
 
     public function names() {
