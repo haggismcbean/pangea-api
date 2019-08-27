@@ -10,9 +10,13 @@ class PointEvent
 {
     public function handle($activeCharacter, $targetCharacter) {
         // okay so first, we find all the characters in the same location as this one!
-        $locationId = $activeCharacter->location_id;
+        $zoneId = $activeCharacter->zone_id;
 
-        $characters = Location::find($locationId)->characters()->get();
+        if (!$character->zone()->first()->parent_id) {
+            $characters = Group::find($character->group_id)->characters()->get();
+        } else {
+            $characters = Zone::find($zoneId)->characters()->get();
+        }
 
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([

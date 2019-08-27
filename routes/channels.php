@@ -24,8 +24,9 @@ Broadcast::channel('chat.{id}', function ($user, $id) {
 
 Broadcast::channel('zone.{id}', function ($user, $id) {
 	$character = $user->characters()->first();
+	$zone = $character->zone()->first();
 
-	if ($character->zone_id == (int) $id) {
+	if ($character->zone_id == (int) $id && $zone->parent_zone) {
 		return ['id' => $character->id, 'name' => $character->name];
 	}
 });

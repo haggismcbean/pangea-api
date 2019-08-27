@@ -96,8 +96,9 @@ class CharacterController extends Controller
     public function show() {
         // fetch all characters for this user
         $user = Auth::user();
+        $character = $user->characters()->first();
 
-        return Character::where('user_id', $user->id)->withTrashed()->get();
+        return Character::where('zone_id', $character->zone_id)->withTrashed()->get();
     }
 
     public function attack(Character $character) {
@@ -253,5 +254,11 @@ class CharacterController extends Controller
         }
 
         return $messages;
+    }
+
+    public function lastMessage(Character $character) {
+        return $character->messages()
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 }
