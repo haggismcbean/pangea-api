@@ -43,11 +43,13 @@ class ExplorationController extends Controller
 
         $randomNumber = rand(0, 10);
 
-        // if ($randomNumber < 2 && $locationItemsCount > 0) {
-            // ExplorationController::completeCreateMine($character, $activity);
-        // } else if ($randomNumber < 4) {
+        if ($randomNumber < 2 && $locationItemsCount > 0) {
+            ExplorationController::completeCreateMine($character, $activity);
+        } else if ($randomNumber < 4) {
             ExplorationController::completeFindPerson($character, $activity);
-        // }
+        } else if ($randomNumber < 6) {
+            ExplorationController::completeFindExistingZone($character, $activity);
+        }
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
@@ -135,8 +137,24 @@ class ExplorationController extends Controller
 
         $character->group_id = $group->id;
         $character->save();
+    }
 
-        // TODO - we need to broadcast to the front end (to both users) to join the group!
+    public static function completeFindExistingZone($character, $activity) {
+        $activity->output_type = 'zone';
+        $activity->save();
+
+        $zoneId = $character->zone()->first()->id;
+        $user = $character->user()->first();
+
+        $zoneController = new ZoneController();
+        $borderingZones = $zoneController->getBorderingZonesById($zoneId, $user);
+
+        $zoneCount = sizeof($borderingZones->childZones);
+
+        $randomZone = $borderingZones->childZones[rand(0, $zoneCount - 1)];
+
+        $character->zone_id = $randomZone->id;
+        $character->save();
     }
 
     private static function getRandomLocationItem($locationItems) {

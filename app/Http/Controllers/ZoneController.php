@@ -170,7 +170,7 @@ class ZoneController extends Controller
         return response()->json($newZones, 200);
     }
 
-    private function getBorderingZonesById($zoneId, $user) {
+    public function getBorderingZonesById($zoneId, $user) {
         $currentZone = $user->characters()->where('zone_id', $zoneId)->first()->zone()->first();
 
         $character = $user->characters()->first();
