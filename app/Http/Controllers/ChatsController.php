@@ -56,6 +56,10 @@ class ChatsController extends Controller
 
 		$message = $request->input('message');
 
+		if (!$character->zone()->first()->parent_id) {
+			return response()->json(['status' => 'Cannot send global messages in wilderness'], 401);
+		}
+
 		if ($character && $message) {
 			$speakEvent = new SpeakEvent();
 			$speakEvent->handle($character, $message);

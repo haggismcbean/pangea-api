@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(ItemUsesTableSeeder::class);
 
-        $this->call(LocationItemsTableSeeder::class);
+        // $this->call(LocationItemsTableSeeder::class);
 
     }
 }

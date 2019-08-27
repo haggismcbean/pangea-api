@@ -25,6 +25,7 @@ class TravelController extends Controller
 
         $character->activity_id = null;
         $character->zone_id = $activity->output_id;
+        $character->group_id = null;
         $character->save();
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\GameEvents;
 
+use App\Group;
 use App\Character;
 use App\Location;
 use App\Events\MessageSent;
@@ -15,7 +16,7 @@ class GroupSpeakEvent
         $characters = Group::find($groupId)->characters()->get();
 
         foreach ($characters as $nearbyCharacter) {
-            $message = $nearbyCharacter->messages()->create([
+            $newMessage = $nearbyCharacter->messages()->create([
                 'message' => $message,
                 'source_type' => 'character',
                 'source_name' => $activeCharacter->name,
@@ -23,7 +24,7 @@ class GroupSpeakEvent
             ]);
 
             if ($nearbyCharacter->id !== $activeCharacter->id) {
-                broadcast(new MessageSent($nearbyCharacter, $message));
+                broadcast(new MessageSent($nearbyCharacter, $newMessage));
             }
         }
     }
