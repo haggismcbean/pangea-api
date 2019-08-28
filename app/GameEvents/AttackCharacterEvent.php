@@ -25,5 +25,29 @@ class AttackCharacterEvent
             'source_id' => $attacker->id,
         ]);
         broadcast(new MessageSent($attacker, $message));
+
+        $zone = $attacker->zone()->first();
+
+        if ($zone->parent_id) {
+            $observers = $attacker->zone()->first()->characters()
+                ->where('id', '!=', $attacker->id)
+                ->where('id', '!=', $defender->id)
+                ->get();
+        } else {
+            // wilderness
+            $observers = $attacker->group()->first()->characters()
+                ->where('id', '!=', $attacker->id)
+                ->where('id', '!=', $defender->id)
+                ->get();
+
+            foreach ($observers as $observer) {
+                $message = $observer->messages()->create([
+                    'message' => $attacker->name . ' attacked ' . $defender->name,
+                    'source_type' => 'character',
+                    'source_name' => $attacker->name,
+                    'source_id' => $attacker->id,
+                ]);
+            }
+        }
     }
 }
