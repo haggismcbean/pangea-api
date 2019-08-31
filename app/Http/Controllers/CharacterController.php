@@ -98,6 +98,11 @@ class CharacterController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
+        // TODO - proper embark experience with screen where you create a character!
+        if (!$character) {
+            return $this->create();
+        }
+
         return Character::where('zone_id', $character->zone_id)->withTrashed()->get();
     }
 
