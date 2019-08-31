@@ -15,7 +15,8 @@ use App\MadeItem;
 use App\MadeItemRecipe;
 
 use App\Jobs\Travel;
-use App\GameEvents\TravelEvent;
+use App\GameEvents\ArriveEvent;
+use App\GameEvents\LeaveEvent;
 
 class TravelController extends Controller
 {
@@ -30,7 +31,7 @@ class TravelController extends Controller
     }
 
     public static function sendMessage($activity, $result, $workers) {
-        $event = new TravelEvent;
+        $event = new ArriveEvent;
 
         if ($result === 'SUCCESS') {
             $event->handle($workers, true);
@@ -44,16 +45,22 @@ class TravelController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
+        $leavingZoneId = $character->zone_id;
+
         $activityController = new ActivityController;
         $activityController->worker = $character;
 
         $activity = $activityController->createActivity($character, "travelling", null, $zone->id, 'zone');
 
+        $character->zone_id = 0;
         $character->activity_id = $activity->id;
         $character->group_id = null;
         $character->save();
 
         $activityController->workOnActivity();
+
+        $event = new LeaveEvent;
+        $event->handle($character, $leavingZoneId, $activity->id);
 
         return response()->json($activity, 200);
     }

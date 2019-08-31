@@ -250,7 +250,6 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Target zone could not be found'], 403);
         }
 
-        //todo: make travelling an activity.
         $travelController = new TravelController;
         $response = $travelController->changeZones($targetZone);
 

@@ -9,7 +9,6 @@ use App\Events\MessageSent;
 class CharacterSpeakEvent
 {
     public function handle($sourceCharacter, $targetCharacter, $message) {
-        // okay so first, we find all the characters in the same location as this one!
         $locationId = $sourceCharacter->location_id;
 
         $character = Location::find($locationId)->characters()->where('id', $targetCharacter->id)->first();

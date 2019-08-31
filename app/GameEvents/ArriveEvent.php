@@ -9,7 +9,7 @@ use App\Events\MessageSent;
 
 use App\WorldGenerator\TravelMessageGenerator;
 
-class TravelEvent
+class ArriveEvent
 {
     public function handle($character, $isSuccess) {
         if (!$isSuccess) {
@@ -33,5 +33,22 @@ class TravelEvent
         }
 
         broadcast(new MessageSent($character, $message));
+
+        // notify people in new zone
+        $newZone = $character->zone()->first();
+        if ($newZone->parent_zone) {
+            $neighbours = $newZone->characters()->get();
+
+            foreach ($neighbours as $neighbour) {
+                if ($neighbour->id != $character->id) {
+                    $message = $character->messages()->create([
+                        'message' => $character->name . ' has arrived',
+                        'source_type' => 'character',
+                        'source_name' => $character->name,
+                        'source_id' => $character->id
+                    ]);
+                }
+            }
+        }
     }
 }

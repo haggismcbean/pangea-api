@@ -93,8 +93,21 @@ class CharacterController extends Controller
         return response()->json($character, 201);
     }
 
+    public function get() {
+        // fetch all characters for this USER
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        // TODO - proper embark experience with screen where you create a character!
+        if (!$character) {
+            return $this->create();
+        }
+
+        return Character::where('user_id', $user->id)->withTrashed()->get();
+    }
+
     public function show() {
-        // fetch all characters for this user
+        // fetch all characters for this ZONE
         $user = Auth::user();
         $character = $user->characters()->first();
 

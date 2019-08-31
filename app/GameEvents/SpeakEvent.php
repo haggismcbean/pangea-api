@@ -3,16 +3,16 @@
 namespace App\GameEvents;
 
 use App\Character;
-use App\Location;
+use App\Zone;
 use App\Events\MessageSent;
 
 class SpeakEvent
 {
     public function handle($activeCharacter, $message) {
         // okay so first, we find all the characters in the same location as this one!
-        $locationId = $activeCharacter->location_id;
+        $locationId = $activeCharacter->zone_id;
 
-        $characters = Location::find($locationId)->characters()->get();
+        $characters = Zone::find($locationId)->characters()->get();
 
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([
