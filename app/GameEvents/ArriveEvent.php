@@ -47,6 +47,8 @@ class ArriveEvent
                         'source_name' => $character->name,
                         'source_id' => $character->id
                     ]);
+
+                    broadcast(new MessageSent($neighbour, $message));
                 }
             }
         }

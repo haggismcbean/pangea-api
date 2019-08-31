@@ -45,7 +45,7 @@ class TravelController extends Controller
         $user = Auth::user();
         $character = $user->characters()->first();
 
-        $leavingZoneId = $character->zone_id;
+        $leavingZone = $character->zone()->first();
 
         $activityController = new ActivityController;
         $activityController->worker = $character;
@@ -59,8 +59,10 @@ class TravelController extends Controller
 
         $activityController->workOnActivity();
 
-        $event = new LeaveEvent;
-        $event->handle($character, $leavingZoneId, $activity->id);
+        if ($leavingZone->parent_zone) {
+            $event = new LeaveEvent;
+            $event->handle($character, $leavingZone->id, $activity->id);
+        }
 
         return response()->json($activity, 200);
     }
