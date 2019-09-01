@@ -50,6 +50,10 @@ class Zone extends Model
         return $this->hasMany('App\ZoneName');
     }
 
+    public function finders() {
+        return $this->hasMany('App\ZoneFinder');
+    }
+
     public function getName($character) {
         $zoneName = $this->names()
             ->where('character_id', $character->id)
@@ -58,5 +62,9 @@ class Zone extends Model
         if ($zoneName) {
             return $zoneName->zone_name;
         }
+    }
+
+    public function isFoundBy($character) {
+        return null !== $this->finders()->where('character_id', $character->id)->first();
     }
 }

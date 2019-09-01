@@ -16,6 +16,7 @@ use App\Plant;
 use App\Mine;
 use App\Group;
 use App\MineItem;
+use App\ZoneFinder;
 
 use Carbon\Carbon;
 
@@ -151,7 +152,16 @@ class ExplorationController extends Controller
 
         $zoneCount = sizeof($borderingZones->childZones);
 
+        if ($zoneCount === 0) {
+            return;
+        }
+
         $randomZone = $borderingZones->childZones[rand(0, $zoneCount - 1)];
+
+        $zoneFinder = new ZoneFinder;
+        $zoneFinder->zone_id = $randomZone->id;
+        $zoneFinder->character_id = $character->id;
+        $zoneFinder->save();
 
         $character->zone_id = $randomZone->id;
         $character->save();

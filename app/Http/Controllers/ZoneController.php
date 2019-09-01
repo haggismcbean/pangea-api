@@ -9,6 +9,7 @@ use App\LabourCalculator\LabourCalculator;
 
 use App\Zone;
 use App\ZoneName;
+use App\ZoneFinder;
 
 use App\World\Clock;
 
@@ -35,6 +36,15 @@ class ZoneController extends Controller
         $zone->description = $zoneDescription;
 
         $zone->save();
+
+        if (!$parentZone->parent_zone) {
+            // this zone will be hidden in lists from everyone except those who 'know' it
+            // so we have to assign the creator as a knower of the zone.
+            $zoneFinder = new ZoneFinder;
+            $zoneFinder->character_id = $character->id;
+            $zoneFinder->zone_id = $zone->id;
+            $zoneFinder->save();
+        }
 
         return $zone;
     }
@@ -169,7 +179,7 @@ class ZoneController extends Controller
     public function getBorderingZones(Zone $zone) {
         $user = Auth::user();
 
-        $newZones = $this->getBorderingZonesById($zone->id, $user);
+        $newZones = $this->getKnownBorderingZonesById($zone->id, $user);
 
         return response()->json($newZones, 200);
     }
@@ -208,6 +218,7 @@ class ZoneController extends Controller
 
             return $newZones;
         } else {
+            // From wilderness, we only show zones that the character concerned knows about.
             $siblingZones = LocationController::getBorderingZones($currentZone->location_id);
             $childZones = Zone::where('parent_zone', $currentZone->id)->get();
 
@@ -217,7 +228,7 @@ class ZoneController extends Controller
                 }
             }
 
-            foreach ($childZones as $zone) {
+            foreach ($childZones as $key => $zone) {
                 $zone->customName = $zone->getName($character);
             }
 
@@ -228,6 +239,28 @@ class ZoneController extends Controller
 
             return $newZones;
         }
+    }
+
+    public function getKnownBorderingZonesById($zoneId, $user) {
+        $currentZone = $user->characters()->where('zone_id', $zoneId)->first()->zone()->first();
+        $character = $user->characters()->first();
+
+        $borderingZones = $this->getBorderingZonesById($zoneId, $user);
+
+        if (!$currentZone->parent_zone) {
+            $actualChildZones = array();
+
+            foreach ($borderingZones->childZones as $key => $zone) {
+                if ($zone->isFoundBy($character)) {
+                    $zone->customName = $zone->getName($character);
+                    array_push($actualChildZones, $zone);
+                }
+            }
+
+            $borderingZones->childZones = $actualChildZones;
+        }
+
+        return $borderingZones;
     }
 
     public function changeZones(Zone $zone) {
@@ -242,7 +275,7 @@ class ZoneController extends Controller
             return response()->json(['status' => 'Current zone could not be found'], 403);
         }
 
-        $borderingZones = $this->getBorderingZonesById($currentZone->id, $user);
+        $borderingZones = $this->getKnownBorderingZonesById($currentZone->id, $user);
 
         $targetZone = $this->getTargetZoneFromCurrentLocation($borderingZones, $newZoneId);
 
