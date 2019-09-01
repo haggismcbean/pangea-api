@@ -72,7 +72,6 @@ class CharacterFactory extends Model
         $this->eyebrow_type = CharacterAppearanceTraits::getRandomTrait("eyebrowsTypes", $this);
 
         $message = new MessageFormer();
-        $message->addSentence("{{name}} is a {{gender}}", $this);
         $message->addSentence("{{pronoun}} is " . $this->age . " years old", $this);
         $message->addSentence("{{pronoun}} is " . $this->height . "cm tall", $this);
         $message->addSentence("{{pronoun}} weighs " . $this->weight . "kg", $this);

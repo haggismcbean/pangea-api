@@ -16,7 +16,7 @@ class CharacterSpeakEvent
         $message = $character->messages()->create([
             'message' => $message,
             'source_type' => 'character',
-            'source_name' => $sourceCharacter->name,
+            'source_name' => $sourceCharacter->getName($character),
             'source_id' => $sourceCharacter->id,
         ]);
 

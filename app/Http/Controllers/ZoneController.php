@@ -94,8 +94,12 @@ class ZoneController extends Controller
         $zone->current_temperature = $location->current_temperature;
         $zone->current_rainfall = $location->current_temperature;
 
-        if ($zone->parent_id) {
+        if ($zone->parent_zone) {
             $zone->characters = $zone->characters()->get();
+
+            foreach ($zone->characters as $character) {
+                $character->name = $character->getName($currentCharacter);
+            }
         }
 
         $zone->customName = $zone->getName($currentCharacter);
@@ -320,7 +324,13 @@ class ZoneController extends Controller
         $zoneId = $request->input('zoneId');
         $newName = $request->input('name');
 
-        $zoneName = new ZoneName;
+        $zoneName = ZoneName::where('zone_id', $zoneId)
+            ->where('character_id', $character->id)
+            ->first();
+
+        if (!$characterName) {
+            $zoneName = new ZoneName;
+        }
 
         $zoneName->zone_name = $newName;
         $zoneName->zone_id = $zoneId;

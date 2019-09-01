@@ -27,7 +27,7 @@ Broadcast::channel('zone.{id}', function ($user, $id) {
 	$zone = $character->zone()->first();
 
 	if ($character->zone_id == (int) $id && $zone->parent_zone) {
-		return ['id' => $character->id, 'name' => $character->name];
+		return ['id' => $character->id];
 	}
 });
 
@@ -35,6 +35,6 @@ Broadcast::channel('group.{id}', function ($user, $id) {
 	$character = $user->characters()->first();
 
 	if ($character->group_id == (int) $id) {
-		return ['id' => $character->id, 'name' => $character->name];
+		return ['id' => $character->id];
 	}
 });

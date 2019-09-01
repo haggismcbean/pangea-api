@@ -8,7 +8,7 @@ use App\Events\MessageSent;
 
 class SpeakEvent
 {
-    public function handle($activeCharacter, $message) {
+    public function handle($activeCharacter, $speach) {
         // okay so first, we find all the characters in the same location as this one!
         $locationId = $activeCharacter->zone_id;
 
@@ -16,9 +16,9 @@ class SpeakEvent
 
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([
-                'message' => $message,
+                'message' => $speach,
                 'source_type' => 'character',
-                'source_name' => $activeCharacter->name,
+                'source_name' => $activeCharacter->getName($nearbyCharacter),
                 'source_id' => $activeCharacter->id,
             ]);
 

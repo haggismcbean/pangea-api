@@ -17,7 +17,7 @@ class ExplorationEvent
             $message = $character->messages()->create([
                 'message' => "You wander through the wilderness. Before long you stumble across something. " . $description,
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
                 'change' => $changeType,
                 'change_id' => $changeId
@@ -30,10 +30,10 @@ class ExplorationEvent
                 $groupCharacters = $character->group()->first()->characters()->where('id', '!=', $character->id)->get();
 
                 foreach ($groupCharacters as $groupCharacter) {
-                    $message = $character->messages()->create([
+                    $message = $groupCharacter->messages()->create([
                         'message' => "A new person suddenly appears.",
                         'source_type' => 'group',
-                        'source_name' => $character->name,
+                        'source_name' => $character->getName($groupCharacter),
                         'source_id' => $character->id,
                         'change' => $changeType,
                         'change_id' => $changeId
@@ -50,7 +50,7 @@ class ExplorationEvent
         $message = $character->messages()->create([
             'message' => ExplorationMessageGenerator::getFailureMessage(),
             'source_type' => 'character',
-            'source_name' => $character->name,
+            'source_name' => $character->getName($character),
             'source_id' => $character->id,
         ]);
 

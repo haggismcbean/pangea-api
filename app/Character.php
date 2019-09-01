@@ -115,4 +115,20 @@ class Character extends Model
 
         return $totalItems < $inventorySpace;
     }
+
+    public function names() {
+        return $this->hasMany('App\CharacterName', 'named_character_id', 'id');
+    }
+
+    public function getName($character) {
+        $characterName = $this->names()
+            ->where('character_id', $character->id)
+            ->first();
+
+        if ($characterName) {
+            return $characterName->custom_name;
+        } else {
+            return "Unknown";
+        }
+    }
 }

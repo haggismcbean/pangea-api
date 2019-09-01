@@ -16,7 +16,7 @@ class ArriveEvent
             $message = $character->messages()->create([
                 'message' => TravelMessageGenerator::getFailureMessage(),
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
                 'change' => 'zone',
                 'change_id' => $character->zone_id
@@ -25,7 +25,7 @@ class ArriveEvent
             $message = $character->messages()->create([
                 'message' => TravelMessageGenerator::getSuccessMessage($character->zone()->first()),
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
                 'change' => 'zone',
                 'change_id' => $character->zone_id
@@ -42,9 +42,9 @@ class ArriveEvent
             foreach ($neighbours as $neighbour) {
                 if ($neighbour->id != $character->id) {
                     $message = $character->messages()->create([
-                        'message' => $character->name . ' has arrived',
+                        'message' => $character->getName($neighbour) . ' has arrived',
                         'source_type' => 'character',
-                        'source_name' => $character->name,
+                        'source_name' => $character->getName($neighbour),
                         'source_id' => $character->id
                     ]);
 

@@ -24,9 +24,9 @@ class LeaveEvent
 
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([
-                'message' => $leavingCharacter->name . ' is leaving',
+                'message' => $leavingCharacter->getName($nearbyCharacter) . ' is leaving',
                 'source_type' => 'character',
-                'source_name' => $leavingCharacter->name,
+                'source_name' => $leavingCharacter->getName($nearbyCharacter),
                 'source_id' => $leavingCharacter->id,
                 'change' => 'zone',
                 'change_id' => $destinationId

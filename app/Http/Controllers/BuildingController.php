@@ -78,7 +78,7 @@ class BuildingController extends Controller
         $zone = $character->zone()->first();
 
         // if base zone doesn't have a zone, i guess we need to make one!
-        if (!$zone->parent_id) {
+        if (!$zone->parent_zone) {
             $zone = ZoneController::createZone($zone, "Clearing", "A small clearing");
             $zone->size = 2;
             $zone->save();

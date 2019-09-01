@@ -12,7 +12,7 @@ class PointEvent
         // okay so first, we find all the characters in the same location as this one!
         $zoneId = $activeCharacter->zone_id;
 
-        if (!$character->zone()->first()->parent_id) {
+        if (!$character->zone()->first()->parent_zone) {
             $characters = Group::find($character->group_id)->characters()->get();
         } else {
             $characters = Zone::find($zoneId)->characters()->get();
@@ -20,9 +20,9 @@ class PointEvent
 
         foreach ($characters as $nearbyCharacter) {
             $message = $nearbyCharacter->messages()->create([
-                'message' => $activeCharacter->name . ' points at ' . $targetCharacter->name,
+                'message' => $activeCharacter->getName($nearbyCharacter) . ' points at ' . $targetCharacter->getName($nearbyCharacter),
                 'source_type' => 'character',
-                'source_name' => $activeCharacter->name,
+                'source_name' => $activeCharacter->getName($nearbyCharacter),
                 'source_id' => $activeCharacter->id,
             ]);
 

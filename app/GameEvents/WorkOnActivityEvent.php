@@ -14,14 +14,14 @@ class WorkOnActivityEvent
             $message = $character->messages()->create([
                 'message' => 'You finished activity ' . $activity->id,
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
             ]);
         } else {
             $message = $character->messages()->create([
                 'message' => 'You worked on activity ' . $activity->id,
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
             ]);
         }

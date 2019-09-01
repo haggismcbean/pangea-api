@@ -19,7 +19,7 @@ class GroupSpeakEvent
             $newMessage = $nearbyCharacter->messages()->create([
                 'message' => $message,
                 'source_type' => 'character',
-                'source_name' => $activeCharacter->name,
+                'source_name' => $activeCharacter->getName($nearbyCharacter),
                 'source_id' => $activeCharacter->id,
             ]);
 

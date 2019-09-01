@@ -14,6 +14,7 @@ use App\Events\MessageSent;
 use App\MadeItem;
 use App\MadeItemRecipe;
 use App\ItemUse;
+use App\CharacterName;
 
 use App\Jobs\AttackCharacter;
 use App\Jobs\WorkOnActivity;
@@ -90,6 +91,14 @@ class CharacterController extends Controller
         $character->location_id = Zone::find(1)->location_id;
 
         $character->save();
+
+        // Naming the character
+        $characterName = new CharacterName();
+        $characterName->custom_name = $character->name;
+        $characterName->named_character_id = $character->id;
+        $characterName->character_id = $character->id;
+        $characterName->save();
+
         return response()->json($character, 201);
     }
 
@@ -109,14 +118,27 @@ class CharacterController extends Controller
     public function show() {
         // fetch all characters for this ZONE
         $user = Auth::user();
-        $character = $user->characters()->first();
+        $activeCharacter = $user->characters()->first();
 
-        // TODO - proper embark experience with screen where you create a character!
-        if (!$character) {
-            return $this->create();
+        if (!$activeCharacter) {
+            return response()->json("No active character", 400);
         }
 
-        return Character::where('zone_id', $character->zone_id)->withTrashed()->get();
+        $zone = $activeCharacter->zone()->first();
+
+        if ($zone->parent_zone) {
+            $characters = Character::where('zone_id', $activeCharacter->zone_id)->get();
+        } else {
+            // wilderness
+            $characters = Character::where('group_id', $activeCharacter->group_id)->get();
+        }
+
+
+        foreach ($characters as $character) {
+            $character->name = $character->getName($activeCharacter);
+        }
+
+        return $characters;
     }
 
     public function attack(Character $character) {
@@ -278,5 +300,28 @@ class CharacterController extends Controller
         return $character->messages()
             ->orderBy('created_at', 'desc')
             ->first();
+    }
+
+    public function name(Request $request) {
+        $user = Auth::user();
+        $character = $user->characters()->first();
+
+        $namedCharacterId = $request->input('namedCharacterId');
+        $newName = $request->input('name');
+
+        $characterName = CharacterName::where('named_character_id', $namedCharacterId)
+            ->where('character_id', $character->id)
+            ->first();
+
+        if (!$characterName) {
+            $characterName = new CharacterName;
+        }
+
+        $characterName->custom_name = $newName;
+        $characterName->named_character_id = $namedCharacterId;
+        $characterName->character_id = $character->id;
+
+        $characterName->save();
+        return $characterName;
     }
 }

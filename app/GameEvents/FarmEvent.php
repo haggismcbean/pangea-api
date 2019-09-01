@@ -16,14 +16,14 @@ class FarmEvent
             $message = $character->messages()->create([
                 'message' => FarmMessageGenerator::getFailureMessage(),
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
             ]);
         } else {
             $message = $character->messages()->create([
                 'message' => FarmMessageGenerator::getSuccessMessage(),
                 'source_type' => 'character',
-                'source_name' => $character->name,
+                'source_name' => $character->getName($character),
                 'source_id' => $character->id,
             ]);
         }
