@@ -361,7 +361,7 @@ class ZoneController extends Controller
             ->where('character_id', $character->id)
             ->first();
 
-        if (!$characterName) {
+        if (!$zoneName) {
             $zoneName = new ZoneName;
         }
 
