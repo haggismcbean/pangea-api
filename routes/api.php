@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 Route::group(['middleware' => 'auth:api'], function() {
 	Route::put('plant/gather', 'PlantController@gather');
 	Route::post('plant/name', 'PlantController@name');
+	Route::post('plant/share', 'PlantController@share');
 });
 
 // eating

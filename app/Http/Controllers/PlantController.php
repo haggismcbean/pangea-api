@@ -28,13 +28,25 @@ class PlantController extends Controller
         $plantId = $request->input('plantId');
         $newName = $request->input('name');
 
-        $plantName = new PlantName;
+        return $this->namePlant($newName, $plantId, $character->id);
+    }
+
+    private function namePlant($newName, $plantId, $characterId) {
+
+        $plantName = PlantName::where('character_id', $characterId)
+            ->where('plant_id', $plantId)
+            ->first();
+
+        if (!$plantName) {
+            $plantName = new PlantName;
+
+            $plantName->plant_id = $plantId;
+            $plantName->character_id = $characterId;
+        }
 
         $plantName->plant_name = $newName;
-        $plantName->plant_id = $plantId;
-        $plantName->character_id = $character->id;
-
         $plantName->save();
+
         return $plantName;
     }
 
@@ -58,6 +70,18 @@ class PlantController extends Controller
         } else {
             return response()->json(['status' => 'Not enough plants left'], 403);
         }
+    }
+
+    public function share(Request $request) {
+        $user = Auth::user();
+        $activeCharacter = $user->characters()->first();
+
+        $plantId = $request->input('plantId');
+        $characterId = $request->input('characterId');
+
+        $newName = Plant::find($plantId)->getName($activeCharacter);
+
+        return $this->namePlant($newName, $plantId, $characterId);
     }
 
     private function removePlantFromLocation($locationPlant, $amount) {
