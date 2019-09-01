@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\LabourCalculator\LabourCalculator;
 
+use App\Character;
 use App\Zone;
 use App\ZoneName;
 use App\ZoneFinder;
@@ -343,7 +344,7 @@ class ZoneController extends Controller
     }
 
     private function isInteger($variable) {
-        if ( strval($variable) !== strval(intval($variable)) ) {
+        if (strval($variable) !== strval(intval($variable)) ) {
             return false;
         }
 
@@ -371,5 +372,42 @@ class ZoneController extends Controller
 
         $zoneName->save();
         return $zoneName;
+    }
+
+    public function share(Request $request) {
+        $user = Auth::user();
+        $sharingCharacter = $user->characters()->first();
+
+        $zone = Zone::find($request->input('zoneId'));
+        $character = Character::find($request->input('characterId'));
+
+        $zoneName = $zone->getName($sharingCharacter);
+        $newZoneName = $zone->names()->where('character_id', $sharingCharacter->id)->first();
+
+        // create zone name
+        if ($newZoneName) {
+            $zoneName = $zone->names()->where('character_id', $character->id)->first();
+            
+            if (!$zoneName) {
+                $zoneName = new ZoneName;
+                $zoneName->zone_id = $zone->id;
+                $zoneName->character_id = $character->id;
+            }
+
+            $zoneName->zone_name = $newZoneName->zone_name;
+            $zoneName->save();
+        }
+
+
+        // create zoneFinder
+        $newZoneFinder = $zone->finders()->where('character_id', $character->id)->first();
+
+        if (!$newZoneFinder) {
+            $newZoneFinder = new ZoneFinder;
+            $newZoneFinder->character_id = $character->id;
+            $newZoneFinder->zone_id = $zone->id;
+        }
+
+        $newZoneFinder->save();
     }
 }
