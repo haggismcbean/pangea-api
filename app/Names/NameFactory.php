@@ -19,9 +19,9 @@ class NameFactory extends Model
     public static function getRandomForename($gender)
     {
         if ($gender === "male") {
-            $forenames = json_decode(file_get_contents("/var/www/api.pangeana/app/Names/DataStores/MaleForenames.json"), true);
+            $forenames = json_decode(file_get_contents("/var/www/api.pangeana.com/app/Names/DataStores/MaleForenames.json"), true);
         } else {
-            $forenames = json_decode(file_get_contents("/var/www/api.pangeana/app/Names/DataStores/FemaleForenames.json"), true);
+            $forenames = json_decode(file_get_contents("/var/www/api.pangeana.com/app/Names/DataStores/FemaleForenames.json"), true);
         }
 
         $length = count($forenames) - 1;
