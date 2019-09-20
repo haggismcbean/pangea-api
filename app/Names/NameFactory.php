@@ -10,7 +10,7 @@ class NameFactory extends Model
 
     public static function getRandomSurname()
     {
-        $surnames = json_decode(file_get_contents("DataStores/Surnames.json"), true);
+        $surnames = json_decode(file_get_contents("/var/www/api.pangeana.com/app/Names/DataStores/Surnames.json"), true);
         $length = count($surnames) - 1;
         $randomIndex = rand(0, $length);
         return $surnames[$randomIndex];
