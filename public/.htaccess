@@ -20,7 +20,7 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
-SetEnvIf Origin "^http(s)?://(.+\.)?(local.pangea.com|pangea.com|localhost)(:[0-9]+)?$" origin_is=$0
+SetEnvIf Origin "^http(s)?://(.+\.)?(local.pangeana.com|pangeana.com|localhost)(:[0-9]+)?$" origin_is=$0
 Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
 Header always set Access-Control-Allow-Headers: "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 Header always set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
