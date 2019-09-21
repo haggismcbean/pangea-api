@@ -1,5 +1,5 @@
 {
-	"authHost": "http://local.pangea-api.com:8888",
+	"authHost": "http://api.pangeana.com",
 	"authEndpoint": "/broadcasting/auth",
 	"database": "redis",
 	"databaseConfig": {
@@ -19,7 +19,7 @@
 	"sslPassphrase": "",
 	"apiOriginAllow": {
 		"allowCors": true,
-		"allowOrigin": "http://local.pangea.com:8888/",
+		"allowOrigin": "http://api.pangeana.com",
 		"allowMethods": "PUT, GET, POST, DELETE, OPTIONS",
 		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 	}
