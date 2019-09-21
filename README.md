@@ -108,6 +108,7 @@ Run three servers for the web hooks to be working properly:
     crontab -e
 	* * * * * php /www/pangea-api/artisan schedule:run 1>> /dev/null 2>&1
 	
+Note we have install process manager and a shell script to run the socket.io server in the production server. So instead of number 2 above, run pm2 start socket.sh
 
 # If you Forget How to Query from Command Line:
 ```
