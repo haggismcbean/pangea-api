@@ -40,7 +40,7 @@ class ChatsController extends Controller
 		if ($character) {
 			return Message::where('character_id', $character->id)->orderBy('created_at', 'DESC')->paginate(15);
 		} else {
-			return response()->json(['status' => 'Unauthorised'], 401);
+			return response()->json(['message' => 'Unauthorised'], 401);
 		}
 	}
 
@@ -57,7 +57,7 @@ class ChatsController extends Controller
 		$message = $request->input('message');
 
 		if (!$character->zone()->first()->parent_zone) {
-			return response()->json(['status' => 'Cannot send global messages in wilderness'], 401);
+			return response()->json(['message' => 'Cannot send global messages in wilderness'], 401);
 		}
 
 		if ($character && $message) {
@@ -66,7 +66,7 @@ class ChatsController extends Controller
 			
 			return ['status' => 'Message Sent!'];
 		} else {
-			return response()->json(['status' => 'Unauthorised'], 401);
+			return response()->json(['message' => 'Unauthorised'], 401);
 		}
 	}
 
@@ -93,7 +93,7 @@ class ChatsController extends Controller
 			
 			return ['status' => 'Message Sent!'];
 		} else {
-			return response()->json(['status' => 'Unauthorised'], 401);
+			return response()->json(['message' => 'Unauthorised'], 401);
 		}
 	}
 
@@ -115,7 +115,7 @@ class ChatsController extends Controller
 			
 			return ['status' => 'Message Sent!'];
 		} else {
-			return response()->json(['status' => 'Unauthorised'], 401);
+			return response()->json(['message' => 'Unauthorised'], 401);
 		}
 	}
 
@@ -134,7 +134,7 @@ class ChatsController extends Controller
 			
 			return ['status' => 'Message Sent!'];
 		} else {
-			return response()->json(['status' => 'Unauthorised'], 401);
+			return response()->json(['message' => 'Unauthorised'], 401);
 		}
 	}
 

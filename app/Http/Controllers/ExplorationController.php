@@ -69,7 +69,7 @@ class ExplorationController extends Controller
         $locationItems = $character->location()->first()->locationItems()->where('item_type', '!=', 'stone')->get();
 
         if (!$locationItems) {
-            return response()->json("No remaining resources in this location", 400);
+            return response()->json(['message' => "No remaining resources in this location"], 400);
         }
 
         $locationItem = ExplorationController::getRandomLocationItem($locationItems);
@@ -206,11 +206,11 @@ class ExplorationController extends Controller
         $zone = $character->zone()->first();
 
         if ($zone->parent_zone) {
-            return response()->json("Can only explore in wilderness", 400);
+            return response()->json(['message' => "Can only explore in wilderness"], 400);
         }
 
         if ($zone->size < 2) {
-            return response()->json("This location is fully explored", 400);
+            return response()->json(['message' => "This location is fully explored"], 400);
         }
 
         $recipe = (object)[];

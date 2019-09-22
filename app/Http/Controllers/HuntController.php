@@ -71,7 +71,7 @@ class HuntController extends Controller
         $itemUse = ItemUse::where('activity', 'hunting')->where('item_id', $request->itemId)->first();
         
         if (!$itemUse) {
-            return response()->json("Can't hunt with that item", 400);
+            return response()->json(['message' => "Can't hunt with that item"], 400);
         }
 
         $activityController = new ActivityController;

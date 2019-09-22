@@ -56,7 +56,7 @@ class ZoneController extends Controller
         $character = $user->characters()->where('zone_id', $zone->id)->first();
 
         if (!$character) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         $location = $zone->location()->first();
@@ -79,7 +79,7 @@ class ZoneController extends Controller
         $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
 
         if (!$currentCharacter) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         $biomeDescription = new BiomeFactory();
@@ -95,7 +95,7 @@ class ZoneController extends Controller
         $currentCharacter = $user->characters()->where('zone_id', $zone->id)->first();
 
         if (!$currentCharacter) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         $location = $zone->location()->first();
@@ -125,7 +125,7 @@ class ZoneController extends Controller
         $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
 
         if (!$currentZone) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         $characters = $zone->characters()->get();
@@ -139,7 +139,7 @@ class ZoneController extends Controller
         $currentZone = $user->characters()->where('zone_id', $zone->id)->first();
 
         if (!$currentZone) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         $inventory = $zone->itemOwners()
@@ -155,7 +155,7 @@ class ZoneController extends Controller
         $currentZone = $user->characters()->first()->zone()->first();
 
         if ($currentZone != $zone) {
-            return response()->json(['status' => 'Can\'t get activities of zone character is not in'], 403);
+            return response()->json(['message' => 'Can\'t get activities of zone character is not in'], 403);
         }
 
         $activities = $currentZone->activities()->get();
@@ -191,7 +191,7 @@ class ZoneController extends Controller
         $character = $user->characters()->first();
 
         if (!$currentZone) {
-            return response()->json(['status' => 'Zone could not be found'], 403);
+            return response()->json(['message' => 'Zone could not be found'], 403);
         }
 
         if ($currentZone->parent_zone > 0) {
@@ -273,7 +273,7 @@ class ZoneController extends Controller
         $currentZone = $character->zone()->first();
 
         if (!$currentZone) {
-            return response()->json(['status' => 'Current zone could not be found'], 403);
+            return response()->json(['message' => 'Current zone could not be found'], 403);
         }
 
         $borderingZones = $this->getKnownBorderingZonesById($currentZone->id, $user);
@@ -285,7 +285,7 @@ class ZoneController extends Controller
         }
 
         if (!$targetZone) {
-            return response()->json(['status' => 'Target zone could not be found'], 403);
+            return response()->json(['message' => 'Target zone could not be found'], 403);
         }
 
         $travelController = new TravelController;
@@ -301,7 +301,7 @@ class ZoneController extends Controller
         $itemQuantity = $request->input('itemQuantity');
 
         if ($itemQuantity < 0 || !$this->isInteger($itemQuantity)) {
-            return response()->json("Must be a positive whole number", 400);
+            return response()->json(['message' => "Must be a positive whole number"], 400);
         }
 
         $character = $user->characters()->first();

@@ -95,7 +95,7 @@ class CraftingController extends Controller
         $activity = $character->zone()->first()->activities()->find($activityId);
 
         if (!$activity) {
-            return response()->json("Activity not found", 400);
+            return response()->json(['message' => "Activity not found"], 400);
         }
 
         $character->activity_id = $activity->id;
