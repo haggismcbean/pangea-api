@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -112,6 +113,13 @@ class ChatsController extends Controller
 		if ($character && $message) {
 			$speakEvent = new GroupSpeakEvent();
 			$speakEvent->handle($character, $message);
+
+			$groupId = $character->group_id;
+	        $group = Group::find($groupId);
+
+	        if (!$group) {
+	            return response()->json(['message' => 'You are not in a group'], 400);
+	        }
 			
 			return ['status' => 'Message Sent!'];
 		} else {

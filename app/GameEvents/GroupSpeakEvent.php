@@ -13,7 +13,13 @@ class GroupSpeakEvent
         // okay so first, we find all the characters in the same location as this one!
         $groupId = $activeCharacter->group_id;
 
-        $characters = Group::find($groupId)->characters()->get();
+        $group = Group::find($groupId);
+
+        if (!$group) {
+            return;
+        }
+
+        $characters = $group->characters()->get();
 
         foreach ($characters as $nearbyCharacter) {
             $newMessage = $nearbyCharacter->messages()->create([
