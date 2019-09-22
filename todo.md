@@ -5,10 +5,8 @@ BEFORE MAKING NEW FEATURES, LETS STOP TO FIX THINGS
 Broken things audit:
 
  - Give item - only shown myself in the list of people to give it to...
- - Attack character didn't seem to do any damage? (possible bug) - looks like it does damage but the api call doesn't return updated value?!
  - Work on activity throws error
  - undefined has woken up (should be 'unknown')... Also notification is shown twice somehow :)
- - talk to group throws error Call to a member function characters() on null"
 
 
 SOMEHOW RELATED TO INCOGNITO MODE??
