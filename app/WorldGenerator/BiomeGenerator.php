@@ -26,6 +26,10 @@ class BiomeGenerator extends Model
         $this->coldestTemperature = $averageTemperature - $this->getSeasonVariation($averageTemperature);
 
         $this->plantDensity = $this->getPlantDensity($averageRainfall, $averageTemperature);
+
+        $this->averageHunterGathererYield = $this->getYield('hunter', $averageRainfall, $averageTemperature);
+        $this->averagePastoralYield = $this->getYield('pastoral', $averageRainfall, $averageTemperature);
+        $this->averageArableYield = $this->getYield('arable', $averageRainfall, $averageTemperature);
     }
 
     private function getSeasonVariation($averageValue) {
@@ -115,6 +119,215 @@ class BiomeGenerator extends Model
                 }
 
                 return 10;
+        }
+    }
+
+    private function getYield($type, $averageRainfall, $averageTemperature) {
+        switch ($averageTemperature) {
+            case 0:
+                switch($type) {
+                    case 'hunter': 
+                        return 1;
+                    case 'pastoral': 
+                        return 0;
+                    case 'arable':
+                        return 0;
+                }
+            case 1:
+                switch($type) {
+                    case 'hunter': 
+                        return 1;
+                    case 'pastoral': 
+                        return 6;
+                    case 'arable':
+                        return 0;
+                }
+
+            case 2:
+                switch($averageRainfall) {
+                    case 0:
+                    case 1:
+                        switch($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 6;
+                            case 'arable':
+                                return 0;
+                        }
+                    case 2:
+                    case 3:
+                    case 4:
+                        switch($type) {
+                            case 'hunter': 
+                                return 3;
+                            case 'pastoral': 
+                                return 9;
+                            case 'arable':
+                                return 2;
+                        }
+                }
+
+            case 3:
+                switch($averageRainfall) {
+                    case 0:
+                    case 1:
+                        switch($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 9;
+                            case 'arable':
+                                return 2;
+                        }
+                    case 2:
+                        switch ($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 9;
+                            case 'arable':
+                                return 3;
+
+                        }
+                    case 3:
+                    case 4:
+                    case 5:
+                        switch($type) {
+                            case 'hunter': 
+                                return 3;
+                            case 'pastoral': 
+                                return 9;
+                            case 'arable':
+                                return 50;
+                        }
+                }
+
+            case 4:
+                switch($averageRainfall) {
+                    case 0:
+                    case 1:
+                        switch($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 3;
+                            case 'arable':
+                                return 0;
+                        }
+                    case 2:
+                    case 3:
+                        switch ($type) {
+                            case 'hunter': 
+                                return 2;
+                            case 'pastoral': 
+                                return 15;
+                            case 'arable':
+                                return 35;
+
+                        }
+                    case 4:
+                    case 5:
+                    case 6:
+                        switch($type) {
+                            case 'hunter': 
+                                return 2;
+                            case 'pastoral': 
+                                return 15;
+                            case 'arable':
+                                return 50;
+                        }
+                }
+
+            case 5:
+                switch($averageRainfall) {
+                    case 0:
+                    case 1:
+                        switch($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 3;
+                            case 'arable':
+                                return 0;
+                        }
+                    case 2:
+                        switch ($type) {
+                            case 'hunter': 
+                                return 3;
+                            case 'pastoral': 
+                                return 12;
+                            case 'arable':
+                                return 7;
+
+                        }
+                    case 3:
+                    case 4:
+                        switch($type) {
+                            case 'hunter': 
+                                return 4;
+                            case 'pastoral': 
+                                return 6;
+                            case 'arable':
+                                return 35;
+                        }
+                    case 5:
+                    case 6:
+                    case 7:
+                        switch($type) {
+                            case 'hunter': 
+                                return 4;
+                            case 'pastoral': 
+                                return 6;
+                            case 'arable':
+                                return 15;
+                        }
+                }
+
+            case 6:
+                switch($averageRainfall) {
+                    case 0:
+                    case 1:
+                        switch($type) {
+                            case 'hunter': 
+                                return 1;
+                            case 'pastoral': 
+                                return 3;
+                            case 'arable':
+                                return 0;
+                        }
+                    case 2:
+                    case 3:
+                        switch ($type) {
+                            case 'hunter': 
+                                return 3;
+                            case 'pastoral': 
+                                return 12;
+                            case 'arable':
+                                return 7;
+
+                        }
+                    case 4:
+                        switch($type) {
+                            case 'hunter': 
+                                return 4;
+                            case 'pastoral': 
+                                return 6;
+                            case 'arable':
+                                return 35;
+                        }
+                    case 5:
+                    case 6:
+                    case 7:
+                        switch($type) {
+                            case 'hunter': 
+                                return 4;
+                            case 'pastoral': 
+                                return 6;
+                            case 'arable':
+                                return 15;
+                        }
+                }
         }
     }
 }

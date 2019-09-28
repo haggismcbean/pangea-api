@@ -41,6 +41,9 @@ class BiomeTableSeeder extends Seeder
                 'lowestRainfall' => $biome->lowestRainfall,
                 'coldestTemperature' =>  $biome->coldestTemperature,
                 'plantDensity' =>  $biome->plantDensity,
+                'averageHunterGathererYield' => $biome->averageHunterGathererYield,
+                'averagePastoralYield' => $biome->averagePastoralYield,
+                'averageArableYield' => $biome->averageArableYield
             ]);
         }
     }
