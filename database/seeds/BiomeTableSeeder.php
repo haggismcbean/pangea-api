@@ -22,10 +22,10 @@ class BiomeTableSeeder extends Seeder
             for ($averageTemperature=0; $averageTemperature < 7; $averageTemperature++) {
                 $name = Location::where('temperature', $averageTemperature)->where('rainfall', $averageRainfall)->where('biome', '!=', 'Ocean')->first();
                 if ($name) {
-                    $biome = new BiomeGenerator($name->biome, $averageTemperature, $averageRainfall);
+                    $biome = new BiomeGenerator($name->biome, $averageRainfall, $averageTemperature);
                     array_push($biomes, $biome);
 
-                    $biome = new BiomeGenerator('Ocean', $averageTemperature, $averageRainfall);
+                    $biome = new BiomeGenerator('Ocean', $averageRainfall, $averageTemperature);
                     array_push($biomes, $biome);
                 }
             }

@@ -7,6 +7,18 @@ Broken things audit:
  - Give item - only shown myself in the list of people to give it to...
  - Work on activity throws error
  - undefined has woken up (should be 'unknown')... Also notification is shown twice somehow :)
+ - the text enterer needs to be way fancier, or changed to be a normal input:
+ 	- handle special characters like 'tab'
+ 	- handle ctrl + backspace
+ 	- handle arrows
+ 	- handle ctrl + arrows
+ 	- handle ctrl + v
+ 	- handle things like click and drag
+ - animations (red on combat, etc)
+ - cancel the welcome messages when a user does something
+ - the five minute messages should be more randomised (messages AND timing)
+ 	- alternatively have a randomised one minute message that goes out to people who haven't had anything in a while sometimes.
+
 
 
 SOMEHOW RELATED TO INCOGNITO MODE??
