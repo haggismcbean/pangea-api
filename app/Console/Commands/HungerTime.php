@@ -53,7 +53,7 @@ class HungerTime extends Command
                 return;
             }
 
-            $character->hunger = $character->hunger - 1;
+            $character->hunger = $character->hunger - 20;
             $character->save();
 
             $message = $character->messages()->create([

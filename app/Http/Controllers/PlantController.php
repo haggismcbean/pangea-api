@@ -116,12 +116,13 @@ class PlantController extends Controller
         if (!$plant) {
             $descriptionKey = $plantPiece . 'Appearance';
             $description = $location->plants()->find($plantId)->$descriptionKey;
+            $efficiency = $location->plants()->find($plantId)->yieldPerItem;
 
             if (!$description) {
                 return;
             }
 
-            return ItemController::createNewItem($plantId, $plantPiece, $description, 'plant');
+            return ItemController::createNewItem($plantId, $plantPiece, $description, 'plant', $efficiency);
         } else {
             return $plant;
         }

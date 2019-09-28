@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Location;
 use App\Biome;
+use App\Plant;
 use App\WorldGenerator\World;
 
 class LocationTableSeeder extends Seeder
@@ -30,7 +31,12 @@ class LocationTableSeeder extends Seeder
                 'rainfall' => $location->rainfall,
                 'temperature' => $location->temperature,
                 'has_river' => $location->hasRiver,
-                'biome_id' => $biome->id
+                'biome_id' => $biome->id,
+                'yearly_animal_yield' => $biome->averageHunterGathererYield / 2,
+                'gathered_this_year' => 0,
+                'todays_remaining_animal_yield' => 0,
+                'peak_animal_day' => 25,
+                'trough_animal_day' => 5
             ]);
         }
     }

@@ -20,7 +20,7 @@ class ItemController extends Controller
         }
     }
 
-    public static function createNewItem($typeId, $name, $description, $itemType) {
+    public static function createNewItem($typeId, $name, $description, $itemType, $efficiency = null) {
         $item = new Item;
 
         $item->item_type = $itemType;
@@ -38,7 +38,16 @@ class ItemController extends Controller
             // leaf, fruit, seed
             $item->unit_weight = rand(8, 12);
             $item->unit_volume = rand(8, 12);
-            $item->efficiency = 1;
+
+            //efficiency for plants needs to be set to their yield gain when eaten.
+            //which is then multiplied by the yield->hunger converter to work out
+            //their hunger gain...
+            if ($efficiency) {
+                $item->efficiency = $efficiency;
+            } else {
+                $item->efficiency = 1;
+            }
+
             $item->rot_rate = 1;
         }
 

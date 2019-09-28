@@ -127,7 +127,7 @@ class BiomeGenerator extends Model
             case 0:
                 switch($type) {
                     case 'hunter': 
-                        return 1;
+                        return 100;
                     case 'pastoral': 
                         return 0;
                     case 'arable':
@@ -136,9 +136,9 @@ class BiomeGenerator extends Model
             case 1:
                 switch($type) {
                     case 'hunter': 
-                        return 1;
+                        return 100;
                     case 'pastoral': 
-                        return 6;
+                        return 600;
                     case 'arable':
                         return 0;
                 }
@@ -149,9 +149,9 @@ class BiomeGenerator extends Model
                     case 1:
                         switch($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 6;
+                                return 600;
                             case 'arable':
                                 return 0;
                         }
@@ -160,11 +160,11 @@ class BiomeGenerator extends Model
                     case 4:
                         switch($type) {
                             case 'hunter': 
-                                return 3;
+                                return 300;
                             case 'pastoral': 
-                                return 9;
+                                return 900;
                             case 'arable':
-                                return 2;
+                                return 200;
                         }
                 }
 
@@ -174,20 +174,20 @@ class BiomeGenerator extends Model
                     case 1:
                         switch($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 9;
+                                return 900;
                             case 'arable':
-                                return 2;
+                                return 200;
                         }
                     case 2:
                         switch ($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 9;
+                                return 900;
                             case 'arable':
-                                return 3;
+                                return 300;
 
                         }
                     case 3:
@@ -195,11 +195,11 @@ class BiomeGenerator extends Model
                     case 5:
                         switch($type) {
                             case 'hunter': 
-                                return 3;
+                                return 300;
                             case 'pastoral': 
-                                return 9;
+                                return 900;
                             case 'arable':
-                                return 50;
+                                return 5000;
                         }
                 }
 
@@ -209,9 +209,9 @@ class BiomeGenerator extends Model
                     case 1:
                         switch($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 3;
+                                return 300;
                             case 'arable':
                                 return 0;
                         }
@@ -219,11 +219,11 @@ class BiomeGenerator extends Model
                     case 3:
                         switch ($type) {
                             case 'hunter': 
-                                return 2;
+                                return 200;
                             case 'pastoral': 
-                                return 15;
+                                return 1500;
                             case 'arable':
-                                return 35;
+                                return 3500;
 
                         }
                     case 4:
@@ -231,11 +231,11 @@ class BiomeGenerator extends Model
                     case 6:
                         switch($type) {
                             case 'hunter': 
-                                return 2;
+                                return 200;
                             case 'pastoral': 
-                                return 15;
+                                return 1500;
                             case 'arable':
-                                return 50;
+                                return 5000;
                         }
                 }
 
@@ -245,42 +245,42 @@ class BiomeGenerator extends Model
                     case 1:
                         switch($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 3;
+                                return 300;
                             case 'arable':
                                 return 0;
                         }
                     case 2:
                         switch ($type) {
                             case 'hunter': 
-                                return 3;
+                                return 300;
                             case 'pastoral': 
-                                return 12;
+                                return 1200;
                             case 'arable':
-                                return 7;
+                                return 700;
 
                         }
                     case 3:
                     case 4:
                         switch($type) {
                             case 'hunter': 
-                                return 4;
+                                return 400;
                             case 'pastoral': 
-                                return 6;
+                                return 600;
                             case 'arable':
-                                return 35;
+                                return 3500;
                         }
                     case 5:
                     case 6:
                     case 7:
                         switch($type) {
                             case 'hunter': 
-                                return 4;
+                                return 400;
                             case 'pastoral': 
-                                return 6;
+                                return 600;
                             case 'arable':
-                                return 15;
+                                return 1500;
                         }
                 }
 
@@ -290,9 +290,9 @@ class BiomeGenerator extends Model
                     case 1:
                         switch($type) {
                             case 'hunter': 
-                                return 1;
+                                return 100;
                             case 'pastoral': 
-                                return 3;
+                                return 300;
                             case 'arable':
                                 return 0;
                         }
@@ -300,32 +300,32 @@ class BiomeGenerator extends Model
                     case 3:
                         switch ($type) {
                             case 'hunter': 
-                                return 3;
+                                return 300;
                             case 'pastoral': 
-                                return 12;
+                                return 1200;
                             case 'arable':
-                                return 7;
+                                return 700;
 
                         }
                     case 4:
                         switch($type) {
                             case 'hunter': 
-                                return 4;
+                                return 400;
                             case 'pastoral': 
-                                return 6;
+                                return 600;
                             case 'arable':
-                                return 35;
+                                return 3500;
                         }
                     case 5:
                     case 6:
                     case 7:
                         switch($type) {
                             case 'hunter': 
-                                return 4;
+                                return 400;
                             case 'pastoral': 
-                                return 6;
+                                return 600;
                             case 'arable':
-                                return 15;
+                                return 1500;
                         }
                 }
         }
