@@ -48,13 +48,13 @@ class ForgotPasswordController extends Controller
         $user = User::where('email', $request->input('email'))->first();
 
         if (!$user) {
-            return response()->json(['data' => 'User doesn\'t exist'], 400);
+            return response()->json(['message' => 'User doesn\'t exist'], 400);
         }
 
         $token = $this->broker()->createToken($user);
 
         Mail::to($user)->send(new ResetToken($token));
 
-        return response()->json(['data' => 'Email sent'], 200);
+        return response()->json(['message' => 'Email sent'], 200);
     }
 }

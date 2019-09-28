@@ -74,7 +74,7 @@ class CharacterController extends Controller
 
             return response()->json($result, 200);
         } else {
-            return response()->json("Cannot get inventory of another character", 401);
+            return response()->json(['message' => "Cannot get inventory of another character"], 401);
         }
     }
 
@@ -121,7 +121,7 @@ class CharacterController extends Controller
         $activeCharacter = $user->characters()->first();
 
         if (!$activeCharacter) {
-            return response()->json("No active character", 400);
+            return response()->json(['message' => "No active character"], 400);
         }
 
         $zone = $activeCharacter->zone()->first();
@@ -159,7 +159,7 @@ class CharacterController extends Controller
         $itemQuantity = $request->input('itemQuantity');
 
         if ($itemQuantity < 0 || !$this->isInteger($itemQuantity)) {
-            return response()->json("Must be a positive whole number", 400);
+            return response()->json(['message' => "Must be a positive whole number"], 400);
         }
 
         $character = $user->characters()->first();
@@ -176,14 +176,14 @@ class CharacterController extends Controller
         $characterId = $request->input('characterId');
 
         if ($itemQuantity < 0 || !$this->isInteger($itemQuantity)) {
-            return response()->json("Must be a positive whole number", 400);
+            return response()->json(['message' => "Must be a positive whole number"], 400);
         }
 
         $character = $user->characters()->first();
         $targetCharacter = Character::find($characterId);
 
         if ($character->zone_id != $targetCharacter->zone_id) {
-            return response()->json("You cannot give things to someone in a different zone", 400);
+            return response()->json(['message' => "You cannot give things to someone in a different zone"], 400);
         }
 
         return ItemOwnerController::moveItemFromTo($character, $targetCharacter, 'character', $itemId, $itemQuantity);
@@ -226,7 +226,7 @@ class CharacterController extends Controller
             ->first();
 
         if ($itemOwner->count == 0) {
-            return response()->json("You cannot eat something you do not have in your inventory", 400);
+            return response()->json(['message' => "You cannot eat something you do not have in your inventory"], 400);
         }
 
         // is it food?
@@ -284,7 +284,7 @@ class CharacterController extends Controller
         $character = Character::withTrashed()->where('id', $request)->first();
 
         if ($character->is_dead == 0) {
-            return response()->json("Cannot get death message of living character", 401);
+            return response()->json(['message' => "Cannot get death message of living character"], 401);
         }
 
         $messages = $character->messages()->where('source_name', 'death')->get();

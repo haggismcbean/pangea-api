@@ -48,15 +48,15 @@ class ItemOwnerController extends Controller
         $item = $fromItem->item()->first();
 
         if ($fromItem == $toItem) {
-            return response()->json("Cannot give item to yourself", 400);
+            return response()->json(['message' => "Cannot give item to yourself"], 400);
         }
 
         if (!$item || !$fromItem) {
-            return response()->json("Item could not be found", 400);
+            return response()->json(['message' => "Item could not be found"], 400);
         }
 
         if ($fromItem->count < $itemQuantity) {
-            return response()->json("Item quantity greater than count of items", 400);
+            return response()->json(['message' => "Item quantity greater than count of items"], 400);
         }
 
         $fromItem->count = $fromItem->count - $itemQuantity;

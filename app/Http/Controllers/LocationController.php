@@ -11,7 +11,7 @@ class LocationController extends Controller
         $currentLocation = Location::find($locationId);
 
         if (!$currentLocation) {
-            throw Error(response()->json(['status' => 'Zone could not be found'], 403)); 
+            throw Error(response()->json(['message' => 'Zone could not be found'], 403)); 
         }
 
         $north = Location::where('x_coord', $currentLocation->x_coord)

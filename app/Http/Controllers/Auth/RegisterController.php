@@ -50,7 +50,7 @@ class RegisterController extends Controller
         try {
             $this->validator($request->all())->validate();
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Bad username, password, or email'], 400);
+            return response()->json(['message' => 'Bad username, password, or email'], 400);
         }
 
         // A Registered event is created and will trigger any relevant

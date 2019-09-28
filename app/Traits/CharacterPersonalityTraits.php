@@ -26,9 +26,9 @@ class CharacterPersonalityTraits extends Model
 
     public static function init()
     {
-        CharacterPersonalityTraits::$enjoysArray = json_decode(file_get_contents("/var/www/api.pangeana.com/app/Traits/DataStores/Hobbies.json"), true);
+        CharacterPersonalityTraits::$enjoysArray = json_decode(file_get_contents("/www/pangea-api/app/Traits/DataStores/Hobbies.json"), true);
 
-        CharacterPersonalityTraits::$believesArray = json_decode(file_get_contents("/var/www/api.pangeana.com/app/Traits/DataStores/Beliefs.json"), true);
+        CharacterPersonalityTraits::$believesArray = json_decode(file_get_contents("/www/pangea-api/app/Traits/DataStores/Beliefs.json"), true);
 
         $traits = [
             'enjoys', 'believes', 'aLargeGroup', 'aSeriousConversation'

@@ -177,11 +177,11 @@ class MiningController extends Controller
     public function create(Request $request) {
         $user = Auth::user();
         $character = $user->characters()->first();
-        $currentZone = $character()->zone()->first();
+        $currentZone = $character->zone()->first();
 
         // Check we are not in a mine or a farm:
         if ($currentZone->mine()->first() || $currentZone->farm()->first()) {
-            return response()->json("Cannot create a mine or farm in a mine or farm", 400);
+            return response()->json(['message' => "Cannot create a mine in a mine or farm"], 400);
         }
 
         // TODO = requires a pick of some sort
@@ -209,7 +209,7 @@ class MiningController extends Controller
             ->count();
 
         if ($stoneCount < 1) {
-            return response()->json('Stone not found', 400);
+            return response()->json(['message' => 'Stone not found'], 400);
         }
 
         return $this->doActivity($recipe, $outputId, $outputType);
@@ -281,7 +281,7 @@ class MiningController extends Controller
             return response()->json($accessibleStones, 200);
         }
 
-        return response()->json("Unknown error", 400);
+        return response()->json(['message' => "Unknown error"], 400);
     }
 
     public function doActivity($activityRecipe, $outputId=null, $outputType=null) {

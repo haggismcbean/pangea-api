@@ -68,7 +68,7 @@ class PlantController extends Controller
 
             return $this->addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece, $amount);
         } else {
-            return response()->json(['status' => 'Not enough plants left'], 403);
+            return response()->json(['message' => 'Not enough plants left'], 403);
         }
     }
 
@@ -93,7 +93,7 @@ class PlantController extends Controller
         $plant = $this->getPlant($plantId, $plantPiece, $location);
 
         if (!$plant) {
-            return response()->json(['status' => 'Cannot find plant or plant part'], 403);
+            return response()->json(['message' => 'Cannot find plant or plant part'], 403);
         }
 
         if ($character->hasInventorySpace()) {
