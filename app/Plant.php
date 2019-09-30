@@ -94,4 +94,47 @@ class Plant extends Model
 
         return $this;
     }
+
+    public function getTodaysAvailableYield($plantPart) {
+
+        if ($plantPart === 'fruit') {
+            return $this->getYieldFromPeakDay($this->peakFruitDay);
+        }
+
+        if ($plantPart === 'flower') {
+            return $this->getYieldFromPeakDay($this->peakFlowerDay);
+        }
+
+        if ($plantPart === 'seed') {
+            return $this->getYieldFromPeakDay($this->peakSeedDay);
+        }
+
+        if ($plantPart === 'leaf') {
+            return $this->getYieldFromPeakDay($this->peakLeafDay);
+        }
+
+        if ($plantPart === 'stalk') {
+            return $this->getYieldFromPeakDay($this->peakStalkDay);
+        }
+
+        if ($plantPart === 'root') {
+            return $this->getYieldFromPeakDay($this->peakRootDay);
+        }
+
+        return 0;
+    }
+
+    private function getYieldFromPeakDay($peakDay) {
+        $day = Clock::getDayOfYear();
+
+        if (Clock::isWithinDays($day, $peakDay, 1)) {
+            return $this->yearly_yield / 2;
+        }
+
+        if (Clock::isWithinDays($day, $peakDay, 2)) {
+            return $this->yearly_yield / 4;
+        }
+
+        return 0;
+    }
 }

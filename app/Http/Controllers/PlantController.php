@@ -63,8 +63,8 @@ class PlantController extends Controller
 
         $locationPlant = $location->getLocationPlant($plantId);
 
-        if ($locationPlant && $locationPlant->count > $amount) {
-            $this->removePlantFromLocation($locationPlant, $amount);
+        if ($locationPlant && $locationPlant->isAvailable($amount, $plantPiece)) {
+            $this->removePlantFromLocation($plantPiece, $locationPlant, $amount);
 
             return $this->addPlantToNewOwner($plantId, $character, $locationPlant, $location, $plantPiece, $amount);
         } else {
@@ -84,8 +84,33 @@ class PlantController extends Controller
         return $this->namePlant($newName, $plantId, $characterId);
     }
 
-    private function removePlantFromLocation($locationPlant, $amount) {
-        $locationPlant->count = $locationPlant->count - $amount;
+    private function removePlantFromLocation($plantPiece, $locationPlant, $amount) {
+        $plant = $locationPlant->plant()->first();
+
+        if ($plantPiece === 'fruit') {
+            $locationPlant->fruit_gathered_today += $amount * $plant->yield_per_item;
+        }
+
+        if ($plantPiece === 'flower') {
+            $locationPlant->flower_gathered_today += $amount * $plant->yield_per_item;
+        }
+
+        if ($plantPiece === 'seed') {
+            $locationPlant->seed_gathered_today += $amount * $plant->yield_per_item;
+        }
+
+        if ($plantPiece === 'leaf') {
+            $locationPlant->leaf_gathered_today += $amount * $plant->yield_per_item;
+        }
+
+        if ($plantPiece === 'stalk') {
+            $locationPlant->stalk_gathered_today += $amount * $plant->yield_per_item;
+        }
+
+        if ($plantPiece === 'root') {
+            $locationPlant->root_gathered_today += $amount * $plant->yield_per_item;
+        }
+
         $locationPlant->save();
     }
 

@@ -37,6 +37,9 @@ class LocationPlantTableSeeder extends Seeder
     		$count += count($plants);
 
     		foreach ($plants as $plant) {
+                if ($ediblePlantsCount === 0) {
+                    $ediblePlantsCount = 1;
+                }
 
     			DB::table('location_plant')->insert([
 		            'location_id' => $location->id,

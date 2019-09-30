@@ -20,4 +20,36 @@ class LocationPlant extends Model
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function isAvailable($amount, $plantPart) {
+    	$plant = $this->plant()->first();
+    	$availableYieldToday = $plant->getTodaysAvailableYield($plantPart);
+    	$requestedYield = $amount * $plant->yield_per_item;
+
+    	if ($plantPart === 'fruit'
+    			&& $this->fruit_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	if ($plantPart === 'flower'
+    			&& $this->flower_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	if ($plantPart === 'seed'
+    			&& $this->seed_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	if ($plantPart === 'leaf'
+    			&& $this->leaf_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	if ($plantPart === 'stalk'
+    			&& $this->stalk_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	if ($plantPart === 'root'
+    			&& $this->root_gathered_today + $requestedYield > $availableYieldToday) {
+    		return false;
+    	}
+    	return true;
+    }
 }
