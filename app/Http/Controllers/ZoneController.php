@@ -11,6 +11,7 @@ use App\Character;
 use App\Zone;
 use App\ZoneName;
 use App\ZoneFinder;
+use App\LocationPlant;
 
 use App\World\Clock;
 
@@ -64,10 +65,16 @@ class ZoneController extends Controller
         $plants = $location->plants()->get();
 
         // So we only want to show the bits of plants that are in season.
-
         foreach ($plants as $plant) {
             $plant->customName = $plant->getName($character);
             $plant->setOutOfSeasonProperties();
+            $plant->locationPlant = LocationPlant::where('plant_id', $plant->id)->where('location_id', $location->id)->first();
+            $plant->availableFruitYield = $plant->getTodaysAvailableYield('fruit');
+            $plant->availableFlowerYield = $plant->getTodaysAvailableYield('flower');
+            $plant->availableSeedYield = $plant->getTodaysAvailableYield('seed');
+            $plant->availableLeafYield = $plant->getTodaysAvailableYield('leaf');
+            $plant->availableStalkYield = $plant->getTodaysAvailableYield('stalk');
+            $plant->availableRootYield = $plant->getTodaysAvailableYield('root');
         }
 
         return response()->json($plants, 200);
