@@ -56,7 +56,7 @@ class Plant extends Model
         }
 
         // fruit
-        if (!Clock::isWithinDays($day, $this->peakFruitDay, 8)) {
+        if ($this->hasFruit && !Clock::isWithinDays($day, $this->peakFruitDay, 8)) {
             
             if (Clock::isWithinDays($day, $this->peakFruitDay - 4, 4)) {
                 $this->fruitAppearance = $this->fruitAppearance . "They look under ripe";
@@ -97,7 +97,7 @@ class Plant extends Model
 
     public function getTodaysAvailableYield($plantPart) {
 
-        if ($plantPart === 'fruit') {
+        if ($plantPart === 'fruit' && $this->hasFruit) {
             return $this->getYieldFromPeakDay($this->peakFruitDay);
         }
 
