@@ -27,12 +27,12 @@ class LocationPlantTableSeeder extends Seeder
 
             // to do - sum up all the edible plants in the biome.
             $ediblePlantsCount = 0;
-            $ediblePlantsCount += $plants->where('leafUse', 'food')->count;
-            $ediblePlantsCount += $plants->where('seedUse', 'food')->count;
-            $ediblePlantsCount += $plants->where('flowerUse', 'food')->count;
-            $ediblePlantsCount += $plants->where('fruitUse', 'food')->count;
-            $ediblePlantsCount += $plants->where('stalkUse', 'food')->count;
-            $ediblePlantsCount += $plants->where('rootUse', 'food')->count;
+            $ediblePlantsCount += $plants->where('leafUse', 'food')->count();
+            $ediblePlantsCount += $plants->where('seedUse', 'food')->count();
+            $ediblePlantsCount += $plants->where('flowerUse', 'food')->count();
+            $ediblePlantsCount += $plants->where('fruitUse', 'food')->count();
+            $ediblePlantsCount += $plants->where('stalkUse', 'food')->count();
+            $ediblePlantsCount += $plants->where('rootUse', 'food')->count();
 
     		$count += count($plants);
 
@@ -46,10 +46,19 @@ class LocationPlantTableSeeder extends Seeder
                     'todays_remaining_yield' => 0
 		        ]);
 
-                $plant->yearly_yield = $biome->averageHunterGathererYield / 2 / ($ediblePlantsCount + rand(-10, 10));
-                $plant->yield_per_item = $plant->yearly_yield / (20 + rand(-10, 10));
-                $plant->max_plants_in_farm = $biome->averageArableYield / $plant->yearly_yield;
-                $plant->save();
+			if ($plant->leafUse === 'food'
+				|| $plant->seedUse === 'food'
+				|| $plant->flowerUse === 'food'
+				|| $plant->fruitUse === 'food'
+				|| $plant->stalkUse === 'food'
+				|| $plant->rootUse === 'food') {
+
+
+                		$plant->yearly_yield = ($biome->averageHunterGathererYield / 2 / $ediblePlantsCount) + rand(0, 10);
+                		$plant->yield_per_item = $plant->yearly_yield / (20 + rand(0, 10));
+                		$plant->max_plants_in_farm = $biome->averageArableYield / $plant->yearly_yield;
+                		$plant->save();
+			}
     		}
     	}
     }
