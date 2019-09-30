@@ -28,6 +28,8 @@ use App\Names\EatingFactory;
 
 class CharacterController extends Controller
 {
+    private $HUNGER_YEILD = 8;
+
     public static function getCharacter($characterId) {
         $user = Auth::user();
 
@@ -261,7 +263,8 @@ class CharacterController extends Controller
             return;
         }
 
-        $character->hunger = $character->hunger + 20;
+        // food yield is multiplied by 8 to calculate hunger restore.
+        $character->hunger = $character->hunger + ($item->efficiency * $this->HUNGER_YEILD);
         if ($character->hunger > 100) {
             $character->hunger = 100;
         }

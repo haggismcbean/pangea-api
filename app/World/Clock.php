@@ -68,6 +68,17 @@ class Clock
         // returns a number between -12 and 12
     }
 
+    public static function isMidnight($location) {
+        // on pangea it is always night except from 12noon to 3pm
+        $timezone = Clock::getLocationTimezone($location);
+        $currentHour = date('H'); // a number between 0 and 23
+        if ($currentHour + $timezone == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public static function isBreakfastHour($location) {
         // on pangea it is always night except from 12noon to 3pm
         $timezone = Clock::getLocationTimezone($location);

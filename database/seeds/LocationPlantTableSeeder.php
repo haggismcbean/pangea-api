@@ -42,23 +42,27 @@ class LocationPlantTableSeeder extends Seeder
 		            'location_id' => $location->id,
 		            'plant_id' => $plant->id,
 		            'count' => $plantDensity * rand(5, 50),
-                    'gathered_this_year' => 0,
-                    'todays_remaining_yield' => 0
+                    'fruit_gathered_today' => 0,
+                    'flower_gathered_today' => 0,
+                    'seed_gathered_today' => 0,
+                    'leaf_gathered_today' => 0,
+                    'stalk_gathered_today' => 0,
+                    'root_gathered_today' => 0
 		        ]);
 
-			if ($plant->leafUse === 'food'
-				|| $plant->seedUse === 'food'
-				|| $plant->flowerUse === 'food'
-				|| $plant->fruitUse === 'food'
-				|| $plant->stalkUse === 'food'
-				|| $plant->rootUse === 'food') {
+        		$plant->yearly_yield = ($biome->averageHunterGathererYield / 2 / $ediblePlantsCount) + rand(0, 10);
+        		$plant->yield_per_item = $plant->yearly_yield / (20 + rand(0, 10));
 
+    			if ($plant->leafUse === 'food'
+    				    || $plant->seedUse === 'food'
+    				    || $plant->flowerUse === 'food'
+    				    || $plant->fruitUse === 'food'
+    				    || $plant->stalkUse === 'food'
+    				    || $plant->rootUse === 'food') {
+            		$plant->max_plants_in_farm = $biome->averageArableYield / $plant->yearly_yield;
+    			}
 
-                		$plant->yearly_yield = ($biome->averageHunterGathererYield / 2 / $ediblePlantsCount) + rand(0, 10);
-                		$plant->yield_per_item = $plant->yearly_yield / (20 + rand(0, 10));
-                		$plant->max_plants_in_farm = $biome->averageArableYield / $plant->yearly_yield;
-                		$plant->save();
-			}
+        		$plant->save();
     		}
     	}
     }

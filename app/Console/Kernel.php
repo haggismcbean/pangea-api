@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         'App\Console\Commands\TimeChange',
         'App\Console\Commands\WeatherChange',
         'App\Console\Commands\ConditionsChange',
+        'App\Console\Commands\ResetGatheredCounters',
     ];
 
     /**
@@ -29,6 +30,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('character:hunger-time')
+                 ->hourly();
+
+        $schedule->command('location:reset-gathered-counters')
                  ->hourly();
 
         $schedule->command('farm:growing-time')
@@ -44,6 +48,8 @@ class Kernel extends ConsoleKernel
         // every fifteen minutes 10 past the hour
         $schedule->command('character:conditions-change')
                  ->cron('10-59/15 * * * *');
+
+
     }
 
     /**

@@ -30,13 +30,11 @@ class LocationTableSeeder extends Seeder
                 'biome' => $location->biome,
                 'rainfall' => $location->rainfall,
                 'temperature' => $location->temperature,
-		'current_temperature' => $location->temperature,
-		'current_rainfall' => $location->rainfall,
+        		'current_temperature' => $location->temperature,
+        		'current_rainfall' => $location->rainfall,
                 'has_river' => $location->hasRiver,
                 'biome_id' => 0,
-//                'yearly_animal_yield' => $biome->averageHunterGathererYield / 2,
-                'gathered_this_year' => 0,
-                'todays_remaining_animal_yield' => 0,
+                'animals_gathered_today' => 0,
                 'peak_animal_day' => 25,
                 'trough_animal_day' => 5
             ]);
