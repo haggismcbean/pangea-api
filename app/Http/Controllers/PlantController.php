@@ -141,7 +141,7 @@ class PlantController extends Controller
         if (!$plant) {
             $descriptionKey = $plantPiece . 'Appearance';
             $description = $location->plants()->find($plantId)->$descriptionKey;
-            $efficiency = $location->plants()->find($plantId)->yieldPerItem;
+            $efficiency = $location->plants()->find($plantId)->yield_per_item;
 
             if (!$description) {
                 return;
