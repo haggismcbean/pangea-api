@@ -36,7 +36,7 @@ class ItemController extends Controller
             $item->rot_rate = 2;
         } else {
             // leaf, fruit, seed
-            $item->unit_weight = $item->yield_per_item;
+            $item->unit_weight = rand(8, 12);
             $item->unit_volume = rand(8, 12);
 
             //efficiency for plants needs to be set to their yield gain when eaten.
