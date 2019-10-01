@@ -72,7 +72,7 @@ class MiningController extends Controller
     public static function completeCreateMine($character, $activity) {
         $zone = $character->zone()->first();
 
-        $mineZone = ZoneController::createZone($zone, "Mine", "The scratched out beginnings of a mine");
+        $mineZone = ZoneController::createZone($zone, "Mine", "The scratched out beginnings of a mine", $character);
 
         if (!$mineZone) {
             return;

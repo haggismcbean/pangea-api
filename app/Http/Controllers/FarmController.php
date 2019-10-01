@@ -104,7 +104,7 @@ class FarmController extends Controller
 
     public static function completeCreatePlot($character, $activity) {
         $zone = $character->zone()->first();
-        $farmZone = ZoneController::createZone($zone, "Farm", "The scratched out beginnings of a farm");
+        $farmZone = ZoneController::createZone($zone, "Farm", "The scratched out beginnings of a farm", $character);
 
         if (!$farmZone) {
             return;

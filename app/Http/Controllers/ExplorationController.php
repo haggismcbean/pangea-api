@@ -76,7 +76,7 @@ class ExplorationController extends Controller
 
         $item = $locationItem->item();
 
-        $mineZone = ZoneController::createZone($zone, $item->name . " Mine", "A natural deposit of " . $item->description);
+        $mineZone = ZoneController::createZone($zone, $item->name . " Mine", "A natural deposit of " . $item->description, $character);
 
         if (!$mineZone) {
             return;
