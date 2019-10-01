@@ -111,6 +111,10 @@ class PlantController extends Controller
             $locationPlant->root_gathered_today += $amount * $plant->yield_per_item;
         }
 
+        if ($plantPiece === 'wood' && $amount > 9) {
+            $locationPlant->count = $locationPlant->count - 1;
+        }
+
         $locationPlant->save();
     }
 
