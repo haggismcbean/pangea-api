@@ -29,7 +29,7 @@ class CraftingController extends Controller
         $recipe = $activity->recipe()->first();
 
         if ($recipe) {
-            $itemType = $recipe()->first()->item()->first();
+            $itemType = $recipe->first()->item()->first();
             $item = ItemController::getItem('made_item', $itemType->id);
 
             if ($itemType->category === 'structures') {

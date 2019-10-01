@@ -22,7 +22,7 @@ use App\Factories\BiomeFactory;
 
 class ZoneController extends Controller
 {
-    public static function createZone(Zone $parentZone, $zoneName, $zoneDescription) {
+    public static function createZone(Zone $parentZone, $zoneName, $zoneDescription, $character) {
         if ($parentZone->size == 1) {
             return;
         }

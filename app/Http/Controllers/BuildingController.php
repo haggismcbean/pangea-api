@@ -79,7 +79,7 @@ class BuildingController extends Controller
 
         // if base zone doesn't have a zone, i guess we need to make one!
         if (!$zone->parent_zone) {
-            $zone = ZoneController::createZone($zone, "Clearing", "A small clearing");
+            $zone = ZoneController::createZone($zone, "Clearing", "A small clearing", $character);
             $zone->size = 2;
             $zone->save();
 
@@ -90,7 +90,7 @@ class BuildingController extends Controller
         // sub zones can have a size of zero.
         if ($zone->size > 1) {
             // TODO - building description
-            $buildingZone = ZoneController::createZone($zone, "Building", "A simple dwelling");
+            $buildingZone = ZoneController::createZone($zone, "Building", "A simple dwelling", $character);
         }
     }
 
