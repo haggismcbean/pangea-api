@@ -13,6 +13,7 @@ use App\Http\Controllers\AnimalController;
 use App\ItemUse;
 use App\MadeItem;
 use App\MadeItemRecipe;
+use App\Zone;
 
 use App\Jobs\Travel;
 use App\GameEvents\ArriveEvent;
@@ -26,6 +27,7 @@ class TravelController extends Controller
 
         $character->activity_id = null;
         $character->zone_id = $activity->output_id;
+        $character->location_id = Zone::find($activity->output_id)->location_id;
         $character->group_id = null;
         $character->save();
     }
