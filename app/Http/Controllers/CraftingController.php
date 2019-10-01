@@ -32,7 +32,7 @@ class CraftingController extends Controller
             $itemType = $activity->recipe()->first()->item()->first();
             $item = ItemController::getItem('made_item', $itemType->id);
 
-            if ($character->hasInventorySpace()) {
+            if ($character->hasInventorySpace($item)) {
                 $itemOwner = ItemOwnerController::getItemOwner('character', $character, $item);
             } else {
                 $zone = $character->zone()->first();

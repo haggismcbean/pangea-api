@@ -119,7 +119,7 @@ class ActivityController extends Controller
                     }
                 }
 
-                $ingredient->quantity_added = $ingredient->quantity_added + 1;
+                $ingredient->quantity_added = $ingredient->quantity_added + $amount;
                 $ingredient->save();
 
                 $characterItem->save();
@@ -164,11 +164,11 @@ class ActivityController extends Controller
         // TODO - check if user is logged in as well :P
 
         if ($this->worker->activity_id !== $this->activity->id) {
-            throw new Error("Character is not currently working on this activity");
+            abort(400, "Character is not currently working on this activity");
         }
 
         if (!$this->activity->isReadyForWork()) {
-            throw new Error("Activity is not ready to be worked on");
+            abort(400, "Activity is not ready to be worked on");
         }
     }
 

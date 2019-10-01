@@ -104,16 +104,18 @@ class Character extends Model
       return $this->hasMany(Message::class);
     }
 
-    public function hasInventorySpace() {
+    public function hasInventorySpace($newItem) {
         $inventorySpace = 100;
-        $totalItems = 0;
+        $totalWeight = 0;
         $items = $this->itemOwners()->get();
 
         foreach ($items as $item) {
-            $totalItems = $totalItems + $item->count;
+            $totalWeight += ($item->item()->first()->unit_weight * $item->count);
         }
 
-        return $totalItems < $inventorySpace;
+        $totalWeight += $newItem->unit_weight;
+
+        return $totalWeight < $inventorySpace;
     }
 
     public function names() {
