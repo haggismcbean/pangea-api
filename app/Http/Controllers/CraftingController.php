@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Activity;
 use App\ActivityItem;
-
+use App\Http\Controllers\ZoneController;
 use App\Item;
 use App\MadeItem;
 use App\MadeItemRecipe;
@@ -32,6 +32,11 @@ class CraftingController extends Controller
             $itemType = $activity->recipe()->first()->item()->first();
             $item = ItemController::getItem('made_item', $itemType->id);
 
+            if (CraftingController::isConstruction($item)) {
+                CraftingController::createNewConstruction($character, $item);
+                return;
+            }
+
             if ($character->hasInventorySpace($item)) {
                 $itemOwner = ItemOwnerController::getItemOwner('character', $character, $item);
             } else {
@@ -45,6 +50,15 @@ class CraftingController extends Controller
 
         $activity->destroy($activity->id);
         $character->activity_id = null;
+    }
+
+    private static function isConstruction($item) {
+        return MadeItem::find($item->id)->category === 'structures';
+    }
+
+    private static function createNewConstruction($character, $item) {
+        $parentZone = $character->zone()->first();
+        return ZoneController::createZone($parentZone, $item->name, $item->name);
     }
 
     public static function sendMessage($activity, $result, $character) {
