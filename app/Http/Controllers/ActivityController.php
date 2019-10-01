@@ -11,6 +11,7 @@ use App\Http\Controllers\HuntController;
 use App\Activity;
 use App\Jobs\ActivityJob;
 use App\Jobs\Hunt;
+use App\MadeItemRecipe;
 
 class ActivityController extends Controller
 {
@@ -98,13 +99,13 @@ class ActivityController extends Controller
                     return response()->json(['message' => "Item does not need more of that ingredient"], 400);
                 }
 
-                $recipeIngredient = MadeItemRecipe::find($activity->recipe_id)
+                $recipeIngredient = MadeItemRecipe::find($this->activity->recipe_id)
                     ->ingredients()
                     ->where('item_id', $item->id)
                     ->first();
 
                 if (!$recipeIngredient) {
-                    $recipeIngredient = MadeItemRecipe::find($activity->recipe_id)
+                    $recipeIngredient = MadeItemRecipe::find($this->activity->recipe_id)
                         ->ingredients()
                         ->where('item_type', $item->name)
                         ->first();
