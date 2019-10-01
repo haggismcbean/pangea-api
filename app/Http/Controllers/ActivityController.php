@@ -90,18 +90,32 @@ class ActivityController extends Controller
                     $ingredient = $this->activity->ingredients()->where('item_type', $item->name)->first();
                 }
 
-                $traitName = $ingredient->trait()->first()->trait;
-
-                if ($item->traits()->where('trait', $traitName)->count() == 0) {
-                    return response()->json(['message' => "Item needs to have trait " . $traitName], 400);
-                }
-
                 if (!$ingredient) {
                     return response()->json(['message' => "Item could not be found in this activity"], 400);
                 }
 
                 if ($ingredient->quantity_added == $ingredient->quantity_required) {
                     return response()->json(['message' => "Item does not need more of that ingredient"], 400);
+                }
+
+                $recipeIngredient = MadeItemRecipe::find($activity->recipe_id)
+                    ->ingredients()
+                    ->where('item_id', $item->id)
+                    ->first();
+
+                if (!$recipeIngredient) {
+                    $recipeIngredient = MadeItemRecipe::find($activity->recipe_id)
+                        ->ingredients()
+                        ->where('item_type', $item->name)
+                        ->first();
+                }
+
+                if ($recipeIngredient->trait()->first()) {
+                    $traitName = $ingredient->trait()->first()->trait;
+
+                    if ($item->traits()->where('trait', $traitName)->count() == 0) {
+                        return response()->json(['message' => "Item needs to have trait " . $traitName], 400);
+                    }
                 }
 
                 $ingredient->quantity_added = $ingredient->quantity_added + 1;

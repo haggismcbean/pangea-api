@@ -82,7 +82,8 @@ class CraftingController extends Controller
 
         $item = Item::find($itemId);
 
-        $activityController = new ActivityController($activity);
+        $activityController = new ActivityController;
+        $activityController->activity = $activity;
         $activityController->addIngredientsToActivity($character, $item, $amount);
     }
 

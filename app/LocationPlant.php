@@ -50,7 +50,7 @@ class LocationPlant extends Model
     			&& $this->root_gathered_today + $requestedYield > $availableYieldToday) {
     		return false;
     	}
-        if ($plantPart === 'wood' && $amount < 10) {
+        if ($plantPart === 'wood' && $amount < 10 && $this->count > 0) {
             return true;
         }
         if ($plantPart === 'wood' && $amount > 9) {
