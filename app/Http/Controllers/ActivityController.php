@@ -82,7 +82,10 @@ class ActivityController extends Controller
         foreach ($characterItems as $characterItemKey => $characterItem) {
 
             if ($characterItem->item_id == $item->id) {
-                // TODO - validation and remove the correct number of items.
+                if ($characterItem->count - $amount < 0) {
+                    return response()->json(['message' => "You do not have enough " . $item->name], 400);
+                }
+
                 $characterItem->count = $characterItem->count - $amount;
 
                 $ingredient = $this->activity->ingredients()->where('item_id', $item->id)->first();

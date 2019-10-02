@@ -9,6 +9,7 @@ use App\ActivityItem;
 
 use App\Http\Controllers\ActivityItemController;
 use App\Http\Controllers\PlantController;
+use App\Http\Controllers\TravelController;
 
 use App\MadeItem;
 use App\MadeItemRecipe;
@@ -85,6 +86,8 @@ class BuildingController extends Controller
 
             $character->zone_id = $zone->id;
             $character->save();
+
+            TravelController::sendMessage($activity, "SUCCESS", $character);
         }
 
         // sub zones can have a size of zero.
