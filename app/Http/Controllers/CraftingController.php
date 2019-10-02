@@ -29,12 +29,12 @@ class CraftingController extends Controller
         $recipe = $activity->recipe()->first();
 
         if ($recipe) {
-            $itemType = $recipe->first()->item()->first();
-            $item = ItemController::getItem('made_item', $itemType->id);
+            $itemType = $recipe->item()->first();
 
             if ($itemType->category === 'structures') {
                 return BuildingController::completeBuildBuilding($character, $activity);
             }
+            $item = ItemController::getItem('made_item', $itemType->id);
 
             if ($character->hasInventorySpace($item)) {
                 $itemOwner = ItemOwnerController::getItemOwner('character', $character, $item);
