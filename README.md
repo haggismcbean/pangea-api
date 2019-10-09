@@ -28,10 +28,10 @@
 - [x] travelling
 - [x] combat (manual & auto modes) - it should be pretty trivially easy to instantly kill a sleeping person. It should be pretty hard to kill an awake person by yourself. But as part of a group? Not hard. But still sometimes they can run away.
 - [x] eating
-- [ ] dying
+- [x] dying
 - [ ] building/terraforming
 - [ ] talking in groups/cleverly
-- [ ] waking up
+- [x] waking up
 - [x] manufacturing (this can easily be split into many more parts)
 - [x] mining
 - [x] farming
@@ -43,9 +43,9 @@
 
 ### States
 - [x] location
-- [ ] biome descriptions
-- [ ] weather
-- [ ] day/night
+- [x] biome descriptions
+- [x] weather
+- [x] day/night
 - [x] hunger/health
 
 ### Moderation
