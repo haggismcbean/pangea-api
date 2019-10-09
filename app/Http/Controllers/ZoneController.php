@@ -206,10 +206,10 @@ class ZoneController extends Controller
             $parentZone->customName = $parentZone->getName($character);
 
             // we show all sibling zones further down, but if you're in a clearing you don't see the other clearings unless you've discovered them
-            if ($parentZone->parent_zone === 0) {
+            if ($parentZone->parent_zone === null) {
                 $siblingZones = Zone::where('parent_zone', $currentZone->parent_zone)
                     ->join('zone_finders', 'zones.id', '=', 'zone_finders.zone_id')
-                    ->where('id', '!=', $currentZone->id)
+                    ->where('zones.id', '!=', $currentZone->id)
                     ->where('character_id', $character->id)
                     ->get();
             } else {

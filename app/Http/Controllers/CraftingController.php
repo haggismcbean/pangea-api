@@ -88,7 +88,7 @@ class CraftingController extends Controller
 
         $activityController = new ActivityController;
         $activityController->activity = $activity;
-        $activityController->addIngredientsToActivity($character, $item, $amount);
+        return $activityController->addIngredientsToActivity($character, $item, $amount);
     }
 
     public function workOnActivity(Request $request) {
