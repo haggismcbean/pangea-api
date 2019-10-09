@@ -120,7 +120,7 @@ class ItemUseController extends Controller
         $form = new Form(new ItemUse);
 
         $items = Item::where('item_type', '!=', 'plant')
-            ->where('item_type', '!=', 'animal')
+            ->where('item_type', '=', 'made_item')
             ->get();
 
         $form->select('item_id', 'Item')
