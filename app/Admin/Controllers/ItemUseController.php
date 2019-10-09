@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\ItemUse;
+use App\Item;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -118,9 +119,51 @@ class ItemUseController extends Controller
     {
         $form = new Form(new ItemUse);
 
-        $form->number('item_id', 'Item id');
-        $form->text('activity', 'Activity');
+        $items = Item::where('item_type', '!=', 'plant')
+            ->where('item_type', '!=', 'animal')
+            ->get();
+
+        $form->select('item_id', 'Item')
+            ->options($this->getAsOptions($items, 'item_type'))
+            ->rules('required');
+
+        $form->select('activity', 'Activity')->options([
+            //gathering
+            'lumberjacking' => 'woodwork',
+            'harvesting' => 'metalwork',
+            'fishing' => 'construction',
+            'hunting' => 'weaving',
+            'farming' => 'textiles',
+            'gathering' => 'masonry',
+            'mining' => 'mining',
+            //craftin
+            'crafting' => 'crafting',
+            //combat
+            'fighting' => 'pottery',
+            'defending' => 'defending',
+            //zone based uses
+            'storage' => 'storage',
+            'transporting' => 'transporting',
+            //structures
+            'lockable' => 'lockable',
+            'wall' => 'wall',
+            'key' => 'key',
+            //passive uses
+            'readable' => 'readable',
+            'wearable' => 'wearable',
+            'edible' => 'edible',
+        ])->rules('required');
 
         return $form;
+    }
+
+    private function getAsOptions($options, $additionalInfo="") {
+        $madeItemOptions = [];
+
+        foreach ($options as $item) {
+            $madeItemOptions[$item->id] = $item->name . " " . $item->$additionalInfo;
+        }
+
+        return $madeItemOptions;
     }
 }
