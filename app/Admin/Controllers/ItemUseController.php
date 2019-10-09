@@ -129,17 +129,17 @@ class ItemUseController extends Controller
 
         $form->select('activity', 'Activity')->options([
             //gathering
-            'lumberjacking' => 'woodwork',
-            'harvesting' => 'metalwork',
-            'fishing' => 'construction',
-            'hunting' => 'weaving',
-            'farming' => 'textiles',
-            'gathering' => 'masonry',
+            'lumberjacking' => 'lumberjacking',
+            'harvesting' => 'harvesting',
+            'fishing' => 'fishing',
+            'hunting' => 'hunting',
+            'farming' => 'farming',
+            'gathering' => 'gathering',
             'mining' => 'mining',
             //craftin
             'crafting' => 'crafting',
             //combat
-            'fighting' => 'pottery',
+            'fighting' => 'fighting',
             'defending' => 'defending',
             //zone based uses
             'storage' => 'storage',
